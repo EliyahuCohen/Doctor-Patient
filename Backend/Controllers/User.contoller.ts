@@ -67,6 +67,7 @@ export async function login(req: Request, res: Response) {
   const match = await bcrypt.compare(password, exists.password);
   if (match) {
     const token = createAccessToken(exists._id.toString());
+    console.log({exists,token})
     return res.status(200).json({ exists, token });
   }
   return res.status(400).json({ message: "Incorrect password" });

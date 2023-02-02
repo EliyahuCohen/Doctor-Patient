@@ -53,13 +53,17 @@ const SigninPage = () => {
         <div>
           <button
             className="click"
-            onClick={() => {
-              loginFunc();
+            onClick={()=>{
+              if(check(5)){
+                loginFunc()
+              }else{
+                setMyError("")
+              }
             }}
           >
             Login in
           </button>
-          <div className="errorMessage">{myError}</div>
+          <div className="error">{myError}</div>
         </div>
         <div className="links">
           <Link to="/register">Don't have an account?</Link>

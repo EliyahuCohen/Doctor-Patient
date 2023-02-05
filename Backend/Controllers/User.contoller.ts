@@ -17,7 +17,7 @@ export async function signup(req: Request, res: Response) {
       const hash = await bcrypt.hash(password, salt);
       return User.create({ ...req.body, password: hash }).then((result) => {
         const token = createAccessToken(result._id.toString());
-        return res.status(201).json({ result, token });
+        return res.status(201).json({ user: result, token });
       });
     }
     return res.status(400).json({ message: "Email already in use" });
@@ -67,8 +67,7 @@ export async function login(req: Request, res: Response) {
   const match = await bcrypt.compare(password, exists.password);
   if (match) {
     const token = createAccessToken(exists._id.toString());
-    console.log({exists,token})
-    return res.status(200).json({ exists, token });
+    return res.status(200).json({ user: exists, token });
   }
   return res.status(400).json({ message: "Incorrect password" });
 }

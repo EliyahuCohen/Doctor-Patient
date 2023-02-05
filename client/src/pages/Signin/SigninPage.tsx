@@ -6,15 +6,17 @@ import { useLogin } from "../../hooks/useLogin";
 import "./app.scss";
 const SigninPage = () => {
   const [myError, setMyError] = useState<string>("");
-  const [user, setUser] = useState<Login>({
+  const [User, setUser] = useState<Login>({
     email: "",
     password: "",
   });
-  const { loginFunc } = useLogin(user, setMyError);
+
+  const { loginFunc } = useLogin(User, setMyError);
   return (
     <div className="wrapper">
       <div>
-        <h1>Welcome back</h1>
+        <h1>Welcome back </h1>
+
         <div className="btn">
           <img
             src="https://www.vectorlogo.zone/logos/google/google-icon.svg"
@@ -28,8 +30,8 @@ const SigninPage = () => {
         <div>
           <label htmlFor="email">Email</label>
           <input
-            value={user.email}
-            onChange={(e) => setUser({ ...user, email: e.target.value })}
+            value={User.email}
+            onChange={(e) => setUser({ ...User, email: e.target.value })}
             className="input5"
             name="Email Address"
             type="email"
@@ -39,8 +41,8 @@ const SigninPage = () => {
           />
           <label htmlFor="pass">Password</label>
           <input
-            value={user.password}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
+            value={User.password}
+            onChange={(e) => setUser({ ...User, password: e.target.value })}
             name="Password (at least 8 charecters)"
             className="input5"
             type="password"
@@ -53,11 +55,11 @@ const SigninPage = () => {
         <div>
           <button
             className="click"
-            onClick={()=>{
-              if(check(5)){
-                loginFunc()
-              }else{
-                setMyError("")
+            onClick={() => {
+              if (check(5)) {
+                loginFunc();
+              } else {
+                setMyError("");
               }
             }}
           >

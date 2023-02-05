@@ -1,0 +1,3 @@
+make sure that we have messages acorrding to time 
+for example 
+if the user go to a page and we say hello eliyahu for ex and we like also say good morning so the good morning should be depends on the user time of visiting that page

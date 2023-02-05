@@ -1,0 +1,53 @@
+.admin {
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  margin-top: 10vh;
+
+  .tags {
+    transition: 0.3s;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    p {
+      position: relative;
+      cursor: pointer;
+      transition: 0.3s;
+      &::after {
+        transition: 0.3s;
+        content: "";
+        position: absolute;
+        top: 120%;
+        transform-origin: center;
+        left: 0;
+        height: 2px;
+        border-radius: 100vh;
+        background: #229F97;
+        scale: 0;
+        width: 100%;
+      }
+      &:hover {
+        transition: 0.3s;
+        opacity: 0.8;
+        &::after {
+          scale: 1;
+        }
+      }
+    }
+    p.selected{
+      color: #229F97;
+      &::after{
+        scale: 1;
+      }
+    }
+
+    p:not(:nth-child(1)) {
+      margin: 0 1rem;
+    }
+
+    @media screen and (max-width: 1000px) {
+      justify-content: center;
+    }
+  }
+}

@@ -45,11 +45,32 @@ nav {
     background: rgba(102, 51, 153, 0.56);
     scale: 0;
   }
-
+  .flex {
+    display: flex;
+    align-items: center;
+  }
   h1 {
     word-spacing: 1rem;
   }
+  .navLinks {
+    display: flex;
+    align-items: center;
+    .specialLink {
+      padding: 0.2rem 0.7rem;
+      transition: 0.3s;
+      background: #eaeef54e;
+      border: 1px solid transparent;
+      border-radius: 100vh;
+      cursor: pointer;
+
+      &:hover {
+        transition: 0.3s;
+        border: 1px solid gray;
+      }
+    }
+  }
   .navLinks a {
+    font-size: 15px;
     margin: 0 30px;
   }
 }

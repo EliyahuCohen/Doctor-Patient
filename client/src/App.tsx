@@ -6,6 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import "./app.css";
+import Admin from "./components/admin/Admin";
 import Navbar from "./components/Navbar/Navbar";
 import { UserType } from "./features/userSlice";
 import RegisterPage from "./pages/Register/RegisterPage";
@@ -27,6 +28,10 @@ const App = () => {
           <Route
             path="/signin"
             element={user ? <Navigate to="/" /> : <SigninPage />}
+          />
+          <Route
+            path="/admin"
+            element={user&&user.role==1 ?   <Admin />:<Navigate to="/" />}
           />
         </Routes>
       </Router>

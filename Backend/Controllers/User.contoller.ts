@@ -26,8 +26,14 @@ export async function signup(req: Request, res: Response) {
   }
 }
 export async function getAllUsers(req: Request, res: Response) {
-  const users = await User.find({}).then((result) => result);
-  return res.status(200).json(users);
+  const {USER_ID} = req.body;
+  const user = await User.findById(USER_ID)
+  if(user&&user.role==1){
+    const users = await User.find({ _id: { $ne: USER_ID } }).then((result) => result);
+    return res.status(200).json(users);
+  }else{
+    return res.status(429).json({message:"You dont have access to this information"});
+  }
 }
 export async function findOneUser(req: Request, res: Response) {
   const { id } = req.params;

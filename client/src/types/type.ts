@@ -27,4 +27,6 @@ export interface User {
   listOfDoctors: string[];
   listOfPatients: string[];
   meetings: string[];
+  live: boolean;
+  createdAt: string;
 }

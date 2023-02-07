@@ -1,4 +1,3 @@
-import { socket } from "../server";
 import { Request, Response } from "express";
 import { isValidObjectId, ObjectId } from "mongoose";
 import Meet from "../Models/Meeting.model";

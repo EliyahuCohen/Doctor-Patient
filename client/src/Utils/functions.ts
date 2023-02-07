@@ -1,10 +1,11 @@
-import { Register } from "../types/type";
+import React from "react";
+import { Register, User } from "../types/type";
 
-export const moveFoword = (
+export function moveFoword(
   index: number,
   props: Register,
   setCurrentStep: any
-) => {
+) {
   if (index == 2) {
     if (props.fName.length > 0 && props.lName.length > 0) {
       setCurrentStep(index);
@@ -20,8 +21,8 @@ export const moveFoword = (
   } else {
     setCurrentStep(1);
   }
-};
-export const check = (number: number): boolean => {
+}
+export function check(number: number): boolean {
   document.querySelectorAll(".errorMessage").forEach((one) => {
     one.remove();
   });
@@ -49,4 +50,8 @@ export const check = (number: number): boolean => {
     }
   });
   return ok;
-};
+}
+export function SortArray(arr: User[], number: number) {
+  if (number == 0) return arr;
+  return arr.filter((user) => user.role == number);
+}

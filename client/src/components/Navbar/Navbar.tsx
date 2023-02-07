@@ -26,12 +26,12 @@ const Navbar = () => {
             </>
           ) : (
             <div className="flex">
-              {user.role == 1 ? (
+              {user.role == 0 ? (
                 <NavLink className="link" to="/admin">
-                  Admin
+                  Dashboard
                 </NavLink>
               ) : null}
-              
+
               <p className="specialLink">{user.fName}</p>
             </div>
           )}

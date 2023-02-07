@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,15 +6,26 @@ import {
   Navigate,
 } from "react-router-dom";
 import "./app.css";
-import Admin from "./components/admin/Admin";
+import AdminPage, { socket } from "./pages/Admin/AdminPage";
 import Navbar from "./components/Navbar/Navbar";
 import { UserType } from "./features/userSlice";
 import RegisterPage from "./pages/Register/RegisterPage";
 import SigninPage from "./pages/Signin/SigninPage";
+import { useEffect } from "react";
 const App = () => {
-  const { user, token } = useSelector(
+  const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    socket.on("connect", () => {
+      socket.emit("userConnected", { id: socket.id, status: "online" });
+    });
+
+    socket.on("disconnect", () => {
+      socket.emit("userDisconnected", { id: socket.id, status: "offline" });
+    });
+  }, []);
   return (
     <div>
       <Router>
@@ -31,7 +42,9 @@ const App = () => {
           />
           <Route
             path="/admin"
-            element={user&&user.role==1 ?   <Admin />:<Navigate to="/" />}
+            element={
+              user && user.role == 0 ? <AdminPage /> : <Navigate to="/" />
+            }
           />
         </Routes>
       </Router>

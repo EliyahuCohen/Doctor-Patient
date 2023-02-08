@@ -4,45 +4,24 @@ import { User } from "../../types/type";
 import { SortArray } from "../../Utils/functions";
 import { format } from "date-fns";
 import "./app.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
-import { io } from "socket.io-client";
-import {
-  adminUsers,
-  updateLiveUsers,
-  updateStateLive,
-} from "../../features/adminSlice";
-
-export const socket = io("http://localhost:3001");
+import { adminUsers } from "../../features/adminSlice";
 
 const AdminPage = () => {
   const [selected, setSelected] = useState<number>(0);
   const { getUsers } = useGetAdminUsers();
-  const dispatch = useDispatch();
-  const { user } = useSelector(
-    (state: { userSlice: UserType }) => state.userSlice
-  );
   const { users } = useSelector(
     (state: { adminSlice: adminUsers }) => state.adminSlice
+  );
+  const { user } = useSelector(
+    (state: { userSlice: UserType }) => state.userSlice
   );
 
   useEffect(() => {
     getUsers();
   }, []);
-  useEffect(() => {
-    socket.on("userLoggedIn", (sock: User) => {
-      dispatch(updateStateLive(sock));
-    });
-    if (user?.role == 0) {
-      dispatch(updateLiveUsers());
-    }
-  }, [socket && users.length > 0, users]);
 
-  useEffect(() => {
-    socket.on("updateAdmin", (data) => {
-      console.log("something changed", data);
-    });
-  }, [socket]);
   return (
     <div className="admin">
       <div className="welcome">

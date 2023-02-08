@@ -3,7 +3,7 @@ import axios from "axios";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../features/userSlice";
-import { socket } from "../pages/Admin/AdminPage";
+import { socket } from "../App";
 import { setLiveUsers } from "../features/adminSlice";
 
 export function useLogin(

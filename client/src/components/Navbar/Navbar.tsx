@@ -31,7 +31,9 @@ const Navbar = () => {
                   Dashboard
                 </NavLink>
               ) : null}
-
+              <NavLink className="link" to="/profile">
+                Profile
+              </NavLink>
               <p className="specialLink">{user.fName}</p>
             </div>
           )}

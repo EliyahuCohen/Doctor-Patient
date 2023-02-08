@@ -38,7 +38,7 @@ const adminSlice = createSlice({
       });
       state.liveUsers = arr;
     },
-    updateLiveUsers: (state) => {
+    updateLiveUsers: (state: adminUsers) => {
       state.users.forEach((user) => {
         state.liveUsers.forEach((live) => {
           if (user._id == live) {
@@ -46,6 +46,16 @@ const adminSlice = createSlice({
           }
         });
       });
+    },
+    removeLiveUser: (state: adminUsers, action) => {
+      console.log(action.payload);
+      for (let i = 0; i < state.users.length; i++) {
+        console.log(state.users[i]._id);
+        if (state.users[i]._id == action.payload) {
+          state.users[i].live = false;
+          break;
+        }
+      }
     },
   },
 });
@@ -55,5 +65,6 @@ export const {
   updateLiveUsers,
   updateStateLive,
   setLiveUsersObject,
+  removeLiveUser,
 } = adminSlice.actions;
 export default adminSlice.reducer;

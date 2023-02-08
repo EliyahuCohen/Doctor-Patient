@@ -20,7 +20,6 @@ export function useLogin(
         if (res.data.user.role == 0) {
           dispatch(setLiveUsers(res.data.usersId));
         }
-
         socket.emit("userConnected", res.data.user);
       })
       .catch((err) => {

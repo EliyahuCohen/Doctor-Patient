@@ -33,12 +33,16 @@ const AdminPage = () => {
     socket.on("userLoggedIn", (sock: User) => {
       dispatch(updateStateLive(sock));
     });
-
     if (user?.role == 0) {
       dispatch(updateLiveUsers());
     }
   }, [socket && users.length > 0, users]);
 
+  useEffect(() => {
+    socket.on("updateAdmin", (data) => {
+      console.log("something changed", data);
+    });
+  }, [socket]);
   return (
     <div className="admin">
       <div className="welcome">

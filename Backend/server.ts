@@ -1,38 +1,36 @@
 import express, { Application } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 import userRouter from "./Routes/User.route";
 import meetRouter from "./Routes/Meet.route";
 import http from "http";
 import { Server } from "socket.io";
 dotenv.config();
+export interface user {
+  userId: ObjectId;
+  socketId: string;
+}
 
-export let usersID: any[] = [];
+export let usersID: user[] = [];
 
 //setting and setups
 mongoose.set("strictQuery", true);
 const app: Application = express();
 const server = http.createServer(app);
 export const io = new Server(server, { cors: { origin: "*" } });
-const usersArr: any[] = [];
 
 io.on("connection", (socket) => {
   socket.on("userConnected", (data: any) => {
-    if (data._id != undefined) {
-      usersArr.push({ userId: data._id, socketId: socket.id });
+    if (data._id && socket) {
+      usersID.push({ userId: data._id, socketId: socket.id });
     }
-    console.log(usersArr);
     socket.emit("updateAdmin", data);
   });
 
   socket.on("disconnect", () => {
-    usersArr.splice(
-      usersArr.findIndex((u) => u.socketId == socket.id),
-      1
-    );
-    console.log("user left", usersArr);
-    socket.emit("updateAdmin", usersArr);
+    usersID = usersID.filter((one) => one.socketId !== socket.id);
+    socket.emit("updateAdmin", usersID);
   });
 });
 app.use(cors({ origin: "*" }));

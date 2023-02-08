@@ -4,7 +4,12 @@ import { useSelector } from "react-redux";
 import { UserType } from "../features/userSlice";
 import { User } from "../types/type";
 import { useDispatch } from "react-redux";
-import { setAdminUsers } from "../features/adminSlice";
+import {
+  setAdminUsers,
+  setLiveUsers,
+  setLiveUsersObject,
+  updateLiveUsers,
+} from "../features/adminSlice";
 export function useGetAdminUsers() {
   const { user, token } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
@@ -19,14 +24,9 @@ export function useGetAdminUsers() {
     instance
       .get("http://localhost:3001/users/all")
       .then((res) => {
-        dispatch(
-          setAdminUsers(
-            res.data.map((element: User) => {
-              element.live = false;
-              return element;
-            })
-          )
-        );
+        dispatch(setAdminUsers(res.data.users));
+        dispatch(setLiveUsersObject(res.data.usersId));
+        dispatch(updateLiveUsers(res.data.usersId));
       })
       .catch((err) => {
         console.log(err);

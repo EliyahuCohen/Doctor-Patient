@@ -34,7 +34,7 @@ export async function getAllUsers(req: Request, res: Response) {
     const users = await User.find({ _id: { $ne: USER_ID } })
       .sort({ _createdAt: "descending" })
       .then((result) => result);
-    return res.status(200).json(users);
+    return res.status(200).json({ users, usersId: usersID });
   } else {
     return res
       .status(429)
@@ -84,7 +84,7 @@ export async function updateRole(req: Request, res: Response) {
       },
     }
   ).then(() => {
-    return res.status(202).json({ message: "User was updated " });
+    return res.status(202).json({ message: "User was updated" });
   });
 }
 export async function login(req: Request, res: Response) {
@@ -97,7 +97,6 @@ export async function login(req: Request, res: Response) {
   if (match) {
     const token = createAccessToken(exists._id.toString());
     io.emit("userLoggedIn", exists);
-    usersID.push(exists._id);
     if (exists.role != 0) return res.status(200).json({ user: exists, token });
     return res.status(200).json({ user: exists, token, usersId: usersID });
   }

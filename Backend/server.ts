@@ -23,17 +23,14 @@ export const io = new Server(server, { cors: { origin: "*" } });
 io.on("connection", (socket) => {
   socket.on("userConnected", (data: any) => {
     if (data._id && socket) {
-      console.log(data._id);
       if (data.role !== 0) {
         usersID.push({ userId: data._id, socketId: socket.id });
       }
     }
   });
-
   socket.on("disconnect", () => {
     let selected = usersID.filter((one) => one.socketId == socket.id)[0];
-    usersID = usersID.filter((one) => one.socketId == socket.id);
-    console.log(selected, "selected");
+    usersID = usersID.filter((one) => one.socketId !== socket.id);
     if (selected) {
       io.emit("updateAdmin", selected.userId);
     }

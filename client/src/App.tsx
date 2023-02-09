@@ -9,7 +9,7 @@ import { io } from "socket.io-client";
 import "./app.css";
 import AdminPage from "./pages/Admin/AdminPage";
 import Navbar from "./components/Navbar/Navbar";
-import { UserType } from "./features/userSlice";
+import { setUser, UserType } from "./features/userSlice";
 import RegisterPage from "./pages/Register/RegisterPage";
 import SigninPage from "./pages/Signin/SigninPage";
 import { useEffect } from "react";
@@ -31,6 +31,7 @@ const App = () => {
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
+
   useEffect(() => {
     socket.on("userLoggedIn", (sock: User) => {
       dispatch(updateStateLive(sock));
@@ -42,7 +43,6 @@ const App = () => {
   }, [socket, user, users.length]);
   useEffect(() => {
     socket.on("updateAdmin", (res) => {
-      console.log(res);
       dispatch(removeLiveUser(res));
     });
   }, [socket]);

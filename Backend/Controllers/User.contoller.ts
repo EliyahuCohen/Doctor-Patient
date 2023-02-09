@@ -19,6 +19,7 @@ export async function signup(req: Request, res: Response) {
       const hash = await bcrypt.hash(password, salt);
       return User.create({ ...req.body, password: hash }).then((result) => {
         const token = createAccessToken(result._id.toString());
+        io.emit("newUser", { user: result });
         return res.status(201).json({ user: result, token });
       });
     }

@@ -17,6 +17,7 @@ export function useLogin(
       .then((res) => {
         setMyError(() => "");
         dispatch(setUser(res.data));
+        localStorage.setItem("user", JSON.stringify(res.data));
         if (res.data.user.role == 0) {
           dispatch(setLiveUsers(res.data.usersId));
         }

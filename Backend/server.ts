@@ -28,6 +28,9 @@ io.on("connection", (socket) => {
       }
     }
   });
+  socket.on("newUser", (id) => {
+    usersID.push({ userId: id, socketId: socket.id });
+  });
   socket.on("disconnect", () => {
     let selected = usersID.filter((one) => one.socketId == socket.id)[0];
     usersID = usersID.filter((one) => one.socketId !== socket.id);

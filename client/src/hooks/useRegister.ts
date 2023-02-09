@@ -3,6 +3,7 @@ import axios from "axios";
 import React from "react";
 import { setUser } from "../features/userSlice";
 import { useDispatch } from "react-redux";
+import { socket } from "../App";
 
 export function useRegister(
   prop: Register,
@@ -14,6 +15,7 @@ export function useRegister(
       .post("http://localhost:3001/users/signup", prop)
       .then((res) => {
         setError("");
+        socket.emit("newUser", res.data.user._id);
         dispatch(setUser(res.data));
       })
       .catch((err) => {

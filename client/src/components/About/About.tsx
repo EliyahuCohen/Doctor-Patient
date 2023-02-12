@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import image from "../../assets/about.jpg";
 const About = () => {
   return (
-    <motion.div className="howWrapper">
+    <motion.div id="about" className="howWrapper">
       <div className="divs">
         <motion.img
           initial={{ x: -250, opacity: 0 }}
@@ -46,22 +46,22 @@ const About = () => {
         whileInView={{ opacity: 1 }}
         className="squares"
       >
-        <div>
+        <motion.div initial={{opacity:0}} whileInView={{opacity:1}} transition={{duration:1}} >
           <span>1k+</span>
           <p>Patients Beds</p>
-        </div>
-        <div>
+        </motion.div>
+        <motion.div initial={{opacity:0}} whileInView={{opacity:1}} transition={{duration:1}} >
           <span>20k+</span>
           <p>Happy Patients</p>
-        </div>
-        <div>
+        </motion.div>
+        <motion.div initial={{opacity:0}} whileInView={{opacity:1}} transition={{duration:1}} >
           <span>700</span>
           <p>Doctors & Nurse</p>
-        </div>
-        <div>
+        </motion.div>
+        <motion.div initial={{opacity:0}} whileInView={{opacity:1}} transition={{duration:1}} >
           <span>15</span>
           <p>Year Experience</p>
-        </div>
+        </motion.div>
       </motion.div>
     </motion.div>
   );

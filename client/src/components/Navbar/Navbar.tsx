@@ -14,10 +14,13 @@ const Navbar = () => {
       transition={{ duration: 0.5 }}
     >
       <div className="navbar">
-        <div>
+        <div className="leftNav">
           <NavLink to="/">
             <h1>🔥 Eden</h1>
           </NavLink>
+          <a href="#about">
+            <p>About Us</p>
+          </a>
         </div>
         <div className="navLinks">
           {!user ? (

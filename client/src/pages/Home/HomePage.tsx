@@ -7,9 +7,10 @@ const HomePage = () => {
     <div className="bigWrapper">
       <motion.div className="pageWrapper">
         <motion.div
-          initial={{ opacity: 0 }}
+        className="first"
+          initial={{ opacity: 0,y:-200}}
           transition={{ duration: 2 }}
-          whileInView={{ opacity: 1 }}
+          whileInView={{ opacity: 1,y:0 }}
         >
           <h1>
             Providing the best medical care and
@@ -21,13 +22,15 @@ const HomePage = () => {
           </p>
           <button>Make an Appoitment</button>
         </motion.div>
+        <div>
         <motion.img
-          initial={{ opacity: 0 }}
-          transition={{ duration: 2 }}
-          whileInView={{ opacity: 1 }}
+           initial={{ opacity: 0,y:200}}
+           transition={{ duration: 2 }}
+           whileInView={{ opacity: 1,y:0 }}
           src={image}
           alt="image of doctors"
         />
+        </div>
       </motion.div>
       <About />
     </div>

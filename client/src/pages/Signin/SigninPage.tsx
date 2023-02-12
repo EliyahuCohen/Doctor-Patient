@@ -26,6 +26,7 @@ const SigninPage = () => {
         </div>
         <div className="or">
           <p>or</p>
+          <span></span>
         </div>
         <div>
           <label htmlFor="email">Email</label>

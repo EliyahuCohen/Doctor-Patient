@@ -20,6 +20,7 @@ import {
   updateStateLive,
   removeLiveUser,
 } from "./features/adminSlice";
+import HomePage from "./pages/Home/HomePage";
 
 export const socket = io("http://localhost:3001");
 
@@ -48,22 +49,11 @@ const App = () => {
   }, [socket]);
 
   return (
-    <div>
+    <div style={{ overflowX: "hidden" }}>
       <Router>
         <Navbar />
         <Routes>
-          <Route
-            path="/"
-            element={
-              user && user.role != 0 ? (
-                <></>
-              ) : user && user.role == 0 ? (
-                <Navigate to="/admin" />
-              ) : (
-                <Navigate to="/signin" />
-              )
-            }
-          />
+          <Route path="/" element={<HomePage />} />
           <Route
             path="/register"
             element={user ? <Navigate to="/" /> : <RegisterPage />}

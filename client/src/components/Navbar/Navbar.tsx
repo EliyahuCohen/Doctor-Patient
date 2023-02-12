@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 import { UserType } from "../../features/userSlice";
 import "./app.scss";
 const Navbar = () => {
@@ -7,7 +8,11 @@ const Navbar = () => {
     (state: { userSlice: UserType }) => state.userSlice
   );
   return (
-    <nav>
+    <motion.nav
+      initial={{ y: -50, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="navbar">
         <div>
           <NavLink to="/">
@@ -38,11 +43,11 @@ const Navbar = () => {
             </div>
           )}
           <NavLink className="setting" to="/">
-            ⚙️
+            🌞
           </NavLink>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

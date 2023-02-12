@@ -6,10 +6,10 @@ button {
   margin-top: 1em;
   padding: 1.2em;
   cursor: pointer;
-  background: #664de5;
+  background: #10a37f;
 
   &:hover {
-    background: #5b3fe9;
+    background: #10a37f;
   }
 }
 .error {
@@ -18,13 +18,14 @@ button {
 }
 
 .wrapper {
+  color: #343541;
+
   min-height: 90vh;
   padding: 1rem;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-
   div {
     min-width: 600px;
 
@@ -35,20 +36,25 @@ button {
       position: relative;
       text-align: center;
       margin-bottom: 1em;
+      width: 100%;
+
       p {
-        padding: 0 10%;
-        width: fit-content;
-        margin: 0 auto;
+        text-align: center;
         background: #fff;
+        width: 30%;
+        margin: 0 auto;
+        padding: 0.3em;
+        z-index: 50;
+        position: relative;
       }
-      ::before {
+      span {
         position: absolute;
-        content: "";
-        width: 100%;
+        z-index: 2;
         top: 50%;
-        left: 0%;
-        z-index: -1;
+        right: 0;
+        left: 0;
         height: 1px;
+        width: 100%;
         background: lightgray;
       }
     }
@@ -106,6 +112,9 @@ button {
       }
     }
   }
+}
+* {
+  background: #fff;
 }
 .errorMessage {
   font-size: 14px;

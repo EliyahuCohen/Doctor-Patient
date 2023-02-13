@@ -5,11 +5,13 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../features/userSlice";
 import { socket } from "../App";
 import { setLiveUsers } from "../features/adminSlice";
+import { useSaveLocalStorage } from "./useSaveLocalStorage";
 
 export function useLogin(
   prop: Login,
   setMyError: React.Dispatch<React.SetStateAction<string>>
 ) {
+  const { saveLocalStorage } = useSaveLocalStorage();
   const dispatch = useDispatch();
   async function loginFunc() {
     return await axios
@@ -21,6 +23,7 @@ export function useLogin(
         if (res.data.user.role == 0) {
           dispatch(setLiveUsers(res.data.usersId));
         }
+        saveLocalStorage(res.data);
         socket.emit("userConnected", res.data.user);
       })
       .catch((err) => {

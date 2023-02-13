@@ -1,6 +1,5 @@
-*{
+* {
   scroll-behavior: smooth !important;
-
 }
 .pageWrapper {
   overflow-x: hidden !important;
@@ -14,8 +13,9 @@
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  .first{
+  .first {
     max-width: 900px;
+    padding: 1rem;
   }
 
   img {

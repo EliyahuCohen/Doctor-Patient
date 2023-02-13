@@ -1,12 +1,15 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { UserType } from "../../features/userSlice";
+import { logout } from "../../features/userSlice";
 import "./app.scss";
+import { socket } from "../../App";
 const Navbar = () => {
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
+  const dispatch = useDispatch();
   return (
     <motion.nav
       initial={{ y: -50, opacity: 0 }}
@@ -45,9 +48,18 @@ const Navbar = () => {
               <p className="specialLink">{user.fName}</p>
             </div>
           )}
-          <NavLink className="setting" to="/">
-            🌞
-          </NavLink>
+          {user ? (
+            <p
+              title="logout"
+              style={{ padding: "0 1rem", cursor: "pointer" }}
+              onClick={() => {
+                localStorage.setItem("user", JSON.stringify(null));
+                dispatch(logout());
+              }}
+            >
+              👋
+            </p>
+          ) : null}
         </div>
       </div>
     </motion.nav>

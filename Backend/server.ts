@@ -26,6 +26,7 @@ io.on("connection", (socket) => {
       if (data.role !== 0) {
         usersID.push({ userId: data._id, socketId: socket.id });
       }
+      io.emit("userLoggedIn", data);
     }
   });
   socket.on("newUser", (id) => {

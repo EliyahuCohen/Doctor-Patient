@@ -21,10 +21,12 @@ import {
   removeLiveUser,
 } from "./features/adminSlice";
 import HomePage from "./pages/Home/HomePage";
+import { useSaveLocalStorage } from "./hooks/useSaveLocalStorage";
 
 export const socket = io("http://localhost:3001");
 
 const App = () => {
+  const { createIfDontHave } = useSaveLocalStorage();
   const dispatch = useDispatch();
   const { users } = useSelector(
     (state: { adminSlice: adminUsers }) => state.adminSlice
@@ -47,6 +49,9 @@ const App = () => {
       dispatch(removeLiveUser(res));
     });
   }, [socket]);
+  useEffect(() => {
+    createIfDontHave();
+  }, []);
 
   return (
     <div style={{ overflowX: "hidden" }}>

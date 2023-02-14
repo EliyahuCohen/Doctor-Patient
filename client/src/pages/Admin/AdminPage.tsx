@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { useGetAdminUsers } from "../../hooks/useGetAdminUsers";
 import { User } from "../../types/type";
 import { SortArray } from "../../Utils/functions";
-import { format } from "date-fns";
 import "./app.scss";
 import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
 import { adminUsers } from "../../features/adminSlice";
+import AdminUserLine from "../../components/AdminUserLine/AdminUserLine";
 
 const AdminPage = () => {
   const [selected, setSelected] = useState<number>(0);
@@ -57,26 +57,7 @@ const AdminPage = () => {
       </div>
       {SortArray(users, selected).map((user: User) => {
         return (
-          <div key={user._id} className="user-info">
-            <p className="mainLine">
-              <span
-                title="is user online"
-                className={`${user.live ? "live" : ""}`}
-              ></span>
-              {user.email}
-            </p>
-
-            <p>{user.role == 1 ? "Doctors" : "Patient"}</p>
-            <p className={`status ${user.approved ? "approved" : "pending"}`}>
-              {user.approved ? "Approved" : "Pending"}
-            </p>
-            <p className="delete-small">
-              {format(new Date(user.createdAt), "dd/MM/yyyy")}
-            </p>
-            <p title="more details" className="arrow delete-small">
-              🧐
-            </p>
-          </div>
+          <AdminUserLine user={user}/>
         );
       })}
     </div>

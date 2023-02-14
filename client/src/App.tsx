@@ -22,6 +22,7 @@ import {
 } from "./features/adminSlice";
 import HomePage from "./pages/Home/HomePage";
 import { useSaveLocalStorage } from "./hooks/useSaveLocalStorage";
+import ProfilePage from "./pages/Profile/ProfilePage";
 
 export const socket = io("http://localhost:3001");
 
@@ -59,6 +60,10 @@ const App = () => {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route
+            path="/profile"
+            element={user ? <ProfilePage /> : <Navigate to="/" />}
+          />
           <Route
             path="/register"
             element={user ? <Navigate to="/" /> : <RegisterPage />}

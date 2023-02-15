@@ -14,6 +14,7 @@ export interface user {
 
 export let usersID: user[] = [];
 
+
 //setting and setups
 mongoose.set("strictQuery", true);
 const app: Application = express();
@@ -26,13 +27,20 @@ io.on("connection", (socket) => {
       if (data.role !== 0) {
         usersID.push({ userId: data._id, socketId: socket.id });
       }
-      io.emit("userLoggedIn", data);
+      io.emit("userLoggedIn", data);``
     }
   });
   socket.on("newUser", (id) => {
     usersID.push({ userId: id, socketId: socket.id });
   });
   socket.on("disconnect", () => {
+    let selected = usersID.filter((one) => one.socketId == socket.id)[0];
+    usersID = usersID.filter((one) => one.socketId !== socket.id);
+    if (selected) {
+      io.emit("updateAdmin", selected.userId);
+    }
+  });
+  socket.on("userLoggedOut", () => {
     let selected = usersID.filter((one) => one.socketId == socket.id)[0];
     usersID = usersID.filter((one) => one.socketId !== socket.id);
     if (selected) {

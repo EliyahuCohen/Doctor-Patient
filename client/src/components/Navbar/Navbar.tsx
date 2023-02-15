@@ -52,6 +52,7 @@ const Navbar = () => {
               onClick={() => {
                 localStorage.setItem("user", JSON.stringify(null));
                 dispatch(logout());
+                socket.emit("userLoggedOut")
               }}
             >
               👋

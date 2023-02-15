@@ -16,26 +16,45 @@ div.OurTeamWrapper {
     margin-bottom: 3rem;
   }
   .doctorsGrid {
-    margin: 0;
+    margin: 0 7em !important;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
     @media screen and (max-width: 1300px) {
+      margin: 0 0 !important;
       grid-template-columns: 1fr 1fr;
     }
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 800px) {
       grid-template-columns: 1fr;
     }
     div.oneDoctor {
       padding: 0.3rem;
-      width: 100%;
+      padding-top: 1rem;
+      width: 100% !important;
+      position: relative;
       border-radius: 1rem;
+      margin: 0 auto;
+      transition: 0.3s;
+      &:hover {
+        transition: 0.3s;
+        box-shadow: 0 0 50px #10a37f;
+      }
     }
     img {
       object-fit: contain;
+      width: 300px;
       border-radius: 1rem;
       width: 100%;
-      max-height: 350px;
+      height: 300px;
     }
+  }
+}
+.doctorInfo {
+  padding: 1rem;
+  p {
+    color: gray;
+  }
+  strong {
+    color: #10a37f;
   }
 }

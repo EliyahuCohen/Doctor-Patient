@@ -25,6 +25,10 @@ const OurTeam = () => {
           className="oneDoctor"
         >
           <img src={Image1} alt="" />
+          <div className="doctorInfo">
+            <p>Dr.Eliyahu Cohen</p>
+            <strong>Optometrist</strong>
+          </div>
         </motion.div>
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
@@ -33,6 +37,10 @@ const OurTeam = () => {
           className="oneDoctor"
         >
           <img src={Image2} alt="" />
+          <div className="doctorInfo">
+            <p>Dr.Rachel Jones</p>
+            <strong>Family Doctor</strong>
+          </div>
         </motion.div>
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
@@ -41,6 +49,10 @@ const OurTeam = () => {
           className="oneDoctor"
         >
           <img src={Image3} alt="" />
+          <div className="doctorInfo">
+            <p>Dr.John Watson</p>
+            <strong>Dentist</strong>
+          </div>
         </motion.div>
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
@@ -49,6 +61,10 @@ const OurTeam = () => {
           className="oneDoctor"
         >
           <img src={Image5} alt="" />
+          <div className="doctorInfo">
+            <p>Shira Cole</p>
+            <strong>Nurse</strong>
+          </div>
         </motion.div>
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
@@ -57,6 +73,10 @@ const OurTeam = () => {
           className="oneDoctor"
         >
           <img src={Image6} alt="" />
+          <div className="doctorInfo">
+            <p>Dr.Lydia Leen</p>
+            <strong>Chiropractor</strong>
+          </div>
         </motion.div>
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
@@ -65,6 +85,10 @@ const OurTeam = () => {
           className="oneDoctor"
         >
           <img src={Image4} alt="" />
+          <div className="doctorInfo">
+            <p>Dr.Lydia Leen</p>
+            <strong>Pediatrician</strong>
+          </div>
         </motion.div>
       </div>
     </motion.div>

@@ -21,9 +21,6 @@ const Navbar = () => {
           <NavLink to="/">
             <h1>🔥 Eden</h1>
           </NavLink>
-          <a href="#about">
-            <p>About Us</p>
-          </a>
         </div>
         <div className="navLinks">
           {!user ? (

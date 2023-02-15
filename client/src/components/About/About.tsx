@@ -1,6 +1,8 @@
 import "./app.scss";
 import { motion } from "framer-motion";
 import image from "../../assets/about.jpg";
+import SmallInfo from "../SmallInfo/SmallInfo";
+import OurTeam from "../OurTeam/OurTeam";
 const About = () => {
   return (
     <motion.div id="about" className="howWrapper">
@@ -40,29 +42,7 @@ const About = () => {
           <button>Learn More</button>
         </motion.div>
       </div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        transition={{ delay: 0.5, duration: 1 }}
-        whileInView={{ opacity: 1 }}
-        className="squares"
-      >
-        <motion.div initial={{opacity:0}} whileInView={{opacity:1}} transition={{duration:1}} >
-          <span>1k+</span>
-          <p>Patients Beds</p>
-        </motion.div>
-        <motion.div initial={{opacity:0}} whileInView={{opacity:1}} transition={{duration:1}} >
-          <span>20k+</span>
-          <p>Happy Patients</p>
-        </motion.div>
-        <motion.div initial={{opacity:0}} whileInView={{opacity:1}} transition={{duration:1}} >
-          <span>700</span>
-          <p>Doctors & Nurse</p>
-        </motion.div>
-        <motion.div initial={{opacity:0}} whileInView={{opacity:1}} transition={{duration:1}} >
-          <span>15</span>
-          <p>Year Experience</p>
-        </motion.div>
-      </motion.div>
+      <SmallInfo />
     </motion.div>
   );
 };

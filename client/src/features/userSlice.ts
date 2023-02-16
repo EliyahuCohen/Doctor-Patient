@@ -7,8 +7,14 @@ export interface UserType {
 }
 
 const initialState: UserType = {
-  token: JSON.parse(localStorage.getItem("user")!).token||null,
-  user: JSON.parse(localStorage.getItem("user")!).user||null,
+  token:
+    (JSON.parse(localStorage.getItem("user")!) &&
+      JSON.parse(localStorage.getItem("user")!).token) ||
+    null,
+  user:
+    (JSON.parse(localStorage.getItem("user")!) &&
+      JSON.parse(localStorage.getItem("user")!).user) ||
+    null,
 };
 
 const userSlice = createSlice({

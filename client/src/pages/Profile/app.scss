@@ -1,0 +1,64 @@
+.profileWrapper {
+  .innerWrraper {
+    max-width: 500px;
+  }
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 1rem;
+  span.checkMark {
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    padding: 2em;
+    background: #10a37f;
+    border-radius: 100vh;
+    margin-bottom: 1rem;
+  }
+  .headline {
+    text-transform: uppercase;
+    font-size: 2em;
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    p {
+      display: flex;
+      align-items: center;
+      margin-top: 2rem;
+      &:first-child {
+        font-weight: bold;
+        padding: 0 1rem 0 0;
+      }
+    }
+  }
+  .fitEmoji {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2em;
+    width: 2em;
+    font-size: 2rem;
+    margin-right: 2rem;
+  }
+}
+.approveBtn {
+  width: fit-content;
+  padding: 1rem 3rem;
+  border: 2px solid #fff;
+  border-radius: 100vh;
+  &:hover {
+    background: #fff;
+    color: #10a37f;
+    border-color: #10a37f;
+  }
+}
+.reject {
+  background: red;
+  &:hover {
+    border-color: red;
+    color: red;
+  }
+}

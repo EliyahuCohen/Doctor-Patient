@@ -1,15 +1,28 @@
-import { useSelector } from "react-redux";
-import { UserType } from "../../features/userSlice";
-import "./app.scss";
-// ✔
-const ProfilePage = () => {
-  const { user } = useSelector(
-    (state: { userSlice: UserType }) => state.userSlice
-  );
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useGetOneUser } from "../../hooks/useGetOneUser";
+import { User } from "../../types/type";
+
+const OneProfile = () => {
+  const { id } = useParams();
+  const [user, setUser] = useState<User | null>(null);
+  const { getUser } = useGetOneUser(id!, setUser);
+  useEffect(() => {
+    if (id) {
+      getUser();
+    }
+  }, []);
+  if (!user) {
+    return (
+      <div>
+        <h1>Loading...</h1>
+      </div>
+    );
+  }
   return (
     <div className="profileWrapper">
       <div className="innerWrraper">
-        <p className="headline">Personal information </p>
+        <p className="headline">User information </p>
         <div className="row">
           <p>
             <span className="fitEmoji">🖋️</span>Full Name:
@@ -36,14 +49,12 @@ const ProfilePage = () => {
           </p>
           <p>{user?.email}</p>
         </div>
-        {user?.role != 0 && (
-          <div className="row">
-            <p>
-              <span className="fitEmoji">✔️ </span>Status:
-            </p>
-            <p>{user?.approved ? "Approved" : "Pending"}</p>
-          </div>
-        )}
+        <div className="row">
+          <p>
+            <span className="fitEmoji">✔️ </span>Status:
+          </p>
+          <p>{user?.approved ? "Approved" : "Pending"}</p>
+        </div>
         <div className="row">
           <p>
             <span className="fitEmoji">
@@ -64,8 +75,19 @@ const ProfilePage = () => {
           </div>
         ) : null}
       </div>
+      {!user.approved ? (
+        <div>
+          <span className="fitEmoji"></span>
+          <button className="approveBtn">Approve</button>
+        </div>
+      ) : (
+        <div>
+          <span className="fitEmoji"></span>
+          <button className="approveBtn reject">Reject</button>
+        </div>
+      )}
     </div>
   );
 };
 
-export default ProfilePage;
+export default OneProfile;

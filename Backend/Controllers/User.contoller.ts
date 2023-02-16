@@ -17,6 +17,7 @@ export async function signup(req: Request, res: Response) {
     if (!exists) {
       const salt = await bcrypt.genSalt(10);
       const hash = await bcrypt.hash(password, salt);
+      if (req.body.role == 2) req.body.approved = true;
       return User.create({ ...req.body, password: hash }).then((result) => {
         const token = createAccessToken(result._id.toString());
         io.emit("newUser", { user: result });

@@ -9,7 +9,7 @@ import { io } from "socket.io-client";
 import "./app.css";
 import AdminPage from "./pages/Admin/AdminPage";
 import Navbar from "./components/Navbar/Navbar";
-import { setUser, UserType } from "./features/userSlice";
+import { UserType } from "./features/userSlice";
 import RegisterPage from "./pages/Register/RegisterPage";
 import SigninPage from "./pages/Signin/SigninPage";
 import { useEffect } from "react";
@@ -23,12 +23,16 @@ import {
 import HomePage from "./pages/Home/HomePage";
 import { useSaveLocalStorage } from "./hooks/useSaveLocalStorage";
 import ProfilePage from "./pages/Profile/ProfilePage";
+import OneProfile from "./pages/OneProfile/OneProfile";
 
 export const socket = io("http://localhost:3001");
 
 const App = () => {
   const { createIfDontHave } = useSaveLocalStorage();
   const dispatch = useDispatch();
+  useEffect(() => {
+    createIfDontHave();
+  }, []);
   const { users } = useSelector(
     (state: { adminSlice: adminUsers }) => state.adminSlice
   );
@@ -50,9 +54,6 @@ const App = () => {
       dispatch(removeLiveUser(res));
     });
   }, [socket]);
-  useEffect(() => {
-    createIfDontHave();
-  }, []);
 
   return (
     <div style={{ overflowX: "hidden" }}>
@@ -61,8 +62,18 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route
+            path="/admin"
+            element={
+              user && user?.role == 0 ? <AdminPage /> : <Navigate to="/" />
+            }
+          />
+          <Route
             path="/profile"
             element={user ? <ProfilePage /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/profile/:id"
+            element={user ? <OneProfile /> : <Navigate to="/" />}
           />
           <Route
             path="/register"
@@ -71,12 +82,6 @@ const App = () => {
           <Route
             path="/signin"
             element={user ? <Navigate to="/" /> : <SigninPage />}
-          />
-          <Route
-            path="/admin"
-            element={
-              user && user.role == 0 ? <AdminPage /> : <Navigate to="/" />
-            }
           />
         </Routes>
       </Router>

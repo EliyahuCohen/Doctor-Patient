@@ -28,16 +28,18 @@ div.OurTeamWrapper {
       grid-template-columns: 1fr;
     }
     div.oneDoctor {
+      opacity: 1 !important;
       padding: 0.3rem;
       padding-top: 1rem;
       width: 100% !important;
       position: relative;
       border-radius: 1rem;
       margin: 0 auto;
-      transition: 0.3s;
+      transition: 1.5s;
       &:hover {
-        transition: 0.3s;
-        box-shadow: 0 0 50px #10a37f;
+        transition: 1.5s;
+        opacity: 0.8 !important;
+        box-shadow: 0 0 100px #10a37f;
       }
     }
     img {

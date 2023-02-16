@@ -9,10 +9,10 @@ import { io } from "socket.io-client";
 import "./app.css";
 import AdminPage from "./pages/Admin/AdminPage";
 import Navbar from "./components/Navbar/Navbar";
-import { UserType } from "./features/userSlice";
+import { setUser, UserType } from "./features/userSlice";
 import RegisterPage from "./pages/Register/RegisterPage";
 import SigninPage from "./pages/Signin/SigninPage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { User } from "./types/type";
 import {
   adminUsers,
@@ -30,16 +30,16 @@ export const socket = io("http://localhost:3001");
 const App = () => {
   const { createIfDontHave } = useSaveLocalStorage();
   const dispatch = useDispatch();
-  useEffect(() => {
-    createIfDontHave();
-  }, []);
+
   const { users } = useSelector(
     (state: { adminSlice: adminUsers }) => state.adminSlice
   );
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
-
+  useEffect(()=>{
+    createIfDontHave();
+  },[])
   useEffect(() => {
     socket.on("userLoggedIn", (sock: User) => {
       dispatch(updateStateLive(sock));
@@ -64,24 +64,28 @@ const App = () => {
           <Route
             path="/admin"
             element={
-              user && user?.role == 0 ? <AdminPage /> : <Navigate to="/" />
+              user != null && user?.role == 0 ? (
+                <AdminPage />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
           <Route
             path="/profile"
-            element={user ? <ProfilePage /> : <Navigate to="/" />}
+            element={user != null ? <ProfilePage /> : <Navigate to="/" />}
           />
           <Route
             path="/profile/:id"
-            element={user ? <OneProfile /> : <Navigate to="/" />}
+            element={user != null ? <OneProfile /> : <Navigate to="/" />}
           />
           <Route
             path="/register"
-            element={user ? <Navigate to="/" /> : <RegisterPage />}
+            element={user != null ? <Navigate to="/" /> : <RegisterPage />}
           />
           <Route
             path="/signin"
-            element={user ? <Navigate to="/" /> : <SigninPage />}
+            element={user != null ? <Navigate to="/" /> : <SigninPage />}
           />
         </Routes>
       </Router>

@@ -37,9 +37,9 @@ const App = () => {
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
-  useEffect(()=>{
+  useEffect(() => {
     createIfDontHave();
-  },[])
+  }, []);
   useEffect(() => {
     socket.on("userLoggedIn", (sock: User) => {
       dispatch(updateStateLive(sock));
@@ -77,7 +77,13 @@ const App = () => {
           />
           <Route
             path="/profile/:id"
-            element={user != null ? <OneProfile /> : <Navigate to="/" />}
+            element={
+              user != null && user.role == 0 ? (
+                <OneProfile />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
           />
           <Route
             path="/register"

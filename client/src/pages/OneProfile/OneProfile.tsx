@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { adminUsers } from "../../features/adminSlice";
+import { UserType } from "../../features/userSlice";
 import { useGetOneUser } from "../../hooks/useGetOneUser";
 import { User } from "../../types/type";
 
@@ -7,6 +10,7 @@ const OneProfile = () => {
   const { id } = useParams();
   const [user, setUser] = useState<User | null>(null);
   const { getUser } = useGetOneUser(id!, setUser);
+
   useEffect(() => {
     if (id) {
       getUser();

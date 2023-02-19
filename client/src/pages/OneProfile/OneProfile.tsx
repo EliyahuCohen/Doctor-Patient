@@ -3,17 +3,32 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetOneUser } from "../../hooks/useGetOneUser";
 import { User } from "../../types/type";
+import { useGetDoctorsAndPatients } from "../../hooks/useGetDoctorsAndPatients";
+import AdminUserLine from "../../components/AdminUserLine/AdminUserLine";
 
 const OneProfile = () => {
   const { id } = useParams();
   const [user, setUser] = useState<User | null>(null);
+  const [userDoctors, setUserDoctors] = useState<User[]>([]);
+  const [userPatients, setPatients] = useState<User[]>([]);
+  const [tabNum, setTabNum] = useState<number>(0);
   const { getUser } = useGetOneUser(id!, setUser);
+  const { getInfo } = useGetDoctorsAndPatients(
+    setUserDoctors,
+    setPatients,
+    user
+  );
 
   useEffect(() => {
     if (id) {
       getUser();
     }
   }, []);
+  useEffect(() => {
+    if (user != null) {
+      getInfo();
+    }
+  }, [user != null]);
   if (!user) {
     return (
       <div>
@@ -26,7 +41,6 @@ const OneProfile = () => {
       <div className="profileWrapper">
         <span className="line"></span>
       </div>
-
       <div className="profileWrapper">
         <p className="image">{user.role == 1 ? "👨‍⚕️" : "😷"}</p>
         <div className="leftProfile">
@@ -95,6 +109,28 @@ const OneProfile = () => {
           </div>
         ) : (
           <button>Approve</button>
+        )}
+      </div>
+      <div className="tabsSection">
+        <div className="tabs">
+          <p onClick={() => setTabNum(0)}>My Doctors</p>
+          {user.role == 1 ? (
+            <p onClick={() => setTabNum(1)}>My Patients</p>
+          ) : null}
+        </div>
+        {tabNum == 0 && (
+          <div>
+            {userDoctors.map((doc) => {
+              return <AdminUserLine key={doc._id} user={doc} />;
+            })}
+          </div>
+        )}
+        {tabNum == 1 && (
+          <div>
+            {userPatients.map((pat) => {
+              return <AdminUserLine key={pat._id} user={pat} />;
+            })}
+          </div>
         )}
       </div>
     </div>

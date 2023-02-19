@@ -21,9 +21,18 @@
     height: 5em;
     font-size: 3rem;
     width: 5em;
+    border-radius: 100vh;
+    border-bottom: 1px solid #229f97;
+
+    @media screen and (max-width: 1000px) {
+      margin-bottom: 2rem;
+      border-radius: 0;
+      width: 100%;
+    }
   }
   .leftProfile {
     padding: 0 2em;
+    margin-left: 2rem;
 
     h2 {
       margin-bottom: 2em;
@@ -76,6 +85,29 @@
     background: red;
     &:hover {
       color: red;
+    }
+  }
+}
+.tabsSection{
+  padding: 1rem;
+  max-width: 1700px;
+  margin: 0 auto;
+  .tabs{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    p{
+      transition: 0.3s;
+      padding-right: 1rem;
+      cursor: pointer;
+      padding-top: 1rem;
+      position: relative;
+      &:not(:first-child){
+        margin-right: 1rem;
+      }&:hover{
+        transition: 0.3s;
+        color: #229f97;
+      }
     }
   }
 }

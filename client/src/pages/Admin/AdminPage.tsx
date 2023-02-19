@@ -21,7 +21,7 @@ const AdminPage = () => {
   useEffect(() => {
     getUsers();
   }, []);
-  if (users.length == 0) return <div>Loadinfg</div>;
+  if (users.length == 0) return <div>Loading...</div>;
   else
     return (
       <div className="admin">

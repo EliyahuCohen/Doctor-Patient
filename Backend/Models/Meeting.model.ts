@@ -2,6 +2,7 @@ import mongoose, { Schema, Types } from "mongoose";
 
 const { ObjectId } = mongoose.Types;
 export interface Meet {
+  title: String;
   time: Date;
   doctorID: typeof ObjectId;
   patientID: typeof ObjectId;
@@ -9,6 +10,10 @@ export interface Meet {
 
 const meetingSchema: Schema = new mongoose.Schema<Meet>(
   {
+    title: {
+      type: String,
+      required: true,
+    },
     time: {
       type: Date,
       required: true,

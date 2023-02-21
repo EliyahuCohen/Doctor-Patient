@@ -89,6 +89,29 @@ export async function updateRole(req: Request, res: Response) {
     return res.status(202).json({ message: "User was updated" });
   });
 }
+export async function getUserDoctorsAndPatients(req: Request, res: Response) {
+  const { USER_ID } = req.body;
+  if (!isValidObjectId(USER_ID))
+    return res.status(400).json({ message: "Not valid object id" });
+  const user = await User.findById(USER_ID);
+  if (!user) return res.status(404).json({ message: "No Such user" });
+  const patientsArray: any = [];
+  const doctorsArray: any = [];
+
+  for (let i = 0; i < user.listOfDoctors.length; i++) {
+    const temp = await User.findById(user.listOfDoctors[i]);
+    if (temp) {
+      doctorsArray.push(temp);
+    }
+  }
+  for (let i = 0; i < user.listOfPatients.length; i++) {
+    const temp = await User.findById(user.listOfPatients[i]);
+    if (temp) {
+      patientsArray.push(temp);
+    }
+  }
+  res.status(200).json({ doctorsArray, patientsArray });
+}
 export async function login(req: Request, res: Response) {
   const { email, password } = req.body;
   if (!email || !password)

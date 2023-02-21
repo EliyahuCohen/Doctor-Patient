@@ -9,10 +9,10 @@ import { io } from "socket.io-client";
 import "./app.css";
 import AdminPage from "./pages/Admin/AdminPage";
 import Navbar from "./components/Navbar/Navbar";
-import { setUser, UserType } from "./features/userSlice";
+import { UserType } from "./features/userSlice";
 import RegisterPage from "./pages/Register/RegisterPage";
 import SigninPage from "./pages/Signin/SigninPage";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { User } from "./types/type";
 import {
   adminUsers,
@@ -24,6 +24,7 @@ import HomePage from "./pages/Home/HomePage";
 import { useSaveLocalStorage } from "./hooks/useSaveLocalStorage";
 import ProfilePage from "./pages/Profile/ProfilePage";
 import OneProfile from "./pages/OneProfile/OneProfile";
+import UserDashboardPage from "./pages/UserDashboard/UserDashboardPage";
 
 export const socket = io("http://localhost:3001");
 
@@ -77,13 +78,7 @@ const App = () => {
           />
           <Route
             path="/profile/:id"
-            element={
-              user != null && user.role == 0 ? (
-                <OneProfile />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
+            element={user != null ? <OneProfile /> : <Navigate to="/" />}
           />
           <Route
             path="/register"
@@ -92,6 +87,10 @@ const App = () => {
           <Route
             path="/signin"
             element={user != null ? <Navigate to="/" /> : <SigninPage />}
+          />
+          <Route
+            path="/dashboard"
+            element={user != null ? <UserDashboardPage /> : <Navigate to="/" />}
           />
         </Routes>
       </Router>

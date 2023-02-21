@@ -7,6 +7,7 @@ import {
   deleteUser,
   login,
   updateRole,
+  getUserDoctorsAndPatients,
 } from "../Controllers/User.contoller";
 import { requiredAuthentication } from "../Middlewares/RequireAuth";
 
@@ -16,6 +17,7 @@ router.post("/signup", signup);
 router.post("/login", login);
 router.use(requiredAuthentication);
 router.get("/all", getAllUsers);
+router.get("/users", getUserDoctorsAndPatients);
 router.get("/one/:id", findOneUser);
 router.delete("/delete/:id", deleteUser);
 router.patch("/update/:id", updateUser);

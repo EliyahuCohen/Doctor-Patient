@@ -113,10 +113,8 @@ const OneProfile = () => {
       </div>
       <div className="tabsSection">
         <div className="tabs">
-          <p onClick={() => setTabNum(0)}>My Doctors</p>
-          {user.role == 1 ? (
-            <p onClick={() => setTabNum(1)}>My Patients</p>
-          ) : null}
+          <p onClick={() => setTabNum(0)}>Doctors</p>
+          {user.role == 1 ? <p onClick={() => setTabNum(1)}>Patients</p> : null}
         </div>
         {tabNum == 0 && (
           <div>

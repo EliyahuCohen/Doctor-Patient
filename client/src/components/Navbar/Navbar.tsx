@@ -19,7 +19,9 @@ const Navbar = () => {
       <div className="navbar">
         <div className="leftNav">
           <NavLink to="/">
-            <h1>🔥 Eden</h1>
+            <h1 className="fire">
+              🔥 <span>Eden</span>
+            </h1>
           </NavLink>
         </div>
         <div className="navLinks">
@@ -35,14 +37,26 @@ const Navbar = () => {
           ) : (
             <div className="flex">
               {user.role == 0 ? (
-                <NavLink className="link" to="/admin">
-                  Dashboard
-                </NavLink>
-              ) : null}
-              <NavLink className="link" to="/profile">
-                Profile
-              </NavLink>
-              <p className="specialLink">{user.fName}</p>
+                <>
+                  <NavLink className="link" to="/admin">
+                    Dashboard
+                  </NavLink>
+                  <NavLink className="link" to="/profile">
+                    Profile
+                  </NavLink>
+                  <p className="specialLink">{user.fName}</p>
+                </>
+              ) : (
+                <>
+                  <NavLink className="link" to="/dashboard">
+                    Dashboard
+                  </NavLink>
+                  <NavLink className="link" to="/profile">
+                    Profile
+                  </NavLink>
+                  <p className="specialLink">{user.fName}</p>
+                </>
+              )}
             </div>
           )}
           {user ? (
@@ -52,7 +66,7 @@ const Navbar = () => {
               onClick={() => {
                 localStorage.setItem("user", JSON.stringify(null));
                 dispatch(logout());
-                socket.emit("userLoggedOut")
+                socket.emit("userLoggedOut");
               }}
             >
               👋

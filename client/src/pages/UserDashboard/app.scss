@@ -45,6 +45,10 @@
   text-align: center;
   padding: 2rem;
 
+  @media screen and (max-width: 1000px) {
+    grid-template-columns: 1fr;
+  }
+
   p {
     transition: 0.3s;
     width: 80%;
@@ -88,6 +92,7 @@ a {
   color: #fff;
 }
 .userLine {
+  transition: 0.3s;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
@@ -97,6 +102,24 @@ a {
   border-radius: 1rem;
   margin: 1rem 0;
   cursor: pointer;
+
+  &:hover {
+    transition: 0.3s;
+    box-shadow: 0 1px 3px #10a37f;
+  }
+
+  @media screen and (max-width: 550px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .first {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+  }
 
   .first {
     display: flex;

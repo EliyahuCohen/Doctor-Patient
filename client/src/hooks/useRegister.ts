@@ -12,7 +12,7 @@ export function useRegister(
   const dispatch = useDispatch();
   async function registerFunc() {
     return await axios
-      .post("http://localhost:3001/users/signup", prop)
+      .post("http://localhost:3002/users/signup", prop)
       .then((res) => {
         setError("");
         socket.emit("newUser", res.data.user._id);

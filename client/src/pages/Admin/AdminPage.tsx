@@ -21,7 +21,12 @@ const AdminPage = () => {
   useEffect(() => {
     getUsers();
   }, []);
-  if (users.length == 0) return <div>Loading...</div>;
+  if (users.length == 0)
+    return (
+      <div>
+        <h1 className="centerText">No Information</h1>
+      </div>
+    );
   else
     return (
       <div className="admin">

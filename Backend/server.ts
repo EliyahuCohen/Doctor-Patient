@@ -14,7 +14,6 @@ export interface user {
 
 export let usersID: user[] = [];
 
-
 //setting and setups
 mongoose.set("strictQuery", true);
 const app: Application = express();
@@ -23,11 +22,12 @@ export const io = new Server(server, { cors: { origin: "*" } });
 
 io.on("connection", (socket) => {
   socket.on("userConnected", (data: any) => {
+    console.log(data);
     if (data._id && socket) {
       if (data.role !== 0) {
         usersID.push({ userId: data._id, socketId: socket.id });
       }
-      io.emit("userLoggedIn", data);``
+      io.emit("userLoggedIn", data);
     }
   });
   socket.on("newUser", (id) => {

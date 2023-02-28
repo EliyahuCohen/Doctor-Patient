@@ -10,7 +10,7 @@ const HomePage = () => {
         <motion.div
           className="first"
           initial={{ opacity: 0, y: -200 }}
-          transition={{ duration: 2 }}
+          transition={{ duration: 1 }}
           whileInView={{ opacity: 1, y: 0 }}
         >
           <h1>
@@ -25,7 +25,7 @@ const HomePage = () => {
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 200 }}
-          transition={{ duration: 2 }}
+          transition={{ duration: 1 }}
           whileInView={{ opacity: 1, y: 0 }}
         >
           <motion.img src={image} alt="image of doctors" />

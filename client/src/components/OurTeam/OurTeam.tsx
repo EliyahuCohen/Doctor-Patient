@@ -11,7 +11,7 @@ const OurTeam = () => {
     <motion.div
       initial={{ y: -200, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 0.5 }}
       className="OurTeamWrapper"
     >
       <div>
@@ -21,7 +21,7 @@ const OurTeam = () => {
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
           whileInView={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
           <img src={Image1} alt="" />
@@ -33,7 +33,7 @@ const OurTeam = () => {
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
           whileInView={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
           <img src={Image2} alt="" />
@@ -45,7 +45,7 @@ const OurTeam = () => {
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
           whileInView={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
           <img src={Image3} alt="" />
@@ -57,7 +57,7 @@ const OurTeam = () => {
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
           whileInView={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
           <img src={Image5} alt="" />
@@ -69,7 +69,7 @@ const OurTeam = () => {
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
           whileInView={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
           <img src={Image6} alt="" />
@@ -81,7 +81,7 @@ const OurTeam = () => {
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
           whileInView={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
           <img src={Image4} alt="" />

@@ -17,7 +17,7 @@ export function useGetOneUser(
       },
     });
     instance
-      .get(`http://localhost:3001/users/one/${id}`)
+      .get(`http://localhost:3002/users/one/${id}`)
       .then((res) => {
         setUser(res.data);
       })

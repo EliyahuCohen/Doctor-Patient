@@ -25,8 +25,9 @@ import { useSaveLocalStorage } from "./hooks/useSaveLocalStorage";
 import ProfilePage from "./pages/Profile/ProfilePage";
 import OneProfile from "./pages/OneProfile/OneProfile";
 import UserDashboardPage from "./pages/UserDashboard/UserDashboardPage";
+import Communication from "./pages/CommunicationPage/Communication";
 
-export const socket = io("http://localhost:3001");
+export const socket = io("http://localhost:3002");
 
 const App = () => {
   const { createIfDontHave } = useSaveLocalStorage();
@@ -45,7 +46,6 @@ const App = () => {
     socket.on("userLoggedIn", (sock: User) => {
       dispatch(updateStateLive(sock));
     });
-
     if (user?.role == 0) {
       dispatch(updateLiveUsers());
     }
@@ -91,6 +91,10 @@ const App = () => {
           <Route
             path="/dashboard"
             element={user != null ? <UserDashboardPage /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/communication/:id"
+            element={user != null ? <Communication /> : <Navigate to="/" />}
           />
         </Routes>
       </Router>

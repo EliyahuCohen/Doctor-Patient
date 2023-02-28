@@ -15,7 +15,7 @@ export function useLogin(
   const dispatch = useDispatch();
   async function loginFunc() {
     return await axios
-      .post("http://localhost:3001/users/login", prop)
+      .post("http://localhost:3002/users/login", prop)
       .then((res) => {
         setMyError(() => "");
         dispatch(setUser(res.data));

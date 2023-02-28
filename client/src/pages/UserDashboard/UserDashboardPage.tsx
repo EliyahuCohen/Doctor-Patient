@@ -41,7 +41,7 @@ const UserDashboardPage = () => {
         {user?.role == 1 || user?.role == 2
           ? doctors.map((doc) => {
               return (
-                <Link to={`/profile/${doc._id}`}>
+                <Link key={doc._id} to={`/communication/${doc._id}`}>
                   <div className="userLine" key={doc._id}>
                     <div className="first">
                       <span>👨‍⚕️</span>
@@ -64,12 +64,12 @@ const UserDashboardPage = () => {
             })
           : null}
         {user?.role == 1 && patients.length == 0 && (
-          <h3 className="systemMessage">No Doctors Yet</h3>
+          <h3 className="systemMessage">No Patients Yet</h3>
         )}
         {user?.role == 1
           ? patients.map((doc) => {
               return (
-                <Link to={`/profile/${doc._id}`}>
+                <Link key={doc._id} to={`/communication/${doc._id}`}>
                   <div className="userLine" key={doc._id}>
                     <div className="first">
                       <span>👨‍⚕️</span>

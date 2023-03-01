@@ -3,3 +3,29 @@
   margin: 0 auto;
   padding: 1rem;
 }
+.sendingMessage {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  display: flex;
+  max-width: 750px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  input {
+    width: 100%;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid lightgray;
+    padding-top: 2rem;
+    font-size: inherit;
+  }
+  button {
+    background: none;
+    height: 100%;
+    width: 50px;
+    font-size: 2em;
+  }
+}

@@ -2,6 +2,63 @@
   max-width: 1700px;
   margin: 0 auto;
   padding: 1rem;
+  h1 {
+    text-align: center;
+  }
+}
+.left {
+  width: 100%;
+  margin-bottom: 1rem;
+  background: #0d978d;
+  width: fit-content;
+  max-width: 300px;
+  padding: 1em;
+  border-radius: 5px;
+  border-bottom-left-radius: 0;
+  color: #fff;
+  word-wrap: break-word;
+}
+.right {
+  width: fit-content;
+  color: #111;
+  background: #ffffff;
+  padding: 1em;
+  max-width: 300px;
+  border: 1px solid lightgray;
+  margin-bottom: 1rem;
+  word-wrap: break-word;
+  border-radius: 5px;
+  border-bottom-right-radius: 0;
+}
+.messageList {
+  margin: 0 auto;
+  max-width: 750px;
+  max-height: 70vh;
+  min-height: 550px;
+  overflow-y: scroll;
+  display: flex;
+  width: 100%;
+  div {
+    width: 100%;
+    p.right {
+      margin: 0 1rem auto auto;
+      margin-top: 1rem;
+      span {
+        text-align: right;
+      }
+    }
+    p.left {
+      margin-top: 1rem;
+    }
+    span {
+      display: block;
+      font-size: 0.6em;
+      background: transparent;
+    }
+  }
+}
+::-webkit-scrollbar {
+  width: 0;
 }
 .sendingMessage {
   position: fixed;

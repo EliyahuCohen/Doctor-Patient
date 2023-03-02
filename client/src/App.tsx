@@ -46,6 +46,10 @@ const App = () => {
     socket.on("userLoggedIn", (sock: User) => {
       dispatch(updateStateLive(sock));
     });
+    socket.on("messageSent", (sock: any) => {
+      // console.log(sock);
+      //here we will trigger a new message alert pop up
+    });
     if (user?.role == 0) {
       dispatch(updateLiveUsers());
     }
@@ -93,7 +97,7 @@ const App = () => {
             element={user != null ? <UserDashboardPage /> : <Navigate to="/" />}
           />
           <Route
-            path="/communication/:id"
+            path="/communication/:userid"
             element={user != null ? <Communication /> : <Navigate to="/" />}
           />
         </Routes>

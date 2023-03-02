@@ -1,8 +1,7 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { UserType } from "../features/userSlice";
-import { User } from "../types/type";
 import { useDispatch } from "react-redux";
 import {
   setAdminUsers,
@@ -11,7 +10,7 @@ import {
   updateLiveUsers,
 } from "../features/adminSlice";
 export function useGetAdminUsers() {
-  const { user, token } = useSelector(
+  const { token } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
   const dispatch = useDispatch();

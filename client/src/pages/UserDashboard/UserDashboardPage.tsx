@@ -1,18 +1,31 @@
 import "./app.scss";
 import Image from "../../assets/service.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { User } from "../../types/type";
 import { useGetUserDoctorPatients } from "../../hooks/useGetUserDoctorPatients";
 import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
 import AdminUserLine from "../../components/AdminUserLine/AdminUserLine";
 import { Link } from "react-router-dom";
+
+export enum stage {
+  ALL,
+  DOCTORS,
+  PATIENTS,
+}
+
 const UserDashboardPage = () => {
   const { token, user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
   const [doctors, setDoctors] = useState<User[]>([]);
   const [patients, setPatients] = useState<User[]>([]);
+  const [show, setShow] = useState<number>(stage.ALL);
+
+  useEffect(() => {
+    console.log(show);
+  }, [show]);
+
   const a = useGetUserDoctorPatients(setDoctors, setPatients, token);
   return (
     <div className="dashboardWrapper">
@@ -29,68 +42,93 @@ const UserDashboardPage = () => {
         <img src={Image} alt="" />
       </div>
       <div className="sections">
+        <p onClick={() => setShow(stage.ALL)}>
+          All <span>({doctors.length + patients.length})</span>
+        </p>
         {user?.role == 2 || user?.role == 1 ? (
-          <p>My Doctors({doctors.length})</p>
+          <p onClick={() => setShow(stage.DOCTORS)}>
+            My Doctors <span>({doctors.length})</span>
+          </p>
         ) : null}
-        {user?.role == 1 ? <p>My Patients({patients.length})</p> : null}
+        {user?.role == 1 ? (
+          <p onClick={() => setShow(stage.PATIENTS)}>
+            My Patients <span>({patients.length})</span>
+          </p>
+        ) : null}
       </div>
       <div className="list">
         {doctors.length == 0 && (
           <h3 className="systemMessage">No Doctors Yet</h3>
         )}
-        {user?.role == 1 || user?.role == 2
-          ? doctors.map((doc) => {
-              return (
-                <Link key={doc._id} to={`/communication/${doc._id}`}>
-                  <div className="userLine" key={doc._id}>
-                    <div className="first">
-                      <span>👨‍⚕️</span>
-                      <div>
-                        <strong>
-                          {doc.fName} {doc.lName}
-                        </strong>
-                        <p>{doc.location}</p>
+        {(show == 0 || show == 1) && (
+          <div style={{ padding: "1rem" }}>
+            {user?.role == 1 || user?.role == 2
+              ? doctors.map((doc) => {
+                  return (
+                    <Link key={doc._id} to={`/communication/${doc._id}`}>
+                      <div className="userLine" key={doc._id}>
+                        <div className="first">
+                          <span>👨‍⚕️</span>
+                          <div>
+                            <strong>
+                              {doc.fName} {doc.lName}
+                            </strong>
+                            <p>{doc.location}</p>
+                          </div>
+                        </div>
+                        <div>
+                          <p className="gender specialityColor">
+                            {doc.speciality}
+                          </p>
+                        </div>
+                        <div>
+                          <p>{doc.email}</p>
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      <p>{doc.speciality}</p>
-                    </div>
-                    <div>
-                      <p>{doc.email}</p>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })
-          : null}
+                    </Link>
+                  );
+                })
+              : null}
+          </div>
+        )}
         {user?.role == 1 && patients.length == 0 && (
           <h3 className="systemMessage">No Patients Yet</h3>
         )}
-        {user?.role == 1
-          ? patients.map((doc) => {
-              return (
-                <Link key={doc._id} to={`/communication/${doc._id}`}>
-                  <div className="userLine" key={doc._id}>
-                    <div className="first">
-                      <span>👨‍⚕️</span>
-                      <div>
-                        <strong>
-                          {doc.fName} {doc.lName}
-                        </strong>
-                        <p>{doc.location}</p>
+        {(show == 0 || show == 2) && (
+          <div style={{ padding: "1rem" }}>
+            {user?.role == 1
+              ? patients.map((doc) => {
+                  return (
+                    <Link key={doc._id} to={`/communication/${doc._id}`}>
+                      <div className="userLine" key={doc._id}>
+                        <div className="first">
+                          <span>👨‍⚕️</span>
+                          <div>
+                            <strong>
+                              {doc.fName} {doc.lName}
+                            </strong>
+                            <p>{doc.location}</p>
+                          </div>
+                        </div>
+                        <div>
+                          <p
+                            className={`gender ${
+                              doc.isMale ? "male" : "female"
+                            }`}
+                          >
+                            {doc.isMale ? "Male" : "Female"}
+                          </p>
+                        </div>
+                        <div>
+                          <p>{doc.email}</p>
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      <p className="gender">{doc.isMale ? "Male" : "Female"}</p>
-                    </div>
-                    <div>
-                      <p>{doc.email}</p>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })
-          : null}
+                    </Link>
+                  );
+                })
+              : null}
+          </div>
+        )}
       </div>
     </div>
   );

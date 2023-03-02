@@ -4,11 +4,12 @@ import dotenv from "dotenv";
 import mongoose, { ObjectId } from "mongoose";
 import userRouter from "./Routes/User.route";
 import meetRouter from "./Routes/Meet.route";
+import messagesRouter from "./Routes/Conversation.route";
 import http from "http";
 import { Server } from "socket.io";
 dotenv.config();
 export interface user {
-  userId: ObjectId;
+  userId: mongoose.Types.ObjectId;
   socketId: string;
 }
 
@@ -22,7 +23,6 @@ export const io = new Server(server, { cors: { origin: "*" } });
 
 io.on("connection", (socket) => {
   socket.on("userConnected", (data: any) => {
-    console.log(data);
     if (data._id && socket) {
       if (data.role !== 0) {
         usersID.push({ userId: data._id, socketId: socket.id });
@@ -52,6 +52,7 @@ app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use("/users", userRouter);
 app.use("/meeting", meetRouter);
+app.use("/messages", messagesRouter);
 
 mongoose
   .connect(process.env.MONGO_URI || "")

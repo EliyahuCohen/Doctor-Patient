@@ -2,7 +2,8 @@ import Conversation from "../Models/Conversation.model";
 import { Request, Response } from "express";
 import { IConversation } from "../Models/Conversation.model";
 import mongoose from "mongoose";
-import { io, user, usersID } from "../server";
+import { io } from "../server";
+import { usersID } from "../server";
 
 interface Req {
   USER_ID: mongoose.Types.ObjectId;

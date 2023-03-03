@@ -12,7 +12,7 @@ import Navbar from "./components/Navbar/Navbar";
 import { UserType } from "./features/userSlice";
 import RegisterPage from "./pages/Register/RegisterPage";
 import SigninPage from "./pages/Signin/SigninPage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { User } from "./types/type";
 import {
   adminUsers,
@@ -26,10 +26,12 @@ import ProfilePage from "./pages/Profile/ProfilePage";
 import OneProfile from "./pages/OneProfile/OneProfile";
 import UserDashboardPage from "./pages/UserDashboard/UserDashboardPage";
 import Communication from "./pages/CommunicationPage/Communication";
+import Message from "./components/Message/Message";
 
 export const socket = io("http://localhost:3002");
 
 const App = () => {
+  const [show, setShow] = useState(false);
   const { createIfDontHave } = useSaveLocalStorage();
   const dispatch = useDispatch();
 
@@ -47,8 +49,10 @@ const App = () => {
       dispatch(updateStateLive(sock));
     });
     socket.on("messageSent", (sock: any) => {
-      // console.log(sock);
-      //here we will trigger a new message alert pop up
+      setShow(true);
+      setTimeout(() => {
+        setShow(false);
+      }, 3000);
     });
     if (user?.role == 0) {
       dispatch(updateLiveUsers());
@@ -63,7 +67,10 @@ const App = () => {
   return (
     <div style={{ overflowX: "hidden" }}>
       <Router>
-        <Navbar />
+        <>
+          <Navbar />
+          {show ? <Message /> : null}
+        </>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route

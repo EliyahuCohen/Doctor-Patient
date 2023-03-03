@@ -20,14 +20,22 @@ mongoose.set("strictQuery", true);
 const app: Application = express();
 const server = http.createServer(app);
 export const io = new Server(server, { cors: { origin: "*" } });
+let admin: user | null = null;
 
 io.on("connection", (socket) => {
   socket.on("userConnected", (data: any) => {
     if (data._id && socket) {
       if (data.role !== 0) {
         usersID.push({ userId: data._id, socketId: socket.id });
+      } else {
+        admin = {
+          userId: data._id,
+          socketId: socket.id,
+        };
       }
-      io.emit("userLoggedIn", data);
+      if (admin) {
+        io.to(admin.socketId).emit("userLoggedIn", data);
+      }
     }
   });
   socket.on("newUser", (id) => {
@@ -36,15 +44,15 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     let selected = usersID.filter((one) => one.socketId == socket.id)[0];
     usersID = usersID.filter((one) => one.socketId !== socket.id);
-    if (selected) {
-      io.emit("updateAdmin", selected.userId);
+    if (selected && admin) {
+      io.to(admin.socketId).emit("updateAdmin", selected.userId);
     }
   });
   socket.on("userLoggedOut", () => {
     let selected = usersID.filter((one) => one.socketId == socket.id)[0];
     usersID = usersID.filter((one) => one.socketId !== socket.id);
-    if (selected) {
-      io.emit("updateAdmin", selected.userId);
+    if (selected && admin) {
+      io.to(admin.socketId).emit("updateAdmin", selected.userId);
     }
   });
 });

@@ -4,6 +4,7 @@ import { IConversation } from "../Models/Conversation.model";
 import mongoose from "mongoose";
 import { io } from "../server";
 import { usersID } from "../server";
+import UserModel from "../Models/User.model";
 
 interface Req {
   USER_ID: mongoose.Types.ObjectId;
@@ -49,10 +50,14 @@ export async function PostNewMessage(req: Request, res: Response) {
   await conversation.save();
   const specificUser = usersID.filter((one) => one.userId == personId)[0];
   if (specificUser) {
+    let senderName = await UserModel.findById(USER_ID).then(
+      (res) => res?.fName + " " + res?.lName!
+    );
     io.to(specificUser.socketId).emit("messageSent", {
       sender: USER_ID,
       message,
       createdAt: date,
+      senderName: senderName,
     });
   }
   return res.status(201).json({ sender: USER_ID, message, createdAt: date });

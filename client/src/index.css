@@ -3,3 +3,21 @@
 * {
   font-family: "Poppins";
 }
+.success {
+  padding: 0.3em;
+  border-radius: 0.2em;
+  background: #19bb8545;
+  color: #19bb86;
+}
+.delete {
+  padding: 0.3em;
+  border-radius: 0.2em;
+  background: #f55b5b3e;
+  color: #f55b5b;
+}
+.system {
+  padding: 0.3em;
+  border-radius: 0.2em;
+  background: #4396e942;
+  color: #4396e9;
+}

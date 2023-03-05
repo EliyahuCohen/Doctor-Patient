@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import formatDistance from "date-fns/esm/formatDistance";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import { useParams } from "react-router-dom";
 import { useMessages } from "../../hooks/useMessages";
 import "./app.scss";
@@ -37,8 +38,11 @@ const Communication = () => {
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
-    sendNewMessage(inputRef.current!.value, userid!);
-    inputRef.current!.value = "";
+    if (inputRef.current?.value.length! >= 1) {
+      sendNewMessage(inputRef.current!.value, userid!);
+      inputRef.current!.value = "";
+    } else {
+    }
   }
   return (
     <div className="communication">
@@ -61,7 +65,9 @@ const Communication = () => {
       </div>
       <form className="sendingMessage" action="">
         <input ref={inputRef} type="text" placeholder={`Write a message...`} />
-        <button onClick={(e) => handleClick(e)}>✉️</button>
+        <button onClick={(e) => handleClick(e)}>
+          <EmailOutlinedIcon fontSize="large" style={{ color: "#333" }} />
+        </button>
       </form>
     </div>
   );

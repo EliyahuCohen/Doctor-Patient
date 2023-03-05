@@ -10,6 +10,7 @@ export interface User {
   meetingAmount: number;
   listOfDoctors: Types.ObjectId[];
   listOfPatients: Types.ObjectId[];
+  messages: string[];
   speciality: string;
   mettings: Types.ObjectId[];
   location: string;
@@ -42,6 +43,11 @@ const userSchema: Schema = new mongoose.Schema<User>(
       type: [Types.ObjectId],
       default: [],
       required: false,
+    },
+    messages: {
+      type: [String],
+      required: false,
+      default: [],
     },
   },
   { timestamps: true }

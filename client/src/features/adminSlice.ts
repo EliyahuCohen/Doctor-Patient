@@ -51,7 +51,6 @@ const adminSlice = createSlice({
       state.users.push(action.payload.user);
       state.users[state.users.length - 1].live = true;
       state.liveUsers.push(action.payload.user._id);
-      console.log("success");
     },
     removeLiveUser: (state: adminUsers, action) => {
       for (let i = 0; i < state.users.length; i++) {

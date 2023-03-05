@@ -1,0 +1,9 @@
+export { default as HomePage } from "./Home/HomePage";
+export { default as AdminPage } from "./Admin/AdminPage";
+export { default as ProfilePage } from "./Profile/ProfilePage";
+export { default as OneProfile } from "./OneProfile/OneProfile";
+export { default as RegisterPage } from "./Register/RegisterPage";
+export { default as SigninPage } from "./Signin/SigninPage";
+export { default as UserDashboardPage } from "./UserDashboard/UserDashboardPage";
+export { default as Communication } from "./CommunicationPage/Communication";
+export { default as SystemMessagesPage } from "./SystemMessages/SystemMessagesPage";

@@ -2,7 +2,6 @@ import "./app.scss";
 import { motion } from "framer-motion";
 import image from "../../assets/about.jpg";
 import SmallInfo from "../SmallInfo/SmallInfo";
-import OurTeam from "../OurTeam/OurTeam";
 const About = () => {
   return (
     <motion.div id="about" className="howWrapper">

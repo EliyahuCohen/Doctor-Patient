@@ -13,7 +13,7 @@ import { UserType } from "./features/userSlice";
 import RegisterPage from "./pages/Register/RegisterPage";
 import SigninPage from "./pages/Signin/SigninPage";
 import { useEffect, useState } from "react";
-import { User } from "./types/type";
+import { IMessage, User } from "./types/type";
 import {
   adminUsers,
   updateLiveUsers,
@@ -32,6 +32,11 @@ export const socket = io("http://localhost:3002");
 
 const App = () => {
   const [show, setShow] = useState(false);
+  const [message, setMessage] = useState<IMessage>({
+    message: "",
+    sender: "",
+    type: "MESSAGE",
+  });
   const { createIfDontHave } = useSaveLocalStorage();
   const dispatch = useDispatch();
 
@@ -49,10 +54,17 @@ const App = () => {
       dispatch(updateStateLive(sock));
     });
     socket.on("messageSent", (sock: any) => {
-      setShow(true);
-      setTimeout(() => {
-        setShow(false);
-      }, 3000);
+      if (!window.location.pathname.includes("communication")) {
+        setMessage({
+          message: sock.message,
+          sender: sock.senderName,
+          type: "MESSAGE",
+        });
+        setShow(true);
+        setTimeout(() => {
+          setShow(false);
+        }, 3000);
+      }
     });
     if (user?.role == 0) {
       dispatch(updateLiveUsers());
@@ -69,7 +81,7 @@ const App = () => {
       <Router>
         <>
           <Navbar />
-          {show ? <Message /> : null}
+          {show ? <Message {...message} /> : null}
         </>
         <Routes>
           <Route path="/" element={<HomePage />} />

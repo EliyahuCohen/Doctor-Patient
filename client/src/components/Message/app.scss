@@ -1,9 +1,22 @@
 div.message {
-  padding: 1rem 3rem;
   border-radius: 5px;
-  border: 1px solid gray;
+  padding: 0.5rem;
   width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  p {
+    color: gray;
+    font-size: smaller;
+  }
+  div {
+    padding-left: 1rem;
+  }
+  @media screen and (max-width: 1700px) {
+    margin-left: 1rem;
+  }
 }
+
 .messageWrraper {
   max-width: 1700px;
   margin: 0 auto;

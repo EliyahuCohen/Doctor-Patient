@@ -30,3 +30,8 @@ export interface User {
   live: boolean;
   createdAt: string;
 }
+export interface IMessage {
+  sender: string;
+  message: string;
+  type: "MESSAGE" | "SYSTEM" | "DELETE";
+}

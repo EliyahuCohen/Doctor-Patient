@@ -1,11 +1,10 @@
 import "./app.scss";
 import Image from "../../assets/service.png";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { User } from "../../types/type";
 import { useGetUserDoctorPatients } from "../../hooks/useGetUserDoctorPatients";
 import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
-import AdminUserLine from "../../components/AdminUserLine/AdminUserLine";
 import { Link } from "react-router-dom";
 
 export enum stage {
@@ -21,10 +20,6 @@ const UserDashboardPage = () => {
   const [doctors, setDoctors] = useState<User[]>([]);
   const [patients, setPatients] = useState<User[]>([]);
   const [show, setShow] = useState<number>(stage.ALL);
-
-  useEffect(() => {
-    console.log(show);
-  }, [show]);
 
   const a = useGetUserDoctorPatients(setDoctors, setPatients, token);
   return (

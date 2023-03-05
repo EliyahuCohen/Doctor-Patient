@@ -1,4 +1,3 @@
-import React from "react";
 import { Register, User } from "../types/type";
 
 export function moveFoword(

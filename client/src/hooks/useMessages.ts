@@ -14,13 +14,13 @@ export function useMessages(
     },
   });
   function getConversation(personId: string) {
-    instance.get(`http://localhost:3002/messages/${personId}`).then((res) => {
+    instance.get(`http://localhost:3001/messages/${personId}`).then((res) => {
       setMessages(res.data.messages);
     });
   }
   function sendNewMessage(message: string, personId: string) {
     instance
-      .post("http://localhost:3002/messages/message", { message, personId })
+      .post("http://localhost:3001/messages/message", { message, personId })
       .then((res) => {
         const date = new Date();
         setMessages((prev) => [...prev, res.data]);

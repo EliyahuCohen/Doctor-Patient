@@ -12,7 +12,7 @@ export function useGetUserDoctorPatients(
         Authorization: `Bearer ${token}`,
       },
     });
-    instance.get("http://localhost:3002/users/users").then((res) => {
+    instance.get("http://localhost:3001/users/users").then((res) => {
       setDoctors(res.data.doctorsArray);
       setPatients(res.data.patientsArray);
     });

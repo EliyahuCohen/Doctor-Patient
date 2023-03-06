@@ -4,6 +4,7 @@ export interface IMessage {
   sender: mongoose.Types.ObjectId;
   message: string;
   createdAt: Date;
+  read: number;
 }
 
 export interface IConversation {

@@ -2,7 +2,64 @@
   max-width: 1700px;
   padding: 1rem;
   margin: 0 auto;
+  select {
+    @media screen and (max-width: 750px) {
+      width: 100%;
+    }
+    padding: 0.3rem 1rem;
+    outline: none;
+    cursor: pointer;
+    option {
+      &:nth-child(1) {
+        background: #fff;
+      }
+      &:nth-child(2) {
+        background: #4bb543;
+      }
+      &:nth-child(3) {
+        background: #ffcc0083;
+      }
+      &:nth-child(4) {
+        background: red;
+      }
+    }
+  }
   h1 {
+    font-size: 1.3em;
     font-weight: 500;
+    text-align: center;
+    width: fit-content;
+    margin: 0 auto;
+  }
+  .systemAlert {
+    * {
+      background: transparent;
+    }
+    margin-top: 1rem;
+    &:first-child {
+      margin-top: 2rem;
+    }
+    padding: 1rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    background: #ffcc0083;
+
+    strong {
+      background: transparent;
+      margin-left: 1rem;
+    }
+    .iconAlert {
+      background: transparent;
+      color: #fff;
+    }
+  }
+  .good {
+    color: #fff;
+    background: #4bb543;
+  }
+  .bad {
+    color: #fff;
+    background: #ff4d4d;
   }
 }

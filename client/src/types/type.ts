@@ -29,9 +29,15 @@ export interface User {
   meetings: string[];
   live: boolean;
   createdAt: string;
+  messages: IAlert[];
 }
 export interface IMessage {
   sender: string;
   message: string;
   type: "MESSAGE" | "SYSTEM" | "DELETE";
+}
+
+export interface IAlert {
+  message: string;
+  type: 1 | 2 | 3;
 }

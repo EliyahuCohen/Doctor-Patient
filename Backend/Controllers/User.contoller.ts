@@ -5,6 +5,7 @@ import { Request, Response } from "express";
 import { isValidObjectId } from "mongoose";
 import { io } from "../server";
 import { usersID } from "../server";
+import { IMessage } from "../Models/Conversation.model";
 
 export async function signup(req: Request, res: Response) {
   const { fName, lName, password, email, location, isMale } = req.body;
@@ -21,7 +22,21 @@ export async function signup(req: Request, res: Response) {
       return User.create({
         ...req.body,
         password: hash,
-        messages: ["Thank you for using Eden for you'r health care provider "],
+        messages: [
+          {
+            message: "Thank you for using Eden for you'r health care provider ",
+            type: 1,
+          },
+          {
+            message: "Please change you'r password we might have a date loop ",
+            type: 2,
+          },
+          {
+            message:
+              "you have 7 days to make the payment or you wont be able to use the servcie ",
+            type: 3,
+          },
+        ],
       }).then((result) => {
         const token = createAccessToken(result._id.toString());
         io.emit("newUser", { user: result });
@@ -92,6 +107,16 @@ export async function updateRole(req: Request, res: Response) {
   ).then(() => {
     return res.status(202).json({ message: "User was updated" });
   });
+}
+export async function getSystemMessages(req: Request, res: Response) {
+  const { USER_ID } = req.body;
+  if (!isValidObjectId(USER_ID))
+    return res.status(400).json({ message: "Not valid object id" });
+  const messages = await User.findOne(
+    { _id: USER_ID },
+    { messages: 1, _id: 0 }
+  );
+  res.status(200).json(messages?.messages);
 }
 export async function getUserDoctorsAndPatients(req: Request, res: Response) {
   const { USER_ID } = req.body;

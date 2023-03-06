@@ -27,8 +27,9 @@ import OneProfile from "./pages/OneProfile/OneProfile";
 import UserDashboardPage from "./pages/UserDashboard/UserDashboardPage";
 import Communication from "./pages/CommunicationPage/Communication";
 import Message from "./components/Message/Message";
+import { SystemMessagesPage } from "./pages";
 
-export const socket = io("http://localhost:3002");
+export const socket = io("http://localhost:3001");
 
 const App = () => {
   const [show, setShow] = useState(false);
@@ -118,6 +119,12 @@ const App = () => {
           <Route
             path="/communication/:userid"
             element={user != null ? <Communication /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/system-messages"
+            element={
+              user != null ? <SystemMessagesPage /> : <Navigate to="/" />
+            }
           />
         </Routes>
       </Router>

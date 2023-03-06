@@ -1,5 +1,10 @@
 import mongoose, { Schema, Types } from "mongoose";
 
+export interface ISystemMessage {
+  message: string;
+  type: 1 | 2 | 3;
+}
+
 export interface User {
   fName: string;
   lName: string;
@@ -10,7 +15,7 @@ export interface User {
   meetingAmount: number;
   listOfDoctors: Types.ObjectId[];
   listOfPatients: Types.ObjectId[];
-  messages: string[];
+  messages: ISystemMessage[];
   speciality: string;
   mettings: Types.ObjectId[];
   location: string;
@@ -45,7 +50,7 @@ const userSchema: Schema = new mongoose.Schema<User>(
       required: false,
     },
     messages: {
-      type: [String],
+      type: [Object],
       required: false,
       default: [],
     },

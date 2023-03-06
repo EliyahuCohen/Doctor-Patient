@@ -46,7 +46,12 @@ export async function PostNewMessage(req: Request, res: Response) {
     return res.status(404).json({ message: "There is no such conversation" });
   }
   const date = new Date();
-  conversation.messages.push({ sender: USER_ID, message, createdAt: date });
+  conversation.messages.push({
+    sender: USER_ID,
+    message,
+    createdAt: date,
+    read: 0,
+  });
   await conversation.save();
   const specificUser = usersID.filter((one) => one.userId == personId)[0];
   if (specificUser) {
@@ -58,6 +63,7 @@ export async function PostNewMessage(req: Request, res: Response) {
       message,
       createdAt: date,
       senderName: senderName,
+      read: 0,
     });
   }
   return res.status(201).json({ sender: USER_ID, message, createdAt: date });

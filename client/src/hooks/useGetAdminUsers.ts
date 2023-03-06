@@ -21,7 +21,7 @@ export function useGetAdminUsers() {
       },
     });
     instance
-      .get("http://localhost:3002/users/all")
+      .get("http://localhost:3001/users/all")
       .then((res) => {
         dispatch(setAdminUsers(res.data.users));
         dispatch(setLiveUsersObject(res.data.usersId));

@@ -7,6 +7,7 @@ import {
   deleteUser,
   login,
   updateRole,
+  getSystemMessages,
   getUserDoctorsAndPatients,
 } from "../Controllers/User.contoller";
 import { requiredAuthentication } from "../Middlewares/RequireAuth";
@@ -19,6 +20,7 @@ router.use(requiredAuthentication);
 router.get("/all", getAllUsers);
 router.get("/users", getUserDoctorsAndPatients);
 router.get("/one/:id", findOneUser);
+router.get("/getMessages", getSystemMessages);
 router.delete("/delete/:id", deleteUser);
 router.patch("/update/:id", updateUser);
 router.patch("/updateRole/:id", updateRole);

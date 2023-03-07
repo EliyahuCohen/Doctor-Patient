@@ -38,25 +38,36 @@ const UserDashboardPage = () => {
       </div>
       <div className="sections">
         <p onClick={() => setShow(stage.ALL)}>
+          {show == 0 && <span className="indicator"></span>}
           All <span>({doctors.length + patients.length})</span>
         </p>
         {user?.role == 2 || user?.role == 1 ? (
           <p onClick={() => setShow(stage.DOCTORS)}>
+            {show == 1 && <span className="indicator"></span>}
             My Doctors <span>({doctors.length})</span>
           </p>
         ) : null}
         {user?.role == 1 ? (
           <p onClick={() => setShow(stage.PATIENTS)}>
+            {show == 2 && <span className="indicator"></span>}
             My Patients <span>({patients.length})</span>
           </p>
         ) : null}
       </div>
       <div className="list">
-        {doctors.length == 0 && (
-          <h3 className="systemMessage">No Doctors Yet</h3>
-        )}
         {(show == 0 || show == 1) && (
           <div style={{ padding: "1rem" }}>
+            {show != 0
+              ? doctors.length == 0 && (
+                  <h3 className="systemMessage">No Doctors Yet</h3>
+                )
+              : null}
+            {show != 0
+              ? doctors.length == 0 &&
+                patients.length == 0 && (
+                  <h3 className="systemMessage">No Patients nor Doctors</h3>
+                )
+              : null}
             {user?.role == 1 || user?.role == 2
               ? doctors.map((doc) => {
                   return (
@@ -86,11 +97,12 @@ const UserDashboardPage = () => {
               : null}
           </div>
         )}
-        {user?.role == 1 && patients.length == 0 && (
-          <h3 className="systemMessage">No Patients Yet</h3>
-        )}
+
         {(show == 0 || show == 2) && (
           <div style={{ padding: "1rem" }}>
+            {user?.role == 1 && patients.length == 0 && (
+              <h3 className="systemMessage">No Patients Yet</h3>
+            )}
             {user?.role == 1
               ? patients.map((doc) => {
                   return (

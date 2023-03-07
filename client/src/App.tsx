@@ -28,21 +28,19 @@ import UserDashboardPage from "./pages/UserDashboard/UserDashboardPage";
 import Communication from "./pages/CommunicationPage/Communication";
 import Message from "./components/Message/Message";
 import { SystemMessagesPage } from "./pages";
+import { messagesType, newMessage } from "./features/messagesSlice";
 
 export const socket = io("http://localhost:3001");
 
 const App = () => {
-  const [show, setShow] = useState(false);
-  const [message, setMessage] = useState<IMessage>({
-    message: "",
-    sender: "",
-    type: "MESSAGE",
-  });
   const { createIfDontHave } = useSaveLocalStorage();
   const dispatch = useDispatch();
 
   const { users } = useSelector(
     (state: { adminSlice: adminUsers }) => state.adminSlice
+  );
+  const { messages } = useSelector(
+    (state: { messagesSlice: messagesType }) => state.messagesSlice
   );
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
@@ -54,19 +52,6 @@ const App = () => {
     socket.on("userLoggedIn", (sock: User) => {
       dispatch(updateStateLive(sock));
     });
-    socket.on("messageSent", (sock: any) => {
-      if (!window.location.pathname.includes("communication")) {
-        setMessage({
-          message: sock.message,
-          sender: sock.senderName,
-          type: "MESSAGE",
-        });
-        setShow(true);
-        setTimeout(() => {
-          setShow(false);
-        }, 3000);
-      }
-    });
     if (user?.role == 0) {
       dispatch(updateLiveUsers());
     }
@@ -75,6 +60,19 @@ const App = () => {
     socket.on("updateAdmin", (res) => {
       dispatch(removeLiveUser(res));
     });
+    socket.on("messageSent", (sock: any) => {
+      if (!window.location.pathname.includes("communication")) {
+        dispatch(
+          newMessage({
+            id: crypto.randomUUID(),
+            message: sock.message,
+            senderName: sock.senderName,
+            type: "MESSAGE",
+            time: 2000,
+          })
+        );
+      }
+    });
   }, [socket]);
 
   return (
@@ -82,7 +80,9 @@ const App = () => {
       <Router>
         <>
           <Navbar />
-          {show ? <Message {...message} /> : null}
+          {messages.map((message: IMessage) => {
+            return <Message key={message.id} {...message} />;
+          })}
         </>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -98,7 +98,13 @@ const App = () => {
           />
           <Route
             path="/profile"
-            element={user != null ? <ProfilePage /> : <Navigate to="/" />}
+            element={
+              user != null && user.approved ? (
+                <ProfilePage />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
           />
           <Route
             path="/profile/:id"
@@ -114,16 +120,32 @@ const App = () => {
           />
           <Route
             path="/dashboard"
-            element={user != null ? <UserDashboardPage /> : <Navigate to="/" />}
+            element={
+              user != null && user.approved ? (
+                <UserDashboardPage />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
           />
           <Route
             path="/communication/:userid"
-            element={user != null ? <Communication /> : <Navigate to="/" />}
+            element={
+              user != null && user.approved ? (
+                <Communication />
+              ) : (
+                <Navigate to="/not-allowed" />
+              )
+            }
           />
           <Route
             path="/system-messages"
             element={
-              user != null ? <SystemMessagesPage /> : <Navigate to="/" />
+              user != null && user.role != 0 ? (
+                <SystemMessagesPage />
+              ) : (
+                <Navigate to="/" />
+              )
             }
           />
         </Routes>

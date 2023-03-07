@@ -37,19 +37,19 @@ const Navbar = () => {
             </>
           ) : (
             <div className="flex">
-              <NavLink to="system-messages" title="system messages">
-                <EmailOutlinedIcon style={{ marginTop: "7px" }} />
-              </NavLink>
+              {user.role != 0 ? (
+                <NavLink to="system-messages" title="system messages">
+                  <EmailOutlinedIcon style={{ marginTop: "7px" }} />
+                </NavLink>
+              ) : null}
               {user.role == 0 ? (
                 <>
                   <NavLink className="link" to="/admin" title="Dashboard page">
                     Dashboard
                   </NavLink>
                   <NavLink className="link" to="/profile" title="Profile page">
-                    Profile
+                    <p className="specialLink">{user.fName}</p>
                   </NavLink>
-
-                  <p className="specialLink">{user.fName}</p>
                 </>
               ) : (
                 <>
@@ -61,12 +61,10 @@ const Navbar = () => {
                     Dashboard
                   </NavLink>
                   <NavLink className="link" to="/profile" title="Profile page">
-                    Profile
+                    <p className="specialLink" title="Profile">
+                      {user.fName}
+                    </p>
                   </NavLink>
-
-                  <p className="specialLink" title="Username">
-                    {user.fName}
-                  </p>
                 </>
               )}
             </div>

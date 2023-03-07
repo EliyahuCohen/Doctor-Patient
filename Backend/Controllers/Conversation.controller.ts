@@ -59,11 +59,12 @@ export async function PostNewMessage(req: Request, res: Response) {
       (res) => res?.fName + " " + res?.lName!
     );
     io.to(specificUser.socketId).emit("messageSent", {
-      sender: USER_ID,
       message,
       createdAt: date,
       senderName: senderName,
-      read: 0,
+      type: "MESSAGE",
+      time: 2000,
+      senderId: USER_ID,
     });
   }
   return res.status(201).json({ sender: USER_ID, message, createdAt: date });

@@ -32,9 +32,11 @@ export interface User {
   messages: IAlert[];
 }
 export interface IMessage {
-  sender: string;
+  senderName: string;
   message: string;
+  id: string;
   type: "MESSAGE" | "SYSTEM" | "DELETE";
+  time: 2000 | 3000 | 4000 | 5000;
 }
 
 export interface IAlert {

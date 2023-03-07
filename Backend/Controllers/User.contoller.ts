@@ -5,7 +5,6 @@ import { Request, Response } from "express";
 import { isValidObjectId } from "mongoose";
 import { io } from "../server";
 import { usersID } from "../server";
-import { IMessage } from "../Models/Conversation.model";
 
 export async function signup(req: Request, res: Response) {
   const { fName, lName, password, email, location, isMale } = req.body;
@@ -24,17 +23,8 @@ export async function signup(req: Request, res: Response) {
         password: hash,
         messages: [
           {
-            message: "Thank you for using Eden for you'r health care provider ",
+            message: "Thank you choosing Eden for you'r health care provider ",
             type: 1,
-          },
-          {
-            message: "Please change you'r password we might have a date loop ",
-            type: 2,
-          },
-          {
-            message:
-              "you have 7 days to make the payment or you wont be able to use the servcie ",
-            type: 3,
           },
         ],
       }).then((result) => {
@@ -78,6 +68,11 @@ export async function updateUser(req: Request, res: Response) {
     return res.status(403).json({ message: "Not able to change the role" });
   await User.updateOne({ _id: id }, { $set: { ...req.body } });
   const user = await User.findById(id);
+  user?.messages.push({
+    type: 1,
+    message: "You updated you'r information successfuly",
+  });
+  await user?.save();
   if (!user) return res.status(404).json({ message: "No such user!" });
   return res.status(200).json(user);
 }
@@ -93,18 +88,28 @@ export async function deleteUser(req: Request, res: Response) {
 }
 export async function updateRole(req: Request, res: Response) {
   const { USER_ID } = req.body;
+  const { id } = req.params;
   if (!isValidObjectId(USER_ID))
     return res.status(400).json({ message: "Not valid object id" });
   const user = await User.findById(USER_ID);
-  if (!user) return res.status(404).json({ message: "User dose not exists" });
-  User.findByIdAndUpdate(
-    { USER_ID },
-    {
-      $set: {
-        approved: true,
-      },
-    }
-  ).then(() => {
+  if (!user || user?.role != 0)
+    return res.status(404).json({ message: "User dose not exists" });
+  const user1 = await User.findById(id);
+  if (user1) {
+    user1.messages.push({
+      type: user1.approved == true ? 3 : 1,
+      message:
+        user1.approved == true
+          ? "Sorry, you'r have been blocked by the admin"
+          : "Congratulation you've just been approved by the admin",
+    });
+    await user1.save();
+  }
+  await User.findByIdAndUpdate(id, {
+    $set: {
+      approved: !user1?.approved,
+    },
+  }).then(() => {
     return res.status(202).json({ message: "User was updated" });
   });
 }

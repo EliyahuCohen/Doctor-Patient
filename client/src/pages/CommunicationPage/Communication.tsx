@@ -24,6 +24,7 @@ const Communication = () => {
       divRef.current?.scrollHeight,
       divRef.current?.scrollHeight
     );
+    inputRef.current?.focus();
   }, [messages]);
   useEffect(() => {
     if (userid) {
@@ -32,7 +33,14 @@ const Communication = () => {
   }, []);
   useEffect(() => {
     socket.on("messageSent", (sock: any) => {
-      setMessages((prev) => [...prev, sock]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          createdAt: sock.createdAt,
+          message: sock.message,
+          sender: sock.senderId,
+        },
+      ]);
     });
   }, [socket]);
 

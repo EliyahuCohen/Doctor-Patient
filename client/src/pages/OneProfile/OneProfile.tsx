@@ -5,6 +5,7 @@ import { useGetOneUser } from "../../hooks/useGetOneUser";
 import { User } from "../../types/type";
 import { useGetDoctorsAndPatients } from "../../hooks/useGetDoctorsAndPatients";
 import AdminUserLine from "../../components/AdminUserLine/AdminUserLine";
+import { useUpdateRole } from "../../hooks/useUpdateRole";
 
 const OneProfile = () => {
   const { id } = useParams();
@@ -18,6 +19,7 @@ const OneProfile = () => {
     setPatients,
     user
   );
+  const { updateRole } = useUpdateRole(id!);
 
   useEffect(() => {
     if (id) {
@@ -31,7 +33,7 @@ const OneProfile = () => {
   }, [user != null]);
   if (!user) {
     return (
-      <div>
+      <div className="loading">
         <h1>Loading...</h1>
       </div>
     );
@@ -105,16 +107,41 @@ const OneProfile = () => {
       <div className="bottomInfo">
         {user.approved == true ? (
           <div>
-            <button className="block">Block</button>
+            <button
+              className="block"
+              onClick={(e) => {
+                updateRole(setUser);
+              }}
+            >
+              Block
+            </button>
           </div>
         ) : (
-          <button>Approve</button>
+          <button
+            onClick={(e) => {
+              updateRole(setUser);
+            }}
+          >
+            Approve
+          </button>
         )}
       </div>
       <div className="tabsSection">
         <div className="tabs">
-          <p onClick={() => setTabNum(0)}>Doctors</p>
-          {user.role == 1 ? <p onClick={() => setTabNum(1)}>Patients</p> : null}
+          <p
+            onClick={() => setTabNum(0)}
+            className={`${tabNum == 0 ? "mark" : ""}`}
+          >
+            Doctors
+          </p>
+          {user.role == 1 ? (
+            <p
+              onClick={() => setTabNum(1)}
+              className={`${tabNum == 1 ? "mark" : ""}`}
+            >
+              Patients
+            </p>
+          ) : null}
         </div>
         {tabNum == 0 && (
           <div>

@@ -43,11 +43,22 @@
   display: flex;
   justify-content: center;
   p {
+    position: relative;
     color: #10a37f;
     font-size: larger;
     padding: 1rem;
     span {
       color: #3886e6;
+    }
+    .indicator {
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 7px;
+      width: 7px;
+      border-radius: 50%;
+      background: #ea4c89;
     }
     &:hover {
       cursor: pointer;

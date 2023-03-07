@@ -70,29 +70,31 @@ const UserDashboardPage = () => {
               : null}
             {user?.role == 1 || user?.role == 2
               ? doctors.map((doc) => {
-                  return (
-                    <Link key={doc._id} to={`/communication/${doc._id}`}>
-                      <div className="userLine" key={doc._id}>
-                        <div className="first">
-                          <span>👨‍⚕️</span>
+                  if (doc.approved) {
+                    return (
+                      <Link key={doc._id} to={`/communication/${doc._id}`}>
+                        <div className="userLine" key={doc._id}>
+                          <div className="first">
+                            <span>👨‍⚕️</span>
+                            <div>
+                              <strong>
+                                {doc.fName} {doc.lName}
+                              </strong>
+                              <p>{doc.location}</p>
+                            </div>
+                          </div>
                           <div>
-                            <strong>
-                              {doc.fName} {doc.lName}
-                            </strong>
-                            <p>{doc.location}</p>
+                            <p className="gender specialityColor">
+                              {doc.speciality}
+                            </p>
+                          </div>
+                          <div>
+                            <p>{doc.email}</p>
                           </div>
                         </div>
-                        <div>
-                          <p className="gender specialityColor">
-                            {doc.speciality}
-                          </p>
-                        </div>
-                        <div>
-                          <p>{doc.email}</p>
-                        </div>
-                      </div>
-                    </Link>
-                  );
+                      </Link>
+                    );
+                  }
                 })
               : null}
           </div>
@@ -105,33 +107,35 @@ const UserDashboardPage = () => {
             )}
             {user?.role == 1
               ? patients.map((doc) => {
-                  return (
-                    <Link key={doc._id} to={`/communication/${doc._id}`}>
-                      <div className="userLine" key={doc._id}>
-                        <div className="first">
-                          <span>👨‍⚕️</span>
+                  if (doc.approved) {
+                    return (
+                      <Link key={doc._id} to={`/communication/${doc._id}`}>
+                        <div className="userLine" key={doc._id}>
+                          <div className="first">
+                            <span>👨‍⚕️</span>
+                            <div>
+                              <strong>
+                                {doc.fName} {doc.lName}
+                              </strong>
+                              <p>{doc.location}</p>
+                            </div>
+                          </div>
                           <div>
-                            <strong>
-                              {doc.fName} {doc.lName}
-                            </strong>
-                            <p>{doc.location}</p>
+                            <p
+                              className={`gender ${
+                                doc.isMale ? "male" : "female"
+                              }`}
+                            >
+                              {doc.isMale ? "Male" : "Female"}
+                            </p>
+                          </div>
+                          <div>
+                            <p>{doc.email}</p>
                           </div>
                         </div>
-                        <div>
-                          <p
-                            className={`gender ${
-                              doc.isMale ? "male" : "female"
-                            }`}
-                          >
-                            {doc.isMale ? "Male" : "Female"}
-                          </p>
-                        </div>
-                        <div>
-                          <p>{doc.email}</p>
-                        </div>
-                      </div>
-                    </Link>
-                  );
+                      </Link>
+                    );
+                  }
                 })
               : null}
           </div>

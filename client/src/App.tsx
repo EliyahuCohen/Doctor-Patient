@@ -69,6 +69,7 @@ const App = () => {
             senderName: sock.senderName,
             type: "MESSAGE",
             time: 2000,
+            senderId: crypto.randomUUID(),
           })
         );
       }
@@ -80,9 +81,13 @@ const App = () => {
       <Router>
         <>
           <Navbar />
-          {messages.map((message: IMessage) => {
-            return <Message key={message.id} {...message} />;
-          })}
+          <div className="messagesWrapper">
+            <div className="abs">
+              {messages.map((message: IMessage) => {
+                return <Message key={message.id} {...message} />;
+              })}
+            </div>
+          </div>
         </>
         <Routes>
           <Route path="/" element={<HomePage />} />

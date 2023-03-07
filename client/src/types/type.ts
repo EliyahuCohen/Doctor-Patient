@@ -32,6 +32,7 @@ export interface User {
   messages: IAlert[];
 }
 export interface IMessage {
+  senderId: string;
   senderName: string;
   message: string;
   id: string;

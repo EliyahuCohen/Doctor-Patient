@@ -31,6 +31,7 @@ const OneProfile = () => {
       getInfo();
     }
   }, [user != null]);
+
   if (!user) {
     return (
       <div className="loading">

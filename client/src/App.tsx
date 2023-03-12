@@ -30,7 +30,7 @@ import { SystemMessagesPage } from "./pages";
 import { newMessage } from "./features/messagesSlice";
 import AddDoctor from "./pages/AddDoctor/AddDoctor";
 import Messages from "./components/Messages/Messages";
-
+import routes, { RouteType } from "./Pathes";
 export const socket = io("http://localhost:3001");
 
 const App = () => {
@@ -82,79 +82,21 @@ const App = () => {
           <Messages />
         </>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route
-            path="/admin"
-            element={
-              user != null && user?.role == 0 ? (
-                <AdminPage />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              user != null && user.approved ? (
-                <ProfilePage />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-          <Route
-            path="/profile/:id"
-            element={user != null ? <OneProfile /> : <Navigate to="/" />}
-          />
-          <Route
-            path="/register"
-            element={user != null ? <Navigate to="/" /> : <RegisterPage />}
-          />
-          <Route
-            path="/signin"
-            element={user != null ? <Navigate to="/" /> : <SigninPage />}
-          />
-          <Route
-            path="/dashboard"
-            element={
-              user != null && user.approved ? (
-                <UserDashboardPage />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-          <Route
-            path="/communication/:userid"
-            element={
-              user != null && user.approved ? (
-                <Communication />
-              ) : (
-                <Navigate to="/not-allowed" />
-              )
-            }
-          />
-          <Route
-            path="/system-messages"
-            element={
-              user != null && user.role != 0 ? (
-                <SystemMessagesPage />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
-          <Route
-            path="dashboard/add-doctor"
-            element={
-              user != null && user.role != 0 ? (
-                <AddDoctor />
-              ) : (
-                <Navigate to="/" />
-              )
-            }
-          />
+          {routes.map((route: RouteType) => {
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={
+                  typeof route.element === "function" ? (
+                    <route.element user={user} />
+                  ) : (
+                    route.element
+                  )
+                }
+              />
+            );
+          })}
         </Routes>
       </Router>
     </div>

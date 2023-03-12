@@ -62,7 +62,7 @@ const AdminPage = () => {
           <p className="delete-small">Read More</p>
         </div>
         {SortArray(users, selected).map((user: User) => {
-          return <AdminUserLine key={user._id} user={user} />;
+          return <AdminUserLine status={true} key={user._id} user={user} />;
         })}
       </div>
     );

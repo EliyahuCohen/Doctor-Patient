@@ -12,8 +12,8 @@ import Navbar from "./components/Navbar/Navbar";
 import { UserType } from "./features/userSlice";
 import RegisterPage from "./pages/Register/RegisterPage";
 import SigninPage from "./pages/Signin/SigninPage";
-import { useEffect, useState } from "react";
-import { IMessage, User } from "./types/type";
+import { useEffect } from "react";
+import { User } from "./types/type";
 import {
   adminUsers,
   updateLiveUsers,
@@ -26,9 +26,10 @@ import ProfilePage from "./pages/Profile/ProfilePage";
 import OneProfile from "./pages/OneProfile/OneProfile";
 import UserDashboardPage from "./pages/UserDashboard/UserDashboardPage";
 import Communication from "./pages/CommunicationPage/Communication";
-import Message from "./components/Message/Message";
 import { SystemMessagesPage } from "./pages";
-import { messagesType, newMessage } from "./features/messagesSlice";
+import { newMessage } from "./features/messagesSlice";
+import AddDoctor from "./pages/AddDoctor/AddDoctor";
+import Messages from "./components/Messages/Messages";
 
 export const socket = io("http://localhost:3001");
 
@@ -38,9 +39,6 @@ const App = () => {
 
   const { users } = useSelector(
     (state: { adminSlice: adminUsers }) => state.adminSlice
-  );
-  const { messages } = useSelector(
-    (state: { messagesSlice: messagesType }) => state.messagesSlice
   );
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
@@ -81,13 +79,7 @@ const App = () => {
       <Router>
         <>
           <Navbar />
-          <div className="messagesWrapper">
-            <div className="abs">
-              {messages.map((message: IMessage) => {
-                return <Message key={message.id} {...message} />;
-              })}
-            </div>
-          </div>
+          <Messages />
         </>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -148,6 +140,16 @@ const App = () => {
             element={
               user != null && user.role != 0 ? (
                 <SystemMessagesPage />
+              ) : (
+                <Navigate to="/" />
+              )
+            }
+          />
+          <Route
+            path="dashboard/add-doctor"
+            element={
+              user != null && user.role != 0 ? (
+                <AddDoctor />
               ) : (
                 <Navigate to="/" />
               )

@@ -1,4 +1,5 @@
 div.message {
+  background: transparent;
   border-radius: 5px;
   padding: 0.5rem;
   width: fit-content;
@@ -10,7 +11,7 @@ div.message {
     font-size: smaller;
   }
   div {
-    padding-left: 1rem;
+    padding: 0 1rem;
   }
   @media screen and (max-width: 1700px) {
     margin-left: 1rem;
@@ -18,6 +19,7 @@ div.message {
 }
 
 .messageWrraper {
+  background: transparent;
   max-width: 1700px;
   margin: 0 auto;
 }

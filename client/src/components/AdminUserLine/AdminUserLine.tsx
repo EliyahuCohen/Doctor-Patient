@@ -2,15 +2,20 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { User } from "../../types/type";
 
-const AdminUserLine = ({ user }: { user: User }) => {
+const AdminUserLine = ({ user, status }: { user: User; status: boolean }) => {
   const navigate = useNavigate();
   return (
-    <div onClick={() => navigate(`/profile/${user._id}`)} className="user-info">
+    <div
+      onClick={() => (status ? navigate(`/profile/${user._id}`) : null)}
+      className="user-info"
+    >
       <p className="mainLine">
-        <span
-          title="is user online"
-          className={`${user.live ? "live" : ""}`}
-        ></span>
+        {status && (
+          <span
+            title="is user online"
+            className={`${user.live ? "live" : ""}`}
+          ></span>
+        )}
         {user.email}
       </p>
 

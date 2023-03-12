@@ -2,6 +2,9 @@
   padding: 1rem;
   max-width: 1700px;
   margin: 0 auto;
+  button {
+    color: #fff;
+  }
   .divs {
     @media screen and (max-width: 1200px) {
       display: flex;

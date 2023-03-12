@@ -3,6 +3,7 @@ import image from "../../assets/doctor.jpg";
 import About from "../../components/About/About";
 import { motion } from "framer-motion";
 import OurTeam from "../../components/OurTeam/OurTeam";
+import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
     <div className="bigWrapper">
@@ -21,7 +22,9 @@ const HomePage = () => {
             We provide the best consultation to you with the <br /> best doctors
             in the field
           </p>
-          <button>Make an Appoitment</button>
+          <Link to="/dashboard">
+            <button>Make an Appoitment</button>
+          </Link>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 200 }}

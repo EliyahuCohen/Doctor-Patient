@@ -9,6 +9,8 @@ import {
   updateRole,
   getSystemMessages,
   getUserDoctorsAndPatients,
+  getAllDoctors,
+  updateDoctorsList,
 } from "../Controllers/User.contoller";
 import { requiredAuthentication } from "../Middlewares/RequireAuth";
 
@@ -21,8 +23,10 @@ router.get("/all", getAllUsers);
 router.get("/users", getUserDoctorsAndPatients);
 router.get("/one/:id", findOneUser);
 router.get("/getMessages", getSystemMessages);
+router.get("/doctors", getAllDoctors);
 router.delete("/delete/:id", deleteUser);
 router.patch("/update/:id", updateUser);
 router.patch("/updateRole/:id", updateRole);
+router.patch("/updateDoctors/:id", updateDoctorsList);
 
 export default router;

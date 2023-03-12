@@ -124,3 +124,10 @@ button {
 .errorField {
   border: 2px solid crimson !important;
 }
+
+button.click {
+  width: 100% !important;
+  background: #10a37f !important;
+  padding: 1rem !important;
+  color: #fff !important;
+}

@@ -5,7 +5,6 @@ import { UserType } from "../features/userSlice";
 import { useDispatch } from "react-redux";
 import {
   setAdminUsers,
-  setLiveUsers,
   setLiveUsersObject,
   updateLiveUsers,
 } from "../features/adminSlice";

@@ -27,7 +27,12 @@
   position: relative;
 }
 .messagesWrapper .abs {
-  position: absolute;
-  top: 0;
+  background: transparent;
+  position: fixed;
+  top: 4rem;
   left: 0;
+}
+::selection {
+  color: #fff;
+  background: #0d978d;
 }

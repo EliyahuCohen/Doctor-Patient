@@ -2,9 +2,10 @@ import User from "../Models/User.model";
 import { createAccessToken, ValidateEmailAndPassword } from "../Utils/helpers";
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
-import { isValidObjectId } from "mongoose";
+import mongoose, { isValidObjectId } from "mongoose";
 import { io } from "../server";
 import { usersID } from "../server";
+import { parseArgs } from "util";
 
 export async function signup(req: Request, res: Response) {
   const { fName, lName, password, email, location, isMale } = req.body;
@@ -123,6 +124,28 @@ export async function getSystemMessages(req: Request, res: Response) {
   );
   res.status(200).json(messages?.messages);
 }
+export async function updateDoctorsList(req: Request, res: Response) {
+  const { id } = req.params;
+  const { USER_ID } = req.body;
+  if (isValidObjectId(id)) {
+    const user = await User.findById(USER_ID);
+    let me = id as any;
+    if (user?.listOfDoctors.includes(me)) {
+      user.listOfDoctors = user.listOfDoctors.filter((one) => one != me);
+    } else {
+      user?.listOfDoctors.push(me);
+    }
+    return await user?.save().then((result) => {
+      return res.status(202).json({ message: "Updated" });
+    });
+  }
+  return res.status(400).json({ message: "No Such User Id" });
+}
+export async function getAllDoctors(req: Request, res: Response) {
+  const doctors = await User.find({ role: 1, approved: true });
+  return res.status(200).json(doctors);
+}
+
 export async function getUserDoctorsAndPatients(req: Request, res: Response) {
   const { USER_ID } = req.body;
   if (!isValidObjectId(USER_ID))
@@ -133,13 +156,19 @@ export async function getUserDoctorsAndPatients(req: Request, res: Response) {
   const doctorsArray: any = [];
 
   for (let i = 0; i < user.listOfDoctors.length; i++) {
-    const temp = await User.findById(user.listOfDoctors[i]);
+    const temp = await User.findOne({
+      _id: user.listOfDoctors[i],
+      approved: true,
+    });
     if (temp) {
       doctorsArray.push(temp);
     }
   }
   for (let i = 0; i < user.listOfPatients.length; i++) {
-    const temp = await User.findById(user.listOfPatients[i]);
+    const temp = await User.findOne({
+      _id: user.listOfPatients[i],
+      approved: true,
+    });
     if (temp) {
       patientsArray.push(temp);
     }

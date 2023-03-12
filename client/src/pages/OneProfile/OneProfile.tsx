@@ -147,15 +147,21 @@ const OneProfile = () => {
         {tabNum == 0 && (
           <div>
             {userDoctors.map((doc) => {
-              return <AdminUserLine key={doc._id} user={doc} />;
+              return <AdminUserLine status={false} key={doc._id} user={doc} />;
             })}
+            {userDoctors.length == 0 && (
+              <h2 style={{ textAlign: "center" }}>No Doctors</h2>
+            )}
           </div>
         )}
         {tabNum == 1 && (
           <div>
             {userPatients.map((pat) => {
-              return <AdminUserLine key={pat._id} user={pat} />;
+              return <AdminUserLine status={false} key={pat._id} user={pat} />;
             })}
+            {userPatients.length == 0 && (
+              <h2 style={{ textAlign: "center" }}>No Patients</h2>
+            )}
           </div>
         )}
       </div>

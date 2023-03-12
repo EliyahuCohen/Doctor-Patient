@@ -40,6 +40,9 @@
   width: 100%;
   div {
     width: 100%;
+    p {
+      font-size: 1em;
+    }
     p.right {
       margin: 0 1rem auto auto;
       margin-top: 1rem;
@@ -48,6 +51,10 @@
       }
     }
     p.left {
+      &::selection {
+        background: #fff;
+        color: #0d978d;
+      }
       margin-top: 1rem;
     }
     span {

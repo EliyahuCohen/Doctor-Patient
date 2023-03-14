@@ -133,14 +133,14 @@ const OneProfile = () => {
             onClick={() => setTabNum(0)}
             className={`${tabNum == 0 ? "mark" : ""}`}
           >
-            Doctors
+            Doctors ({userDoctors.length})
           </p>
           {user.role == 1 ? (
             <p
               onClick={() => setTabNum(1)}
               className={`${tabNum == 1 ? "mark" : ""}`}
             >
-              Patients
+              Patients ({userPatients.length})
             </p>
           ) : null}
         </div>

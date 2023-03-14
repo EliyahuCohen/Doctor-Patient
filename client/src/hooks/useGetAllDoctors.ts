@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { UserType } from "../features/userSlice";
 import { User } from "../types/type";

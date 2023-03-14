@@ -1,22 +1,22 @@
 import { Register } from "../types/type";
 import axios from "axios";
 import React from "react";
-import { setUser } from "../features/userSlice";
-import { useDispatch } from "react-redux";
-import { socket } from "../App";
+import { useNavigate } from "react-router-dom";
 
 export function useRegister(
   prop: Register,
   setError: React.Dispatch<React.SetStateAction<string>>
 ) {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
   async function registerFunc() {
+    if (prop.role == 1 && prop.speciality == "") {
+      prop.speciality = "family-doctor";
+    }
     return await axios
       .post("http://localhost:3001/users/signup", prop)
       .then((res) => {
         setError("");
-        socket.emit("newUser", res.data.user._id);
-        dispatch(setUser(res.data));
+        navigate("/signin");
       })
       .catch((err) => {
         setError(err.response.data.message);

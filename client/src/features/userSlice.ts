@@ -40,7 +40,14 @@ const userSlice = createSlice({
       }
       localStorage.setItem("user", JSON.stringify(state));
     },
+    updateRole: (state: UserType, action: { payload: boolean }) => {
+      if (state.user) {
+        state.user.approved = action.payload;
+        localStorage.setItem("user", JSON.stringify(state));
+      }
+    },
   },
 });
-export const { setUser, logout, updateDoctorList } = userSlice.actions;
+export const { setUser, logout, updateDoctorList, updateRole } =
+  userSlice.actions;
 export default userSlice.reducer;

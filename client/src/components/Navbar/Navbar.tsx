@@ -6,10 +6,21 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import { logout } from "../../features/userSlice";
 import "./app.scss";
 import { socket } from "../../App";
+import { useEffect, useState } from "react";
 const Navbar = () => {
+  const [width, setWidth] = useState<number>(window.innerWidth);
+  const [open, setOpen] = useState<boolean>(false);
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
+  function check() {
+    if (window.innerWidth > 650) setOpen(false);
+    setWidth(window.innerWidth);
+  }
+  useEffect(() => {
+    const height = window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, [width]);
   const dispatch = useDispatch();
   return (
     <motion.nav
@@ -25,64 +36,186 @@ const Navbar = () => {
             </h1>
           </NavLink>
         </div>
-        <div className="navLinks">
-          {!user ? (
-            <>
-              <NavLink className="link" to="/signin" title="Login page">
-                Login
-              </NavLink>
-              <NavLink className="link" to="/register" title="Signup page">
-                Signup
-              </NavLink>
-            </>
-          ) : (
-            <div className="flex">
-              {user.role != 0 ? (
-                <NavLink to="system-messages" title="system messages">
-                  <EmailOutlinedIcon style={{ marginTop: "7px" }} />
+        {width > 650 ? (
+          <div className="navLinks">
+            {!user ? (
+              <>
+                <NavLink className="link" to="/signin" title="Login page">
+                  Login
                 </NavLink>
-              ) : null}
-              {user.role == 0 ? (
-                <>
-                  <NavLink className="link" to="/admin" title="Dashboard page">
-                    Dashboard
+                <NavLink className="link" to="/register" title="Signup page">
+                  Signup
+                </NavLink>
+              </>
+            ) : (
+              <div className="flex">
+                {user.role != 0 ? (
+                  <NavLink to="system-messages" title="system messages">
+                    <EmailOutlinedIcon style={{ marginTop: "7px" }} />
                   </NavLink>
-                  <NavLink className="link" to="/profile" title="Profile page">
-                    <p className="specialLink">{user.fName}</p>
-                  </NavLink>
-                </>
-              ) : (
-                <>
-                  <NavLink
-                    className="link"
-                    to="/dashboard"
-                    title="Dashboard page"
-                  >
-                    Dashboard
-                  </NavLink>
-                  <NavLink className="link" to="/profile" title="Profile page">
-                    <p className="specialLink" title="Profile">
-                      {user.fName}
-                    </p>
-                  </NavLink>
-                </>
-              )}
-            </div>
-          )}
-          {user ? (
-            <p
-              title="logout"
-              style={{ padding: "0 1rem", cursor: "pointer" }}
-              onClick={() => {
-                localStorage.setItem("user", JSON.stringify(null));
-                dispatch(logout());
-                socket.emit("userLoggedOut");
-              }}
+                ) : null}
+                {user.role == 0 ? (
+                  <>
+                    <NavLink
+                      className="link"
+                      to="/admin"
+                      title="Dashboard page"
+                    >
+                      Dashboard
+                    </NavLink>
+                    <NavLink
+                      className="link"
+                      to="/profile"
+                      title="Profile page"
+                    >
+                      <p className="specialLink">{user.fName}</p>
+                    </NavLink>
+                  </>
+                ) : (
+                  <>
+                    <NavLink
+                      className="link"
+                      to="/dashboard"
+                      title="Dashboard page"
+                    >
+                      Dashboard
+                    </NavLink>
+                    <NavLink
+                      className="link"
+                      to="/profile"
+                      title="Profile page"
+                    >
+                      <p className="specialLink" title="Profile">
+                        {user.fName}
+                      </p>
+                    </NavLink>
+                  </>
+                )}
+              </div>
+            )}
+            {user ? (
+              <p
+                title="logout"
+                style={{ padding: "0 1rem", cursor: "pointer" }}
+                onClick={() => {
+                  localStorage.setItem("user", JSON.stringify(null));
+                  dispatch(logout());
+                  socket.emit("userLoggedOut");
+                }}
+              >
+                👋
+              </p>
+            ) : null}
+          </div>
+        ) : (
+          <div>
+            <button
+              title="Open Side Menu"
+              onClick={() => setOpen((prev) => !prev)}
+              className="hamBtn"
             >
-              👋
-            </p>
-          ) : null}
-        </div>
+              🍔
+            </button>
+          </div>
+        )}
+        {open ? (
+          <div className="openMenu">
+            <button
+              title="Open Side Menu"
+              onClick={() => setOpen((prev) => !prev)}
+              className="hamBtn"
+            >
+              🍔
+            </button>
+            {!user ? (
+              <>
+                <NavLink
+                  onClick={() => setOpen(false)}
+                  className="link"
+                  to="/signin"
+                  title="Login page"
+                >
+                  Login
+                </NavLink>
+                <NavLink
+                  onClick={() => setOpen(false)}
+                  className="link"
+                  to="/register"
+                  title="Signup page"
+                >
+                  Signup
+                </NavLink>
+              </>
+            ) : (
+              <div className="flex">
+                {user.role != 0 ? (
+                  <NavLink
+                    onClick={() => setOpen(false)}
+                    to="system-messages"
+                    title="system messages"
+                  >
+                    <EmailOutlinedIcon style={{ marginTop: "7px" }} />
+                  </NavLink>
+                ) : null}
+                {user.role == 0 ? (
+                  <>
+                    <NavLink
+                      onClick={() => setOpen(false)}
+                      className="link"
+                      to="/admin"
+                      title="Dashboard page"
+                    >
+                      Dashboard
+                    </NavLink>
+                    <NavLink
+                      onClick={() => setOpen(false)}
+                      className="link"
+                      to="/profile"
+                      title="Profile page"
+                    >
+                      <p className="specialLink">{user.fName}</p>
+                    </NavLink>
+                  </>
+                ) : (
+                  <>
+                    <NavLink
+                      onClick={() => setOpen(false)}
+                      className="link"
+                      to="/dashboard"
+                      title="Dashboard page"
+                    >
+                      Dashboard
+                    </NavLink>
+                    <NavLink
+                      onClick={() => setOpen(false)}
+                      className="link"
+                      to="/profile"
+                      title="Profile page"
+                    >
+                      <p className="specialLink" title="Profile">
+                        {user.fName}
+                      </p>
+                    </NavLink>
+                  </>
+                )}
+              </div>
+            )}
+            {user ? (
+              <p
+                title="logout"
+                style={{ padding: "0 1rem", cursor: "pointer" }}
+                onClick={() => {
+                  localStorage.setItem("user", JSON.stringify(null));
+                  dispatch(logout());
+                  socket.emit("userLoggedOut");
+                  setOpen(false);
+                }}
+              >
+                👋
+              </p>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </motion.nav>
   );

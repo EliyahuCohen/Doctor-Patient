@@ -2,10 +2,9 @@ import User from "../Models/User.model";
 import { createAccessToken, ValidateEmailAndPassword } from "../Utils/helpers";
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
-import mongoose, { isValidObjectId } from "mongoose";
+import { isValidObjectId } from "mongoose";
 import { io } from "../server";
 import { usersID } from "../server";
-import { parseArgs } from "util";
 
 export async function signup(req: Request, res: Response) {
   const { fName, lName, password, email, location, isMale } = req.body;
@@ -105,6 +104,13 @@ export async function updateRole(req: Request, res: Response) {
           : "Congratulation you've just been approved by the admin",
     });
     await user1.save();
+    const socktid = usersID.filter((u) => u.userId == (id as Object))[0];
+    if (socktid) {
+      io.to(socktid.socketId).emit("isApprove", {
+        approve: !user1.approved,
+        message: user1.messages[user1.messages.length - 1],
+      });
+    }
   }
   await User.findByIdAndUpdate(id, {
     $set: {
@@ -129,15 +135,22 @@ export async function updateDoctorsList(req: Request, res: Response) {
   const { USER_ID } = req.body;
   if (isValidObjectId(id)) {
     const user = await User.findById(USER_ID);
+    const doctor = await User.findById(id);
     let me = id as any;
     if (user?.listOfDoctors.includes(me)) {
       user.listOfDoctors = user.listOfDoctors.filter((one) => one != me);
+      if (doctor) {
+        doctor.listOfPatients = doctor.listOfPatients.filter(
+          (pat) => pat != USER_ID
+        );
+      }
     } else {
       user?.listOfDoctors.push(me);
+      doctor?.listOfPatients.push(USER_ID);
     }
-    return await user?.save().then((result) => {
-      return res.status(202).json({ message: "Updated" });
-    });
+    await user?.save();
+    await doctor?.save();
+    return res.status(201).json({ message: "Updated" });
   }
   return res.status(400).json({ message: "No Such User Id" });
 }
@@ -145,7 +158,6 @@ export async function getAllDoctors(req: Request, res: Response) {
   const doctors = await User.find({ role: 1, approved: true });
   return res.status(200).json(doctors);
 }
-
 export async function getUserDoctorsAndPatients(req: Request, res: Response) {
   const { USER_ID } = req.body;
   if (!isValidObjectId(USER_ID))

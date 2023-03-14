@@ -115,7 +115,7 @@
   justify-content: center;
   align-content: center;
   padding: 2rem;
-  @media screen and (max-width: 1100px) {
+  @media screen and (max-width: 1200px) {
     grid-template-columns: 100%;
     .message {
       margin: auto 1rem;
@@ -149,10 +149,41 @@ a {
   border-radius: 100vh;
   color: #fff;
 }
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 1200px) {
+    flex-direction: column;
+  }
+  @media screen and (max-width: 7200px) {
+    flex-direction: row;
+  }
+  a {
+    opacity: 0.8;
+    &:hover {
+      transition: 0.3s;
+      opacity: 1;
+    }
+    &:first-child {
+      margin: 0.2em;
+      color: #3886e6;
+    }
+  }
+  a {
+    opacity: 0.8;
+    &:hover {
+      transition: 0.3s;
+      opacity: 1;
+    }
+    margin: 0.2em;
+    color: #10a37f;
+  }
+}
 .userLine {
   transition: 0.3s;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 3fr 3fr 3fr 1fr;
   justify-items: center;
   align-items: center;
   border: 1px solid #10a37f;
@@ -162,7 +193,7 @@ a {
   user-select: none;
   cursor: pointer;
 
-  @media screen and (max-width: 700px) {
+  @media screen and (max-width: 800px) {
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -22,15 +22,15 @@
   color: #4396e9;
 }
 .messagesWrapper {
+  padding: 1rem;
   max-width: 1700px;
   margin: 0 auto;
   position: relative;
 }
 .messagesWrapper .abs {
-  background: transparent;
-  position: fixed;
-  top: 4rem;
-  left: 0;
+  position: absolute;
+  top: 2rem;
+  right: 0;
 }
 ::selection {
   color: #fff;

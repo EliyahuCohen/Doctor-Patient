@@ -1,17 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { io } from "socket.io-client";
 import "./app.css";
-import AdminPage from "./pages/Admin/AdminPage";
 import Navbar from "./components/Navbar/Navbar";
 import { UserType } from "./features/userSlice";
-import RegisterPage from "./pages/Register/RegisterPage";
-import SigninPage from "./pages/Signin/SigninPage";
 import { useEffect } from "react";
 import { User } from "./types/type";
 import {
@@ -20,17 +12,12 @@ import {
   updateStateLive,
   removeLiveUser,
 } from "./features/adminSlice";
-import HomePage from "./pages/Home/HomePage";
 import { useSaveLocalStorage } from "./hooks/useSaveLocalStorage";
-import ProfilePage from "./pages/Profile/ProfilePage";
-import OneProfile from "./pages/OneProfile/OneProfile";
-import UserDashboardPage from "./pages/UserDashboard/UserDashboardPage";
-import Communication from "./pages/CommunicationPage/Communication";
-import { SystemMessagesPage } from "./pages";
 import { newMessage } from "./features/messagesSlice";
-import AddDoctor from "./pages/AddDoctor/AddDoctor";
 import Messages from "./components/Messages/Messages";
 import routes, { RouteType } from "./Pathes";
+import { updateRole } from "./features/userSlice";
+
 export const socket = io("http://localhost:3001");
 
 const App = () => {
@@ -50,6 +37,7 @@ const App = () => {
     socket.on("userLoggedIn", (sock: User) => {
       dispatch(updateStateLive(sock));
     });
+
     if (user?.role == 0) {
       dispatch(updateLiveUsers());
     }
@@ -58,6 +46,26 @@ const App = () => {
     socket.on("updateAdmin", (res) => {
       dispatch(removeLiveUser(res));
     });
+    socket.on(
+      "isApprove",
+      (sock: {
+        approve: boolean;
+        message: { message: string; type: 1 | 2 | 3 };
+      }) => {
+        const { type } = sock.message;
+        dispatch(updateRole(sock.approve));
+        dispatch(
+          newMessage({
+            id: crypto.randomUUID(),
+            message: sock.message.message,
+            senderName: "Admin",
+            type: type == 1 ? "MESSAGE" : "DELETE",
+            time: 2000,
+            senderId: crypto.randomUUID(),
+          })
+        );
+      }
+    );
     socket.on("messageSent", (sock: any) => {
       if (!window.location.pathname.includes("communication")) {
         dispatch(

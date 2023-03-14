@@ -7,6 +7,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
 import { Link } from "react-router-dom";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 export enum stage {
   ALL,
@@ -83,27 +85,39 @@ const UserDashboardPage = () => {
                 ? doctors.map((doc) => {
                     if (doc.approved) {
                       return (
-                        <Link key={doc._id} to={`/communication/${doc._id}`}>
-                          <div className="userLine" key={doc._id}>
-                            <div className="first">
-                              <span>👨‍⚕️</span>
-                              <div>
-                                <strong>
-                                  {doc.fName} {doc.lName}
-                                </strong>
-                                <p>{doc.location}</p>
-                              </div>
-                            </div>
+                        <div className="userLine" key={doc._id}>
+                          <div className="first">
+                            <span>👨‍⚕️</span>
                             <div>
-                              <p className="gender specialityColor">
-                                {doc.speciality}
-                              </p>
-                            </div>
-                            <div>
-                              <p>{doc.email}</p>
+                              <strong>
+                                {doc.fName} {doc.lName}
+                              </strong>
+                              <p>{doc.location}</p>
                             </div>
                           </div>
-                        </Link>
+                          <div>
+                            <p className="gender specialityColor">
+                              {doc.speciality}
+                            </p>
+                          </div>
+                          <div>
+                            <p>{doc.email}</p>
+                          </div>
+                          <div className="buttons">
+                            <Link to={`/booking/${doc._id}`}>
+                              <LibraryBooksIcon
+                                className="icon"
+                                fontSize="medium"
+                              />
+                            </Link>
+                            <Link to={`/communication/${doc._id}`}>
+                              <WhatsAppIcon
+                                className="icon"
+                                fontSize="medium"
+                              />
+                            </Link>
+                          </div>
+                        </div>
                       );
                     }
                   })
@@ -120,31 +134,45 @@ const UserDashboardPage = () => {
                 ? patients.map((doc) => {
                     if (doc.approved) {
                       return (
-                        <Link key={doc._id} to={`/communication/${doc._id}`}>
-                          <div className="userLine" key={doc._id}>
-                            <div className="first">
-                              <span>👨‍⚕️</span>
-                              <div>
-                                <strong>
-                                  {doc.fName} {doc.lName}
-                                </strong>
-                                <p>{doc.location}</p>
-                              </div>
-                            </div>
+                        <div className="userLine" key={doc._id}>
+                          <div className="first">
+                            <span>👨‍⚕️</span>
                             <div>
-                              <p
-                                className={`gender ${
-                                  doc.isMale ? "male" : "female"
-                                }`}
-                              >
-                                {doc.isMale ? "Male" : "Female"}
-                              </p>
-                            </div>
-                            <div>
-                              <p>{doc.email}</p>
+                              <strong>
+                                {doc.fName} {doc.lName}
+                              </strong>
+                              <p>{doc.location}</p>
                             </div>
                           </div>
-                        </Link>
+                          <div>
+                            <p
+                              className={`gender ${
+                                doc.isMale ? "male" : "female"
+                              }`}
+                            >
+                              {doc.isMale ? "Male" : "Female"}
+                            </p>
+                          </div>
+                          <div>
+                            <p>{doc.email}</p>
+                          </div>
+                          <div className="buttons">
+                            {doc.role == 0 ? (
+                              <Link to={`/booking/${doc._id}`}>
+                                <LibraryBooksIcon
+                                  className="icon"
+                                  fontSize="medium"
+                                />
+                              </Link>
+                            ) : null}
+                            <Link to={`/communication/${doc._id}`}>
+                              <WhatsAppIcon
+                                className="icon2"
+                                fontSize="medium"
+                              />
+                            </Link>
+                          </div>
+                        </div>
                       );
                     }
                   })

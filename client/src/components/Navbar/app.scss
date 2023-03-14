@@ -1,4 +1,5 @@
 nav {
+  z-index: 5000 !important;
   @media screen and (max-width: 900px) {
     .fire span {
       display: none;
@@ -87,5 +88,27 @@ nav {
     font-size: 15px;
     margin: 0 30px;
     position: relative;
+  }
+}
+.hamBtn {
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 1.5em;
+}
+.openMenu {
+  z-index: 50 !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+  .flex {
+    flex-direction: column;
+    height: 50%;
+    justify-content: space-around;
   }
 }

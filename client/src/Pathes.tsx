@@ -31,7 +31,7 @@ const routes: RouteType[] = [
   {
     path: "/profile",
     element: ({ user }: { user: User }) =>
-      user != null && user.approved ? <ProfilePage /> : <Navigate to="/" />,
+      user != null ? <ProfilePage /> : <Navigate to="/" />,
   },
   {
     path: "/profile/:id",
@@ -60,11 +60,7 @@ const routes: RouteType[] = [
   {
     path: "/communication/:userid",
     element: ({ user }: { user: User }) =>
-      user != null && user.approved ? (
-        <Communication />
-      ) : (
-        <Navigate to="/not-allowed" />
-      ),
+      user != null && user.approved ? <Communication /> : <Navigate to="/" />,
   },
   {
     path: "/system-messages",
@@ -79,6 +75,15 @@ const routes: RouteType[] = [
     path: "/dashboard/add-doctor",
     element: ({ user }: { user: User }) =>
       user != null && user.role != 0 ? <AddDoctor /> : <Navigate to="/" />,
+  },
+  {
+    path: "booking/:id",
+    element: ({ user }: { user: User }) =>
+      user != null && user.role != 0 ? (
+        <h1>This is me BOOKINGs</h1>
+      ) : (
+        <Navigate to="/" />
+      ),
   },
 ];
 

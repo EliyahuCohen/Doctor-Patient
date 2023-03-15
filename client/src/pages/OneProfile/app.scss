@@ -8,6 +8,7 @@
   }
 }
 .profileWrapper {
+  margin-top: 3rem;
   display: flex;
   align-items: center;
   @media screen and (max-width: 1000px) {
@@ -82,10 +83,11 @@
     }
   }
   .block {
-    border-color: red;
-    background: red;
+    color: #fff;
+    border-color: 	#EE4B2B;
+    background: 	#EE4B2B;
     &:hover {
-      color: red;
+      color: 	#EE4B2B;
     }
   }
 }

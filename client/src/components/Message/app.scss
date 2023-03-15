@@ -1,24 +1,22 @@
-div.message {
-  border-radius: 5px;
-  padding: 0.5rem;
-  width: fit-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  p {
-    color: gray;
-    font-size: smaller;
+.messagesWrapper {
+  position: fixed;
+  z-index: 50000;
+  bottom: 1rem;
+  left: 1rem;
+  .message{
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.3rem;
+    div{
+      margin-left: 1rem;
+    }
+    strong{
+      font-size: 0.8em;
+    }
+    p{
+      font-size: 0.5em;
+    }
   }
-  div {
-    padding: 0 1rem;
-  }
-  @media screen and (max-width: 1700px) {
-    margin-left: 1rem;
-  }
-}
-
-.messageWrraper {
-  background: transparent;
-  max-width: 1700px;
-  margin: 0 auto;
 }

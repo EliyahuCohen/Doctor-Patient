@@ -119,7 +119,7 @@ const Navbar = () => {
           </div>
         )}
         {open ? (
-          <div className="openMenu">
+          <motion.div initial={{opacity:0}} whileInView={{opacity:1}} className="openMenu">
             <button
               title="Open Side Menu"
               onClick={() => setOpen((prev) => !prev)}
@@ -214,7 +214,7 @@ const Navbar = () => {
                 👋
               </p>
             ) : null}
-          </div>
+          </motion.div>
         ) : null}
       </div>
     </motion.nav>

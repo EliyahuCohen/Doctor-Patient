@@ -85,10 +85,8 @@ const App = () => {
   return (
     <div style={{ overflowX: "hidden" }}>
       <Router>
-        <>
-          <Navbar />
-          <Messages />
-        </>
+        <Messages />
+        <Navbar />
         <Routes>
           {routes.map((route: RouteType) => {
             return (

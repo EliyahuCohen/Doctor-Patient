@@ -21,17 +21,6 @@
   background: #4396e942;
   color: #4396e9;
 }
-.messagesWrapper {
-  padding: 1rem;
-  max-width: 1700px;
-  margin: 0 auto;
-  position: relative;
-}
-.messagesWrapper .abs {
-  position: absolute;
-  top: 2rem;
-  right: 0;
-}
 ::selection {
   color: #fff;
   background: #0d978d;

@@ -36,7 +36,7 @@ export interface IMessage {
   senderName: string;
   message: string;
   id: string;
-  type: "MESSAGE" | "SYSTEM" | "DELETE" | "NIGHT" | "AFTERNOON";
+  type: "MESSAGE" | "SYSTEM" | "DELETE" |"DARK"| "NIGHT" | "AFTERNOON"|"OVERDATE";
   time: 2000 | 3000 | 4000 | 5000;
 }
 

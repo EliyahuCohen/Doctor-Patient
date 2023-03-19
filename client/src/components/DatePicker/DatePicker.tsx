@@ -103,7 +103,7 @@ const DatePicker = () => {
                       senderId: crypto.randomUUID(),
                       senderName: "System",
                       time: 4000,
-                      type: "DELETE",
+                      type: "OVERDATE",
                     })
                   );
                   return prev;
@@ -124,7 +124,7 @@ const DatePicker = () => {
                     senderId: crypto.randomUUID(),
                     senderName: "System",
                     time: 4000,
-                    type: "DELETE",
+                    type: "OVERDATE",
                   })
                 );
                 return next;

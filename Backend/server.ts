@@ -1,61 +1,24 @@
 import express, { Application } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import mongoose, { ObjectId } from "mongoose";
+import mongoose from "mongoose";
 import userRouter from "./Routes/User.route";
 import meetRouter from "./Routes/Meet.route";
 import messagesRouter from "./Routes/Conversation.route";
 import http from "http";
 import { Server } from "socket.io";
-dotenv.config();
+import { socket } from "./socket";
 export interface user {
   userId: mongoose.Types.ObjectId;
   socketId: string;
 }
 
-export let usersID: user[] = [];
-
-//setting and setups
+dotenv.config();
 mongoose.set("strictQuery", true);
 const app: Application = express();
 const server = http.createServer(app);
 export const io = new Server(server, { cors: { origin: "*" } });
-let admin: user | null = null;
 
-io.on("connection", (socket) => {
-  socket.on("userConnected", (data: any) => {
-    if (data._id && socket) {
-      if (data.role !== 0) {
-        usersID.push({ userId: data._id, socketId: socket.id });
-      } else {
-        admin = {
-          userId: data._id,
-          socketId: socket.id,
-        };
-      }
-      if (admin) {
-        io.to(admin.socketId).emit("userLoggedIn", data);
-      }
-    }
-  });
-  socket.on("newUser", (id) => {
-    usersID.push({ userId: id, socketId: socket.id });
-  });
-  socket.on("disconnect", () => {
-    let selected = usersID.filter((one) => one.socketId == socket.id)[0];
-    usersID = usersID.filter((one) => one.socketId !== socket.id);
-    if (selected && admin) {
-      io.to(admin.socketId).emit("updateAdmin", selected.userId);
-    }
-  });
-  socket.on("userLoggedOut", () => {
-    let selected = usersID.filter((one) => one.socketId == socket.id)[0];
-    usersID = usersID.filter((one) => one.socketId !== socket.id);
-    if (selected && admin) {
-      io.to(admin.socketId).emit("updateAdmin", selected.userId);
-    }
-  });
-});
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use("/users", userRouter);
@@ -66,7 +29,8 @@ mongoose
   .connect(process.env.MONGO_URI || "")
   .then(() =>
     server.listen(process.env.PORT, () => {
-      console.log(`conncted to db and running on port ${process.env.PORT}`);
+      console.log(`connected to db and running on port ${process.env.PORT}`);
+      socket(io);
     })
   )
   .catch((err) => console.log(err));

@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { IConversation } from "../Models/Conversation.model";
 import mongoose from "mongoose";
 import { io } from "../server";
-import { usersID } from "../server";
+import { usersID } from "../socket";
 import UserModel from "../Models/User.model";
 
 interface Req {

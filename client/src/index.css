@@ -21,6 +21,12 @@
   background: #4396e942;
   color: #4396e9;
 }
+.dark {
+  padding: 0.3em;
+  border-radius: 0.2em;
+  background: #4b5772;
+  color: #fff;
+}
 ::selection {
   color: #fff;
   background: #0d978d;

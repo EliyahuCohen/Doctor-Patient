@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import { isValidObjectId } from "mongoose";
 import { io } from "../server";
-import { usersID } from "../server";
+import { usersID } from "../socket";
 
 export async function signup(req: Request, res: Response) {
   const { fName, lName, password, email, location, isMale } = req.body;

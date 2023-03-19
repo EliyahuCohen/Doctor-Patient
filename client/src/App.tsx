@@ -23,7 +23,7 @@ export const socket = io("http://localhost:3001");
 const App = () => {
   const { createIfDontHave } = useSaveLocalStorage();
   const dispatch = useDispatch();
-
+  const date = new Date();
   const { users } = useSelector(
     (state: { adminSlice: adminUsers }) => state.adminSlice
   );
@@ -31,6 +31,26 @@ const App = () => {
     (state: { userSlice: UserType }) => state.userSlice
   );
   useEffect(() => {
+    dispatch(
+      newMessage({
+        id: crypto.randomUUID(),
+        message:
+          date.getHours() < 12
+            ? "Good Morning"
+            : date.getHours() >= 12 && date.getHours() <= 17
+            ? "Good Afternoon"
+            : "Good Night",
+        senderId: crypto.randomUUID(),
+        senderName: "System",
+        time: 3000,
+        type:
+          date.getHours() < 12
+            ? "MESSAGE"
+            : date.getHours() >= 12 && date.getHours() <= 17
+            ? "AFTERNOON"
+            : "NIGHT",
+      })
+    );
     createIfDontHave();
   }, []);
   useEffect(() => {

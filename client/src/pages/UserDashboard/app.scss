@@ -44,26 +44,30 @@
   display: flex;
   justify-content: center;
   p {
-    position: relative;
+    transition: 0.3s;
+    text-align: center;
+    padding: 0.3em 1rem;
+    border: 2px solid #10a37f;
+    border-radius: 100vh;
+    cursor: pointer;
     color: #10a37f;
-    font-size: larger;
-    padding: 1rem;
-    span {
-      color: #3886e6;
-    }
-    .indicator {
-      position: absolute;
-      top: 5px;
-      left: 50%;
-      transform: translateX(-50%);
-      height: 7px;
-      width: 7px;
-      border-radius: 50%;
-      background: #ea4c89;
+    &:not(:first-child) {
+      margin-left: 1rem;
     }
     &:hover {
-      cursor: pointer;
-      color: #ea4c89;
+      transition: 0.3s;
+      color: #fff;
+      background: #10a37f;
+    }
+  }
+  .selected {
+    color: #fff;
+    background: #10a37f;
+  }
+  @media screen and (max-width: 900px) {
+    flex-wrap: wrap;
+    p {
+      margin: 0.5rem auto;
     }
   }
 }
@@ -72,17 +76,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  @media screen and (max-width: 650px) {
-    flex-direction: column;
-    div {
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-      .indicator {
-        left: 50%;
-      }
-    }
-  }
   button {
     margin: 0;
     .icon {
@@ -102,13 +95,32 @@
       border: 2px solid #10a37f;
     }
   }
+  @media screen and (max-width: 900px) {
+    flex-direction: column-reverse;
+    &:first-child {
+      margin-bottom: 3rem;
+    }
+    .adding {
+      margin-bottom: 1rem;
+    }
+  }
 }
 
-.specialityColor {
-  background: #10a37f !important;
-}
 .female {
+  width: fit-content;
   background: #ea4c89 !important;
+  border-radius: 100vh;
+  padding: 0.2em 0.8em;
+  color: #fff;
+  margin: 0 auto;
+}
+.male {
+  margin: 0 auto;
+  width: fit-content;
+  background: #3886e6 !important;
+  padding: 0.2em 0.8em;
+  border-radius: 100vh;
+  color: #fff;
 }
 .list {
   display: grid;
@@ -144,83 +156,64 @@ a {
   padding: 1rem;
   text-transform: uppercase;
 }
+
 .gender {
   padding: 0.3rem 1rem;
   background: #3886e6;
   border-radius: 100vh;
   color: #fff;
 }
-.buttons {
+.userInfo {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  @media screen and (max-width: 1200px) {
-    flex-direction: column;
-  }
-  @media screen and (max-width: 7200px) {
-    flex-direction: row;
-  }
-  a {
-    opacity: 0.8;
-    &:hover {
-      transition: 0.3s;
-      opacity: 1;
+  * {
+    &:not(:first-child) {
+      padding: 0 1rem;
     }
-    &:first-child {
-      margin: 0.2em;
-      color: #3886e6;
-    }
-  }
-  a {
-    opacity: 0.8;
-    &:hover {
-      transition: 0.3s;
-      opacity: 1;
-    }
-    margin: 0.2em;
-    color: #10a37f;
   }
 }
 .userLine {
-  transition: 0.3s;
-  display: grid;
-  grid-template-columns: 3fr 3fr 3fr 1fr;
-  justify-items: center;
-  align-items: center;
-  border: 1px solid #10a37f;
+  border-bottom: 1px solid #10a37f;
   padding: 1rem;
-  border-radius: 1rem;
-  margin: 1rem 0;
-  user-select: none;
-  cursor: pointer;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 3fr 1fr;
+  justify-content: space-between;
 
-  @media screen and (max-width: 800px) {
-    display: flex;
-    flex-direction: column;
+  @media screen and (max-width: 900px) {
+    padding: 0.5rem;
+    * {
+      margin: 0 auto;
+    }
+    grid-template-columns: 1fr;
+    text-align: center;
     justify-content: center;
     align-items: center;
-    * {
-      &:not(:first-child) {
-        margin-top: 5px;
+    border: 1px solid #10a37f;
+    border-radius: 10px;
+    margin-top: 10px;
+    div {
+      &:not(.male, .female) {
+        padding: 1rem;
       }
     }
-
-    .first {
-      display: flex;
-      flex-direction: column;
-      text-align: center;
-    }
   }
-
-  .first {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    span {
-      padding: 1rem;
-    }
-    p {
-      color: gray;
-    }
+}
+.email {
+  text-decoration: underline;
+  cursor: pointer;
+  color: #3886e6;
+}
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  * {
+    margin: 5px;
   }
+}
+.lib {
+  color: #3886e6;
+}
+.what {
+  color: #10a37f;
 }

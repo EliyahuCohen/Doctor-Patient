@@ -7,6 +7,7 @@
   }
   .divs {
     @media screen and (max-width: 1200px) {
+      padding: .5em;
       display: flex;
       flex-direction: column-reverse;
 

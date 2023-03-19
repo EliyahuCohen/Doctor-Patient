@@ -1,20 +1,13 @@
 import "./app.scss";
 import Image from "../../assets/service.png";
 import { useState } from "react";
-import { User } from "../../types/type";
+import { User,stage } from "../../types/type";
 import { useGetUserDoctorPatients } from "../../hooks/useGetUserDoctorPatients";
 import AddIcon from "@mui/icons-material/Add";
 import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
 import { Link } from "react-router-dom";
-import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-
-export enum stage {
-  ALL,
-  DOCTORS,
-  PATIENTS,
-}
+import UserDashborad from "../../components/DashboardUser/UserDashborad";
 
 const UserDashboardPage = () => {
   const { token, user } = useSelector(
@@ -37,7 +30,7 @@ const UserDashboardPage = () => {
             doctors that are very reliable as you are with us
           </p>
         </div>
-        <img src={Image} alt="" />
+        <img src={Image} alt="opening screen image" />
       </div>
       <div className="sectionWrapper">
         <div className="sections">
@@ -77,31 +70,11 @@ const UserDashboardPage = () => {
           {doctors.concat(patients).map((user) => {
             if (user.role == show || show == 0)
               return (
-                <div className="userLine" key={user._id}>
-                  <div>
-                    <strong>{user.fName + " " + user.lName}</strong>
-                    <div className="userInfo">
-                      <p className="email">{user.email}</p>
-                    </div>
-                  </div>
-                  <div className={`${user.isMale ? "male" : "female"}`}>
-                    {user.isMale ? "Male" : "Female"}
-                  </div>
-                  <div className="icons">
-                    {user.role == 1 ? (
-                      <Link to={`/booking/${user._id}`}>
-                        <LibraryBooksIcon className="lib" />
-                      </Link>
-                    ) : null}
-                    <Link to={`/communication/${user._id}`}>
-                      <WhatsAppIcon className="what" />
-                    </Link>
-                  </div>
-                </div>
+                <UserDashborad key={user._id} user={user}/>
               );
           })}
         </div>
-        <p className="message">upcoming appointments</p>
+        <p className="message">Upcoming Appointments</p>
       </div>
     </div>
   );

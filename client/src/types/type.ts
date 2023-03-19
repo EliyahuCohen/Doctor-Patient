@@ -44,3 +44,8 @@ export interface IAlert {
   message: string;
   type: 1 | 2 | 3;
 }
+export enum stage {
+  ALL,
+  DOCTORS,
+  PATIENTS,
+}

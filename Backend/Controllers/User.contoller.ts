@@ -1,8 +1,8 @@
-import User from "../Models/User.model";
+import User, { ITimeSpan, Schedule } from "../Models/User.model";
 import { createAccessToken, ValidateEmailAndPassword } from "../Utils/helpers";
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
-import { isValidObjectId } from "mongoose";
+import mongoose, { isValidObjectId } from "mongoose";
 import { io } from "../server";
 import { usersID } from "../socket";
 
@@ -201,4 +201,47 @@ export async function login(req: Request, res: Response) {
     return res.status(200).json({ user: exists, token, usersId: usersID });
   }
   return res.status(400).json({ message: "Incorrect password" });
+}
+export async function postSchedual(
+  req: Request<{}, {}, { USER_ID: any; weeklySchedual: [Schedule] }>,
+  res: Response
+) {
+  const { USER_ID, weeklySchedual } = req.body;
+  if (mongoose.isValidObjectId(USER_ID)) {
+    const user = await User.findById(USER_ID);
+    if (!user)
+      return res.status(404).json({ message: "User could not be found" });
+    let ws = weeklySchedual;
+    if (weeklySchedual.length > 0) {
+      ws.sort((a, b) => {
+        return a.day - b.day;
+      });
+      //[{day:1},{day:2},{day:3}]
+      for (let i = 1; i < ws.length + 1; i++) {
+        if (ws[i - 1].day > 6 || ws[i - 1].day < 1) {
+          return res
+            .status(400)
+            .json({ message: "Work days are from sunday to tusday only!!!" });
+        }
+        if (ws[i - 1].day != i) {
+          return res
+            .status(400)
+            .json({ message: "Can't have the same days twice schedualed" });
+        }
+      }
+    }
+    if (USER_ID)
+      return res
+        .status(400)
+        .json({ message: "One of the fields is missing or inccorect" });
+    if (user.schedule.length < 7) {
+      user.schedule = ws;
+      await user.save().then(() => {
+        res.status(200).json({ schedual: user.schedule });
+      });
+    } else {
+      return res.status(400).json({ message: "Can't add more days" });
+    }
+  }
+  return res.status(400).json({ message: "Invalid user ID" });
 }

@@ -36,7 +36,14 @@ export interface IMessage {
   senderName: string;
   message: string;
   id: string;
-  type: "MESSAGE" | "SYSTEM" | "DELETE" |"DARK"| "NIGHT" | "AFTERNOON"|"OVERDATE";
+  type:
+    | "MESSAGE"
+    | "SYSTEM"
+    | "DELETE"
+    | "DARK"
+    | "NIGHT"
+    | "AFTERNOON"
+    | "OVERDATE";
   time: 2000 | 3000 | 4000 | 5000;
 }
 
@@ -48,4 +55,12 @@ export enum stage {
   ALL,
   DOCTORS,
   PATIENTS,
+}
+export interface ITimeSpan {
+  startTime: number;
+  endTime: number;
+}
+export interface Schedule {
+  day: 1 | 2 | 3 | 4 | 5 | 6;
+  times: ITimeSpan[];
 }

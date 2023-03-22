@@ -4,6 +4,15 @@ export interface ISystemMessage {
   message: string;
   type: 1 | 2 | 3;
 }
+export interface ITimeSpan {
+  startTime: number;
+  endTime: number;
+}
+
+export interface Schedule {
+  day: 1 | 2 | 3 | 4 | 5 | 6;
+  times: [ITimeSpan];
+}
 
 export interface User {
   fName: string;
@@ -17,10 +26,19 @@ export interface User {
   listOfPatients: Types.ObjectId[];
   messages: ISystemMessage[];
   speciality: string;
-  mettings: Types.ObjectId[];
+  meetings: Types.ObjectId[];
   location: string;
   isMale: boolean;
+  schedule: Schedule[];
 }
+
+const scheduleSchema: Schema = new mongoose.Schema<Schedule>(
+  {
+    day: { type: Number, required: true },
+    times: { type: [Number], required: false, default: [] },
+  },
+  { _id: false }
+);
 
 const userSchema: Schema = new mongoose.Schema<User>(
   {
@@ -44,13 +62,18 @@ const userSchema: Schema = new mongoose.Schema<User>(
       default: [],
       required: false,
     },
-    mettings: {
+    meetings: {
       type: [Types.ObjectId],
       default: [],
       required: false,
     },
     messages: {
       type: [Object],
+      required: false,
+      default: [],
+    },
+    schedule: {
+      type: [scheduleSchema],
       required: false,
       default: [],
     },

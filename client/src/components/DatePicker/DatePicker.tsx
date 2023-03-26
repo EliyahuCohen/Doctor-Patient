@@ -1,5 +1,5 @@
 import "./app.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import { useDispatch } from "react-redux";
@@ -9,7 +9,13 @@ interface IMyDate {
   maxDays: 28 | 29 | 30 | 31;
 }
 
-const DatePicker = () => {
+const DatePicker = ({
+  setSelectedDate,
+}: {
+  setSelectedDate: React.Dispatch<
+    React.SetStateAction<{ month: string; day: number } | null>
+  >;
+}) => {
   const date = new Date();
   const [year, setYear] = useState<number>(date.getFullYear());
   const [day, setDay] = useState<number>(date.getDay());
@@ -81,6 +87,9 @@ const DatePicker = () => {
       maxDays: 31,
     },
   ];
+  useEffect(() => {
+    setSelectedDate({ month: monthes[month], day: date.getDate() });
+  }, []);
   const dispatch = useDispatch();
   return (
     <div className="info">
@@ -114,9 +123,10 @@ const DatePicker = () => {
             <NavigateBeforeIcon className="navigationIcon" />
           </button>
           <button
-            onClick={(e) =>
-              setMonth((next) => {
-                if (next + 1 <= 11) return next + 1;
+            onClick={(e) => {
+              let value = month;
+              if (value + 1 <= 11) {
+                value += 1;
                 dispatch(
                   newMessage({
                     id: crypto.randomUUID(),
@@ -127,9 +137,9 @@ const DatePicker = () => {
                     type: "OVERDATE",
                   })
                 );
-                return next;
-              })
-            }
+              }
+              setMonth(value);
+            }}
           >
             <NavigateNextIcon className="navigationIcon" />
           </button>
@@ -166,6 +176,14 @@ const DatePicker = () => {
                 className={`${
                   index == dayMonth ? "selected" : compDate < date ? "over" : ""
                 }`}
+                onClick={() => {
+                  if (compDate >= date) {
+                    setSelectedDate({
+                      month: monthes[month],
+                      day: index + 1,
+                    });
+                  }
+                }}
                 key={d + index + crypto.randomUUID()}
               >
                 {index + 1}

@@ -41,7 +41,6 @@ export function useSchedual(
     instance
       .get("http://localhost:3001/users/schdeual")
       .then((res) => {
-        console.log("get");
         if (res.data.schedual.length == 0) return;
         const sc = res.data.schedual;
         sc.forEach((element: ScheduleDay, index: number) => {

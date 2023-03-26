@@ -10,6 +10,8 @@ import {
   getSystemMessages,
   getUserDoctorsAndPatients,
   getAllDoctors,
+  postSchedual,
+  getSchedual,
   updateDoctorsList,
 } from "../Controllers/User.contoller";
 import { requiredAuthentication } from "../Middlewares/RequireAuth";
@@ -28,5 +30,7 @@ router.delete("/delete/:id", deleteUser);
 router.patch("/update/:id", updateUser);
 router.patch("/updateRole/:id", updateRole);
 router.patch("/updateDoctors/:id", updateDoctorsList);
+router.post("/schdeual", postSchedual);
+router.get("/schdeual", getSchedual);
 
 export default router;

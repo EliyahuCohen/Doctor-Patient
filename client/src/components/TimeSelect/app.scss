@@ -7,4 +7,94 @@
   }
 }
 .daysList {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+  user-select: none;
+}
+.noS {
+  text-align: center;
+  color: #229f97;
+}
+.savebtn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  button {
+    transition: 0.3s;
+    padding: 0.5rem 1.2rem;
+    border: 2px solid #229f97;
+    color: #229f97;
+    border-radius: 100vh;
+    &:hover {
+      transition: 0.3s;
+      color: #fff;
+      background: #229f97;
+    }
+  }
+}
+.singleDay {
+  cursor: pointer;
+}
+.line {
+  border-radius: 8px;
+  background-color: #f2f3f7;
+  padding: 0.5rem;
+  * {
+    background: transparent;
+  }
+  margin: 1rem auto;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  grid-template-columns: 2fr 2fr 1fr;
+  div {
+    text-transform: uppercase;
+    font-size: small;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  select {
+    padding: 0.3rem 1rem;
+    border: none;
+  }
+}
+.trash {
+  cursor: pointer;
+  color: #c42843;
+}
+.selected {
+  color: #229f97;
+  border-bottom: 2px solid #229f97;
+}
+.times {
+  width: 100%;
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    .i {
+      padding: 5px;
+      height: 40px;
+      width: 40px;
+      color: #fff;
+      background: #229f97;
+      border-radius: 100vh;
+      transition: 0.3s;
+      border: 2px solid #fff;
+      &:hover {
+        transition: 0.3s;
+        color: #229f97;
+        background: #fff;
+        border: 2px solid #229f97;
+      }
+    }
+  }
 }

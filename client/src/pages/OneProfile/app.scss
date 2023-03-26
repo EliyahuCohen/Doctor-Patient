@@ -19,9 +19,8 @@
 .profileWrapper {
   margin-top: 6rem;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1200px) {
     flex-direction: column;
     margin: 4rem auto;
     justify-content: center;

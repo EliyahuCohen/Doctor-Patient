@@ -35,7 +35,7 @@ export interface User {
 const scheduleSchema: Schema = new mongoose.Schema<Schedule>(
   {
     day: { type: Number, required: true },
-    times: { type: [Number], required: false, default: [] },
+    times: { type: [Object], required: false, default: [] },
   },
   { _id: false }
 );

@@ -57,10 +57,14 @@ export enum stage {
   PATIENTS,
 }
 export interface ITimeSpan {
-  startTime: number;
-  endTime: number;
+  startTime: 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19;
+  endTime: 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19;
 }
 export interface Schedule {
   day: 1 | 2 | 3 | 4 | 5 | 6;
   times: ITimeSpan[];
+}
+export interface ScheduleDay {
+  schedule: Schedule;
+  day: string;
 }

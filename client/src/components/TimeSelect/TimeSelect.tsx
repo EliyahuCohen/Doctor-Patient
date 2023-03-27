@@ -63,7 +63,7 @@ const TimeSelect = () => {
           return (
             <div
               className={
-                selected === index ? `singleDay selected` : `singleDay`
+                selected === index ? `singleDay selected1` : `singleDay`
               }
               key={`${day.day}${index}${day.schedule.times.entries}`}
               onClick={() => setSelected(index)}

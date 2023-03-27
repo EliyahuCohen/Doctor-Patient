@@ -43,7 +43,7 @@ const OneProfile = () => {
   return (
     <div>
       <div className="profileWrapper">
-        <span className="line"></span>
+        <span className="line2"></span>
       </div>
       <div className="profileWrapper">
         <p className="image">{user.role == 1 ? "👨‍⚕️" : "😷"}</p>

@@ -32,5 +32,6 @@ mongoose
       console.log(`connected to db and running on port ${process.env.PORT}`);
       socket(io);
     })
-  )
-  .catch((err) => console.log(err));
+    )
+    .catch((err) => console.log(err));
+    

@@ -31,6 +31,16 @@ export interface User {
   isMale: boolean;
   schedule: Schedule[];
 }
+const messageSchema:Schema = new mongoose.Schema<ISystemMessage>({
+  message:{
+    type:String,
+    required:true
+  },
+  type:{
+    type:Number,
+    required:true
+  }
+})
 
 const scheduleSchema: Schema = new mongoose.Schema<Schedule>(
   {
@@ -68,7 +78,7 @@ const userSchema: Schema = new mongoose.Schema<User>(
       required: false,
     },
     messages: {
-      type: [Object],
+      type: [messageSchema],
       required: false,
       default: [],
     },

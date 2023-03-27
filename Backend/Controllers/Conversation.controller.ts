@@ -1,10 +1,10 @@
-import Conversation from "../Models/Conversation.model";
+import Conversation, { IMessage } from "../Models/Conversation.model";
 import { Request, Response } from "express";
 import { IConversation } from "../Models/Conversation.model";
 import mongoose from "mongoose";
 import { io } from "../server";
 import { usersID } from "../socket";
-import UserModel from "../Models/User.model";
+import User from "../Models/User.model";
 
 interface Req {
   USER_ID: mongoose.Types.ObjectId;
@@ -47,18 +47,18 @@ export async function PostNewMessage(req: Request, res: Response) {
   }
   const date = new Date();
   conversation.messages.push({
-    sender: USER_ID,
+    sender: USER_ID as any,
     message,
     createdAt: date,
-    read: 0,
+    read: false,
   });
   await conversation.save();
-  const specificUser = usersID.filter((one) => one.userId == personId)[0];
-  if (specificUser) {
-    let senderName = await UserModel.findById(USER_ID).then(
+  const otherUser = usersID.filter((one) => one.userId == personId)[0];
+  if (otherUser) {
+    let senderName:string = await User.findById(USER_ID).then(
       (res) => res?.fName + " " + res?.lName!
     );
-    io.to(specificUser.socketId).emit("messageSent", {
+    io.to(otherUser.socketId).emit("messageSent", {
       message,
       createdAt: date,
       senderName: senderName,

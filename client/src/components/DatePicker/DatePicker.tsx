@@ -127,6 +127,7 @@ const DatePicker = ({
               let value = month;
               if (value + 1 <= 11) {
                 value += 1;
+              } else {
                 dispatch(
                   newMessage({
                     id: crypto.randomUUID(),
@@ -147,7 +148,7 @@ const DatePicker = ({
       </div>
       <div className="calanderWrapper">
         <div className="dateDays">
-          {["Sun", "Mon", "Tus", "Wen", "Thu", "Fri", "Sut"].map(
+          {["Sun", "Mon", "Tue", "Wen", "Thu", "Fri", "Sat"].map(
             (moth: string, index: number) => {
               return (
                 <span

@@ -5,8 +5,8 @@ import {
   getConversation,
   PostNewMessage,
 } from "../Controllers/Conversation.controller";
-
-router.get("/:personId", requiredAuthentication, getConversation);
-router.post("/message", requiredAuthentication, PostNewMessage);
+router.use(requiredAuthentication);
+router.get("/:personId", getConversation);
+router.post("/message", PostNewMessage);
 
 export default router;

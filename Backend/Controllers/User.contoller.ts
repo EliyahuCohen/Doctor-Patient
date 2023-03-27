@@ -1,13 +1,13 @@
-import User, { ITimeSpan, Schedule } from "../Models/User.model";
+import User, { Schedule } from "../Models/User.model";
 import { createAccessToken, ValidateEmailAndPassword } from "../Utils/helpers";
 import bcrypt from "bcrypt";
-import e, { Request, Response } from "express";
+import { Request, Response } from "express";
 import mongoose, { isValidObjectId } from "mongoose";
 import { io } from "../server";
 import { usersID } from "../socket";
 
 export async function signup(req: Request, res: Response) {
-  const { fName, lName, password, email, location, isMale } = req.body;
+  const { fName, lName, password, email, location } = req.body;
   if (!fName || !lName || !password || !email || !location) {
     return res.status(400).json({ message: "All fields are required" });
   }
@@ -23,13 +23,13 @@ export async function signup(req: Request, res: Response) {
         password: hash,
         messages: [
           {
-            message: "Thank you choosing Eden for you'r health care provider ",
+            message:
+              "Thank you for choosing Eden as your health care provider ",
             type: 1,
           },
         ],
       }).then((result) => {
         const token = createAccessToken(result._id.toString());
-        io.emit("newUser", { user: result });
         return res.status(201).json({ user: result, token });
       });
     }
@@ -37,6 +37,21 @@ export async function signup(req: Request, res: Response) {
   } catch (err: any) {
     return res.status(400).json({ message: err.message });
   }
+}
+export async function login(req: Request, res: Response) {
+  const { email, password } = req.body;
+  if (!email || !password)
+    return res.status(400).json({ message: "All fields are required" });
+  const exists = await User.findOne({ email });
+  if (!exists) return res.status(404).json({ message: "Incorrect Email" });
+  const match = await bcrypt.compare(password, exists.password);
+  if (match) {
+    const token = createAccessToken(exists._id.toString());
+    io.emit("userLoggedIn", exists);
+    if (exists.role != 0) return res.status(200).json({ user: exists, token });
+    return res.status(200).json({ user: exists, token, usersId: usersID });
+  }
+  return res.status(400).json({ message: "Incorrect password" });
 }
 export async function getAllUsers(req: Request, res: Response) {
   const { USER_ID } = req.body;
@@ -49,7 +64,7 @@ export async function getAllUsers(req: Request, res: Response) {
   } else {
     return res
       .status(429)
-      .json({ message: "You dont have access to this information" });
+      .json({ message: "You don't have access to this information" });
   }
 }
 export async function findOneUser(req: Request, res: Response) {
@@ -64,16 +79,16 @@ export async function updateUser(req: Request, res: Response) {
   const { id } = req.params;
   if (!isValidObjectId(id))
     return res.status(403).json({ message: "Invalid user ID" });
-  if (req.body.role)
+  if (req.body.role != 0)
     return res.status(403).json({ message: "Not able to change the role" });
   await User.updateOne({ _id: id }, { $set: { ...req.body } });
   const user = await User.findById(id);
+  if (!user) return res.status(404).json({ message: "No such user!" });
   user?.messages.push({
     type: 1,
-    message: "You updated you'r information successfuly",
+    message: "You updated your information successfuly",
   });
   await user?.save();
-  if (!user) return res.status(404).json({ message: "No such user!" });
   return res.status(200).json(user);
 }
 export async function deleteUser(req: Request, res: Response) {
@@ -86,21 +101,22 @@ export async function deleteUser(req: Request, res: Response) {
   }
   return res.status(400).json({ message: "User dose NOT exists" });
 }
-export async function updateRole(req: Request, res: Response) {
+export async function updatePermissions(req: Request, res: Response) {
   const { USER_ID } = req.body;
   const { id } = req.params;
   if (!isValidObjectId(USER_ID))
     return res.status(400).json({ message: "Not valid object id" });
   const user = await User.findById(USER_ID);
-  if (!user || user?.role != 0)
-    return res.status(404).json({ message: "User dose not exists" });
+  if (!user) return res.status(404).json({ message: "User does not exists" });
+  else if (user.role != 0)
+    return res.status(404).json({ message: "Only admin can change roles." });
   const user1 = await User.findById(id);
   if (user1) {
     user1.messages.push({
       type: user1.approved == true ? 3 : 1,
       message:
         user1.approved == true
-          ? "Sorry, you'r have been blocked by the admin"
+          ? "Sorry, you've been blocked by the admin"
           : "Congratulation you've just been approved by the admin",
     });
     await user1.save();
@@ -111,6 +127,8 @@ export async function updateRole(req: Request, res: Response) {
         message: user1.messages[user1.messages.length - 1],
       });
     }
+  }else{
+    return res.status(404).json({message:"user not found"});
   }
   await User.findByIdAndUpdate(id, {
     $set: {
@@ -136,16 +154,16 @@ export async function updateDoctorsList(req: Request, res: Response) {
   if (isValidObjectId(id)) {
     const user = await User.findById(USER_ID);
     const doctor = await User.findById(id);
-    let me = id as any;
-    if (user?.listOfDoctors.includes(me)) {
-      user.listOfDoctors = user.listOfDoctors.filter((one) => one != me);
-      if (doctor) {
+    let doc = id as any;
+    if (user?.listOfDoctors.includes(doc)) {
+      user.listOfDoctors = user.listOfDoctors.filter((one) => one != doc);
+      if (doctor && doctor.role==1) {
         doctor.listOfPatients = doctor.listOfPatients.filter(
           (pat) => pat != USER_ID
         );
       }
     } else {
-      user?.listOfDoctors.push(me);
+      user?.listOfDoctors.push(doc);
       doctor?.listOfPatients.push(USER_ID);
     }
     await user?.save();
@@ -187,21 +205,7 @@ export async function getUserDoctorsAndPatients(req: Request, res: Response) {
   }
   res.status(200).json({ doctorsArray, patientsArray });
 }
-export async function login(req: Request, res: Response) {
-  const { email, password } = req.body;
-  if (!email || !password)
-    return res.status(400).json({ message: "All fields are required" });
-  const exists = await User.findOne({ email });
-  if (!exists) return res.status(404).json({ message: "Incorrect Email" });
-  const match = await bcrypt.compare(password, exists.password);
-  if (match) {
-    const token = createAccessToken(exists._id.toString());
-    io.emit("userLoggedIn", exists);
-    if (exists.role != 0) return res.status(200).json({ user: exists, token });
-    return res.status(200).json({ user: exists, token, usersId: usersID });
-  }
-  return res.status(400).json({ message: "Incorrect password" });
-}
+
 export interface ScheduleDay {
   schedule: Schedule;
   day: string;
@@ -210,8 +214,9 @@ export async function postSchedual(
   req: Request<{}, {}, { USER_ID: any; weeklySchedual: ScheduleDay[] }>,
   res: Response
 ) {
+  console.log(req.body.weeklySchedual);
   const { USER_ID, weeklySchedual } = req.body;
-  if (mongoose.isValidObjectId(USER_ID)) {
+  if (isValidObjectId(USER_ID)) {
     const user = await User.findById(USER_ID);
     if (!user) return res.status(404).json({ message: "No such user" });
     const ws: Schedule[] = weeklySchedual.map((one) => {
@@ -236,7 +241,7 @@ export async function getSchedual(
   res: Response
 ) {
   const { USER_ID } = req.body;
-  if (mongoose.isValidObjectId(USER_ID)) {
+  if (isValidObjectId(USER_ID)) {
     const user = await User.findById(USER_ID);
     if (!user) return res.status(404).json({ message: "No such user" });
     const ws: ScheduleDay[] = user.schedule.map((one) => {

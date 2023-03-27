@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-export async function requiredAuthentication(
+export function requiredAuthentication(
   req: Request,
   res: Response,
   next: NextFunction

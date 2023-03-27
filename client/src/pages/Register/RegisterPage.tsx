@@ -149,7 +149,7 @@ const RegisterPage = () => {
           <div className="roles">
             <label htmlFor="one" className="role ">
               <div className={props.role == 2 ? "selectedRole" : ""}>
-                <span className="icon">🧑 </span>
+                <span className="icon">🧑</span>
                 <span>As Patient</span>
                 <p>whire better , think more clearly,Stay optemize</p>
               </div>

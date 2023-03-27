@@ -6,7 +6,7 @@ import {
   findOneUser,
   deleteUser,
   login,
-  updateRole,
+  updatePermissions,
   getSystemMessages,
   getUserDoctorsAndPatients,
   getAllDoctors,
@@ -28,7 +28,7 @@ router.get("/getMessages", getSystemMessages);
 router.get("/doctors", getAllDoctors);
 router.delete("/delete/:id", deleteUser);
 router.patch("/update/:id", updateUser);
-router.patch("/updateRole/:id", updateRole);
+router.patch("/updateRole/:id", updatePermissions);
 router.patch("/updateDoctors/:id", updateDoctorsList);
 router.post("/schdeual", postSchedual);
 router.get("/schdeual", getSchedual);

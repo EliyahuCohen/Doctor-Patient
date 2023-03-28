@@ -1,7 +1,7 @@
 import { Register, User } from "../types/type";
-import { useDispatch } from "react-redux";
 import { newMessage } from "../features/messagesSlice";
 import { Socket } from "socket.io-client";
+import messageSent from "../assets/messageSent.mp3";
 import {
   removeLiveUser,
   updateLiveUsers,
@@ -108,6 +108,7 @@ export function handleSocket(socket: Socket, dispatch: any) {
           senderId: crypto.randomUUID(),
         })
       );
+      new Audio(messageSent).play();
     }
   );
   socket.on("messageSent", (sock: any) => {
@@ -122,6 +123,7 @@ export function handleSocket(socket: Socket, dispatch: any) {
           senderId: crypto.randomUUID(),
         })
       );
+      new Audio(messageSent).play();
     }
   });
 }

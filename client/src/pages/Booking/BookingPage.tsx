@@ -11,7 +11,10 @@ const BookingPage = () => {
   return (
     <div className="wrapperDate">
       <div className="bookingWrapper">
-        <DatePicker setSelectedDate={setSelectedDate} />
+        <DatePicker
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
       </div>
       <div className="bookingWrapper2">
         <div className="selectedDate">

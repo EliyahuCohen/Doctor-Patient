@@ -42,13 +42,16 @@
     background: #229f97;
   }
 }
-
+.selectedOver {
+  background: #ea4c89;
+  color: #fff;
+}
 @media screen and (max-width: 950px) {
   .dateDays,
   .dateNumber {
     grid-template-columns: repeat(7, minmax(30px, 1fr));
-    span{
-      padding:0.9 0.5em;
+    span {
+      padding: 0.9 0.5em;
       font-size: small;
     }
   }

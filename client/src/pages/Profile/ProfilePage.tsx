@@ -1,12 +1,20 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import TimeSelect from "../../components/TimeSelect/TimeSelect";
 import { UserType } from "../../features/userSlice";
+import { useGetOneUser } from "../../hooks/useGetOneUser";
+import { User } from "../../types/type";
 import "./app.scss";
-// ✔
+
 const ProfilePage = () => {
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
+  const [theUser, setTheUser] = useState<User | null>(null);
+  const { getUser } = useGetOneUser(user?._id!, setTheUser);
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <>
       <div className="profileWrapper">
@@ -17,60 +25,60 @@ const ProfilePage = () => {
               <span className="fitEmoji">🖋️</span>Full Name:
             </p>
             <p>
-              {user?.fName} {user?.lName}
+              {theUser?.fName} {theUser?.lName}
             </p>
           </div>
           <div className="row">
             <p>
               <span className="fitEmoji">👫</span>Gender:
             </p>
-            <p>{user?.isMale ? "👨 " : "👩"}</p>
+            <p>{theUser?.isMale ? "👨 " : "👩"}</p>
           </div>
           <div className="row">
             <p>
               <span className="fitEmoji">📍</span>Location:
             </p>
-            <p>{user?.location}</p>
+            <p>{theUser?.location}</p>
           </div>
           <div className="row">
             <p>
               <span className="fitEmoji">📧 </span>Email:
             </p>
-            <p>{user?.email}</p>
+            <p>{theUser?.email}</p>
           </div>
-          {user?.role != 0 && (
+          {theUser?.role != 0 && (
             <div className="row">
               <p>
                 <span className="fitEmoji">✔️ </span>Status:
               </p>
-              <p>{user?.approved ? "Approved" : "Pending"}</p>
+              <p>{theUser?.approved ? "Approved" : "Pending"}</p>
             </div>
           )}
           <div className="row">
             <p>
               <span className="fitEmoji">
-                {user?.role == 0 ? "👨‍⚖️ " : user?.role == 1 ? "👨‍⚕️" : "🧑"}
+                {theUser?.role == 0 ? "👨‍⚖️ " : theUser?.role == 1 ? "👨‍⚕️" : "🧑"}
               </span>
               Role:
             </p>
             <p>
-              {user?.role == 0
+              {theUser?.role == 0
                 ? "Admin"
-                : user?.role == 1
+                : theUser?.role == 1
                 ? "Doctor"
                 : "Patient"}
             </p>
           </div>
-          {user?.role == 1 ? (
+          {theUser?.role == 1 ? (
             <div className="row">
               <p>
                 <span className="fitEmoji">💉</span>Speciality:
               </p>
-              <p>{user?.speciality}</p>
+              <p>{theUser?.speciality}</p>
             </div>
           ) : null}
         </div>
-        {user && user.role == 1 && (
+        {theUser && theUser.role == 1 && (
           <div className="workTime">
             <TimeSelect />
           </div>

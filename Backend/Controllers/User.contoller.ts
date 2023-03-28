@@ -127,8 +127,8 @@ export async function updatePermissions(req: Request, res: Response) {
         message: user1.messages[user1.messages.length - 1],
       });
     }
-  }else{
-    return res.status(404).json({message:"user not found"});
+  } else {
+    return res.status(404).json({ message: "user not found" });
   }
   await User.findByIdAndUpdate(id, {
     $set: {
@@ -157,7 +157,7 @@ export async function updateDoctorsList(req: Request, res: Response) {
     let doc = id as any;
     if (user?.listOfDoctors.includes(doc)) {
       user.listOfDoctors = user.listOfDoctors.filter((one) => one != doc);
-      if (doctor && doctor.role==1) {
+      if (doctor && doctor.role == 1) {
         doctor.listOfPatients = doctor.listOfPatients.filter(
           (pat) => pat != USER_ID
         );
@@ -205,7 +205,6 @@ export async function getUserDoctorsAndPatients(req: Request, res: Response) {
   }
   res.status(200).json({ doctorsArray, patientsArray });
 }
-
 export interface ScheduleDay {
   schedule: Schedule;
   day: string;
@@ -214,7 +213,6 @@ export async function postSchedual(
   req: Request<{}, {}, { USER_ID: any; weeklySchedual: ScheduleDay[] }>,
   res: Response
 ) {
-  console.log(req.body.weeklySchedual);
   const { USER_ID, weeklySchedual } = req.body;
   if (isValidObjectId(USER_ID)) {
     const user = await User.findById(USER_ID);

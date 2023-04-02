@@ -4,7 +4,6 @@ import DatePicker from "../../components/DatePicker/DatePicker";
 import { useSchedual } from "../../hooks/useSchedual";
 import { useParams } from "react-router-dom";
 import { ITimeSpan, Schedule } from "../../types/type";
-import AddIcon from "@mui/icons-material/Add";
 
 const BookingPage = () => {
   const { id } = useParams();
@@ -48,35 +47,37 @@ const BookingPage = () => {
           availableMeetings?.times?.map((meeting, index: number) => {
             return (
               <div key={meeting.startTime + index} className="meeting">
-                <div className="innerDiv">
-                  <strong className="time">
-                    {meeting.startTime}:00 - {meeting.endTime}:00
-                  </strong>
-                  <p className="time">
-                    <strong>
-                      {(meeting.endTime - meeting.startTime) * 60}
-                    </strong>{" "}
-                    min
-                  </p>
+                <div className="leftSide">
+                  <div className="dateTime1">
+                    <p>{selectedDate?.day}</p>
+                    <p>{selectedDate?.month.substring(3, -1)}</p>
+                  </div>
+                  <div className="dateTime2">
+                    <p>
+                      {meeting.startTime}:00 - {meeting.endTime}:00
+                    </p>
+                    <p>
+                      Friday • {meeting.startTime} AM •{" "}
+                      {(meeting.endTime - meeting.startTime) * 60} minutes{" "}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p
-                    onClick={(e) => {
-                      const tempMeetings: ITimeSpan[] = [];
-                      availableMeetings.times.forEach((e) => {
-                        if (e.endTime != meeting.endTime) {
-                          tempMeetings.push(e);
-                        }
-                      });
-                      setAvailableMeetings((prev) => {
-                        return { day: prev?.day!, times: tempMeetings };
-                      });
-                    }}
-                    className="schedual"
-                  >
-                    Schedual Appointment
-                  </p>
-                </div>
+                <span
+                  onClick={(e) => {
+                    const tempMeetings: ITimeSpan[] = [];
+                    availableMeetings.times.forEach((e) => {
+                      if (e.endTime != meeting.endTime) {
+                        tempMeetings.push(e);
+                      }
+                    });
+                    setAvailableMeetings((prev) => {
+                      return { day: prev?.day!, times: tempMeetings };
+                    });
+                  }}
+                  className="book"
+                >
+                  Book
+                </span>
               </div>
             );
           })}

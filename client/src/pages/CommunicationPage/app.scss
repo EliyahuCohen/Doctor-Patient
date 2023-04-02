@@ -9,26 +9,24 @@
 .left {
   width: 100%;
   margin-bottom: 1rem;
-  background: #0d978d;
+  background: #f5f8ff;
   width: fit-content;
   max-width: 300px;
-  padding: 1em;
+  padding: 0.7em 1em;
   border-radius: 10px;
-  border-bottom-left-radius: 0;
-  color: #fff;
+  color: black;
   word-wrap: break-word;
 }
 .right {
   width: fit-content;
-  color: #111;
-  background: #ffffff;
-  padding: 1em;
+  color: #dcdee3;
+  background: #586684;
+  padding: 0.7em;
   max-width: 300px;
   border: 1px solid lightgray;
   margin-bottom: 1rem;
   word-wrap: break-word;
   border-radius: 10px;
-  border-bottom-right-radius: 0;
 }
 .messageList {
   margin: 0 auto;
@@ -87,9 +85,13 @@
     font-size: inherit;
   }
   button {
-    background: none;
-    height: 100%;
+    height: 50px;
     width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 2em;
+    padding: 1rem;
+    border-radius: 1rem;
   }
 }

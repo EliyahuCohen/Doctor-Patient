@@ -7,6 +7,7 @@
   display: flex;
   justify-content: space-around;
 }
+
 .bookingWrapper2 {
   max-width: 1700px;
   margin: 0 auto;
@@ -18,15 +19,20 @@
     margin: 0 auto;
     width: 100%;
     text-align: center;
-    color: #229f97;
+    color: #f29890;
   }
 }
 .wrapperDate {
+  max-width: 1700px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-content: center;
   justify-content: center;
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 1050px) {
+    margin-top: 0rem;
     grid-template-columns: 1fr;
+    max-width: 100%;
   }
 }
 .schedual {
@@ -53,19 +59,46 @@
   color: #3886e6;
   margin-top: 1.5rem;
 }
+.book {
+  padding: 0.5rem 0.8rem;
+  background: #fff2f1;
+  border-radius: 12px;
+  font-size: smaller;
+  color: #ff786e;
+  cursor: pointer;
+}
 .meeting {
-  width: 100%;
-  border: 1px solid #229f97;
-  border-radius: 8px;
-  padding: 1em 2em;
-  &:not(:first-child) {
-    margin-top: 1em;
-  }
-  .time {
-    color: #229f97;
-  }
-  .innerDiv {
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .leftSide {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+  }
+  .dateTime1 {
+    color: #ff786e;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    background: #fff2f1;
+
+    p {
+      font-weight: bold;
+      text-transform: uppercase;
+      text-align: center;
+      background: transparent;
+    }
+  }
+  .dateTime2 {
+    padding: 1rem;
+    p {
+      font-weight: bold;
+      font-size: smaller;
+      color: #494a57;
+    }
   }
 }

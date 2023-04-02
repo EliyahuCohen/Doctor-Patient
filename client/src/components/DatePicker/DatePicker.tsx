@@ -25,7 +25,7 @@ const DatePicker = ({
   const [dayMonth, setDayMonth] = useState<number>(date.getDate() - 1);
   const firstDayOfMonth = new Date(year, month, 1);
   const firstDayOfWeek = firstDayOfMonth.getDay();
-  const monthes: string[] = [
+  const months: string[] = [
     "January",
     "February",
     "March",
@@ -41,63 +41,63 @@ const DatePicker = ({
   ];
   const dates: IMyDate[] = [
     {
-      monthName: monthes[0],
+      monthName: months[0],
       maxDays: 31,
     },
     {
-      monthName: monthes[1],
+      monthName: months[1],
       maxDays: date.getFullYear() % 4 == 0 ? 29 : 28,
     },
     {
-      monthName: monthes[2],
+      monthName: months[2],
       maxDays: 31,
     },
     {
-      monthName: monthes[3],
+      monthName: months[3],
       maxDays: 30,
     },
     {
-      monthName: monthes[4],
+      monthName: months[4],
       maxDays: 31,
     },
     {
-      monthName: monthes[5],
+      monthName: months[5],
       maxDays: 30,
     },
     {
-      monthName: monthes[6],
+      monthName: months[6],
       maxDays: 31,
     },
     {
-      monthName: monthes[7],
+      monthName: months[7],
       maxDays: 31,
     },
     {
-      monthName: monthes[8],
+      monthName: months[8],
       maxDays: 30,
     },
     {
-      monthName: monthes[9],
+      monthName: months[9],
       maxDays: 31,
     },
     {
-      monthName: monthes[10],
+      monthName: months[10],
       maxDays: 30,
     },
     {
-      monthName: monthes[11],
+      monthName: months[11],
       maxDays: 31,
     },
   ];
   useEffect(() => {
-    setSelectedDate({ month: monthes[month], day: date.getDate() });
+    setSelectedDate({ month: months[month], day: date.getDate() });
   }, []);
   const dispatch = useDispatch();
   return (
     <div className="info">
       <div className="headerWordsWrapper">
         <div className="headerWords">
-          <strong>{monthes[month]}</strong>
+          <strong>{months[month]}</strong>
           <strong style={{ marginLeft: "1rem" }}>{year}</strong>
         </div>
         <div className="navigationBtns">
@@ -189,7 +189,7 @@ const DatePicker = ({
                     date.getDate() <= compDate.getDate()
                   ) {
                     setSelectedDate({
-                      month: monthes[month],
+                      month: months[month],
                       day: index + 1,
                     });
                   }

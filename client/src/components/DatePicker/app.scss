@@ -1,5 +1,6 @@
 .info {
   width: fit-content;
+  width: 100%;
 }
 
 .calanderWrapper {
@@ -31,15 +32,15 @@
     text-align: center;
   }
 
-  span:not(.selected) {
+  span:not(.selected, .over) {
     &:hover {
-      border: 1px solid #229f97;
+      border: 1px solid #ff7f75;
     }
   }
 
   .selected {
-    color: #fff;
-    background: #229f97;
+    color: #ff7f75;
+    background: #ffe5e3;
   }
 }
 .selectedOver {
@@ -55,7 +56,6 @@
       font-size: small;
     }
   }
-
   .info {
     margin: 0 auto;
   }

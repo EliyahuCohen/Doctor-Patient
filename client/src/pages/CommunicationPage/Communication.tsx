@@ -1,8 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import formatDistance from "date-fns/esm/formatDistance";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import { useParams } from "react-router-dom";
 import { useMessages } from "../../hooks/useMessages";
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import "./app.scss";
 import { socket } from "../../App";
 
@@ -76,7 +76,14 @@ const Communication = () => {
       <form className="sendingMessage" action="">
         <input ref={inputRef} type="text" placeholder={`Write a message...`} />
         <button onClick={(e) => handleClick(e)}>
-          <EmailOutlinedIcon fontSize="large" style={{ color: "#333" }} />
+          <SendOutlinedIcon
+            fontSize="large"
+            style={{
+              color: "#9aa2f3",
+              rotate: "-45deg",
+              background: "transparent",
+            }}
+          />
         </button>
       </form>
     </div>

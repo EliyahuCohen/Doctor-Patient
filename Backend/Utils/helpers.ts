@@ -3,7 +3,7 @@ import validator from "validator";
 
 export function createAccessToken(userId: string) {
   const token = jwt.sign({ userId }, `${process.env.SECRET}`, {
-    expiresIn: "1d",
+    expiresIn: "1w",
   });
   return token;
 }

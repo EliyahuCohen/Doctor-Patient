@@ -33,14 +33,16 @@ const Communication = () => {
   }, []);
   useEffect(() => {
     socket.on("messageSent", (sock: any) => {
-      setMessages((prev) => [
-        ...prev,
-        {
-          createdAt: sock.createdAt,
-          message: sock.message,
-          sender: sock.senderId,
-        },
-      ]);
+      if (window.location.pathname.includes(`communication/${sock.senderId}`)) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            createdAt: sock.createdAt,
+            message: sock.message,
+            sender: sock.senderId,
+          },
+        ]);
+      }
     });
   }, [socket]);
 

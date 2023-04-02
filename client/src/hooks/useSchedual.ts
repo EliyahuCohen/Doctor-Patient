@@ -3,11 +3,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { newMessage } from "../features/messagesSlice";
 import { UserType } from "../features/userSlice";
-import { ScheduleDay } from "../types/type";
-export function useSchedual(
-  setDaysList: React.Dispatch<React.SetStateAction<ScheduleDay[]>>,
-  daysList: ScheduleDay[]
-) {
+import { Schedule, ScheduleDay } from "../types/type";
+export function useSchedual() {
   const dispatch = useDispatch();
   const { token } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
@@ -37,7 +34,10 @@ export function useSchedual(
         console.log(err);
       });
   }
-  async function getSchedual() {
+  async function getSchedual(
+    setDaysList: React.Dispatch<React.SetStateAction<ScheduleDay[]>>,
+    daysList: ScheduleDay[]
+  ) {
     instance
       .get("http://localhost:3001/users/schdeual")
       .then((res) => {
@@ -52,8 +52,35 @@ export function useSchedual(
         console.log(err);
       });
   }
-  useEffect(() => {
-    getSchedual();
-  }, []);
-  return { postSchedual };
+  async function getMeetings(
+    date: Date,
+    doctorId: string,
+    day: number,
+    setAvailableMeetings: React.Dispatch<React.SetStateAction<Schedule | null>>,
+    setError: React.Dispatch<React.SetStateAction<boolean>>
+  ) {
+    instance
+      .post(`http://localhost:3001/meeting/get-meetings/${doctorId}`, {
+        date,
+        day,
+      })
+      .then((res) => {
+        setError(false);
+        setAvailableMeetings(res.data);
+      })
+      .catch((err) => {
+        setError(true);
+        dispatch(
+          newMessage({
+            id: crypto.randomUUID(),
+            message: "Not a working Day",
+            senderId: "System",
+            senderName: "System",
+            time: 3000,
+            type: "DELETE",
+          })
+        );
+      });
+  }
+  return { postSchedual, getMeetings, getSchedual };
 }

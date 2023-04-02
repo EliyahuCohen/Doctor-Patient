@@ -177,10 +177,17 @@ const DatePicker = ({
             return (
               <span
                 className={`${
-                  index == dayMonth ? "selected" : compDate < date ? "over" : ""
+                  index == dayMonth && compDate.getMonth() == date.getMonth()
+                    ? "selected"
+                    : compDate < date
+                    ? "over"
+                    : ""
                 }`}
                 onClick={() => {
-                  if (compDate >= date) {
+                  if (
+                    date.getMonth() <= compDate.getMonth() &&
+                    date.getDate() <= compDate.getDate()
+                  ) {
                     setSelectedDate({
                       month: monthes[month],
                       day: index + 1,

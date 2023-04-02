@@ -29,3 +29,43 @@
     grid-template-columns: 1fr;
   }
 }
+.schedual {
+  text-align: right;
+  transition: 0.3s;
+  margin-top: 0.3em;
+  background: #229f97;
+  width: fit-content;
+  color: #fff;
+  padding: 0.3em 1em;
+  margin: 1rem auto;
+  border: 1px solid #229f97;
+  border-radius: 100ch;
+  cursor: pointer;
+  &:hover {
+    transition: 0.3s;
+    color: #229f97;
+    background: #fff;
+    border: 1px solid #229f97;
+  }
+}
+.messageDoc {
+  text-align: center;
+  color: #3886e6;
+  margin-top: 1.5rem;
+}
+.meeting {
+  width: 100%;
+  border: 1px solid #229f97;
+  border-radius: 8px;
+  padding: 1em 2em;
+  &:not(:first-child) {
+    margin-top: 1em;
+  }
+  .time {
+    color: #229f97;
+  }
+  .innerDiv {
+    display: flex;
+    justify-content: space-between;
+  }
+}

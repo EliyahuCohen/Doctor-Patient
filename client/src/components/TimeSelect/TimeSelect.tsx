@@ -1,5 +1,5 @@
 import "./app.scss";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ScheduleDay } from "../../types/type";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteOutlineOutlined from "@mui/icons-material/DeleteOutlineOutlined";
@@ -15,7 +15,10 @@ const TimeSelect = () => {
     { day: "Thursday", schedule: { day: 5, times: [] } },
     { day: "Friday", schedule: { day: 6, times: [] } },
   ]);
-  const { postSchedual } = useSchedual(setDaysList, daysList);
+  const { postSchedual, getSchedual } = useSchedual();
+  useEffect(() => {
+    getSchedual(setDaysList, daysList);
+  }, []);
   function removeHour(index: number) {
     const week = [...daysList];
     week[selected].schedule.times.splice(index, 1);

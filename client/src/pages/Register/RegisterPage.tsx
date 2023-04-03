@@ -86,13 +86,14 @@ const RegisterPage = () => {
               onChange={(e) => setProps({ ...props, lName: e.target.value })}
             />
             <button
+              className="sideBtn"
               onClick={() => {
                 if (check(1)) {
                   moveFoword(currentStep + 1, props, setCurrentStep);
                 }
               }}
             >
-              Create Workspace
+              Next
             </button>
             <div className="links">
               <Link to="/signin">Do you have an account?</Link>
@@ -130,13 +131,14 @@ const RegisterPage = () => {
               onChange={(e) => setProps({ ...props, password: e.target.value })}
             />
             <button
+              className="sideBtn"
               onClick={() => {
                 if (check(2)) {
                   moveFoword(currentStep + 1, props, setCurrentStep);
                 }
               }}
             >
-              Create Workspace
+              Next
             </button>
           </div>
         </div>
@@ -240,7 +242,7 @@ const RegisterPage = () => {
                 }
               }}
             >
-              Create Workspace
+              Next
             </button>
           </div>
         </div>

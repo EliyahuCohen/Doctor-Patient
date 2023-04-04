@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import DatePicker from "../../components/DatePicker/DatePicker";
 import BlockIcon from "@mui/icons-material/Block";
 import { useSchedual } from "../../hooks/useSchedual";
+import { useMeetings } from "../../hooks/useMeetings";
 import { useParams } from "react-router-dom";
 import { ITimeSpan, Schedule } from "../../types/type";
 
@@ -18,9 +19,10 @@ const BookingPage = () => {
     day: number;
   } | null>(null);
   const { getMeetings } = useSchedual();
+  const { postMeeting } = useMeetings();
   useEffect(() => {
     const d = new Date(`${selectedDate?.month}-${selectedDate?.day}-2023`);
-    getMeetings(date, id!, d.getDay(), setAvailableMeetings, setError);
+    getMeetings(d, id!, d.getDay(), setAvailableMeetings, setError);
   }, [selectedDate]);
   return (
     <div className="wrapperDate">
@@ -70,6 +72,16 @@ const BookingPage = () => {
                 </div>
                 <span
                   onClick={(e) => {
+                    postMeeting(
+                      new Date(
+                        `${selectedDate?.month}-${
+                          selectedDate!.day + 1
+                        }-${date.getFullYear()}`
+                      ),
+                      id,
+                      meeting.endTime,
+                      meeting.startTime
+                    );
                     const tempMeetings: ITimeSpan[] = [];
                     availableMeetings.times.forEach((e) => {
                       if (e.endTime != meeting.endTime) {

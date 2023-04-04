@@ -26,21 +26,22 @@ export interface User {
   listOfPatients: Types.ObjectId[];
   messages: ISystemMessage[];
   speciality: string;
-  meetings: Types.ObjectId[];
+  meetingsDoctors: Types.ObjectId[];
+  meetingsPatients: Types.ObjectId[];
   location: string;
   isMale: boolean;
   schedule: Schedule[];
 }
-const messageSchema:Schema = new mongoose.Schema<ISystemMessage>({
-  message:{
-    type:String,
-    required:true
+const messageSchema: Schema = new mongoose.Schema<ISystemMessage>({
+  message: {
+    type: String,
+    required: true,
   },
-  type:{
-    type:Number,
-    required:true
-  }
-})
+  type: {
+    type: Number,
+    required: true,
+  },
+});
 
 const scheduleSchema: Schema = new mongoose.Schema<Schedule>(
   {
@@ -72,7 +73,12 @@ const userSchema: Schema = new mongoose.Schema<User>(
       default: [],
       required: false,
     },
-    meetings: {
+    meetingsDoctors: {
+      type: [Types.ObjectId],
+      default: [],
+      required: false,
+    },
+    meetingsPatients: {
       type: [Types.ObjectId],
       default: [],
       required: false,

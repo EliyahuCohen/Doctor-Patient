@@ -2,27 +2,32 @@ import mongoose, { Schema, Types } from "mongoose";
 
 const { ObjectId } = mongoose.Types;
 export interface Meet {
-  title: String;
-  time: Date;
-  doctorID: typeof ObjectId;
-  patientID: typeof ObjectId;
+  date: Date;
+  startTime: number;
+  endTime: number;
+  doctorId: typeof ObjectId;
+  patientId: typeof ObjectId;
 }
 
 const meetingSchema: Schema = new mongoose.Schema<Meet>(
   {
-    title: {
-      type: String,
-      required: true,
-    },
-    time: {
+    date: {
       type: Date,
       required: true,
     },
-    doctorID: {
+    startTime: {
+      type: Number,
+      required: true,
+    },
+    endTime: {
+      type: Number,
+      required: true,
+    },
+    doctorId: {
       type: Types.ObjectId,
       required: true,
     },
-    patientID: {
+    patientId: {
       type: Types.ObjectId,
       required: true,
     },

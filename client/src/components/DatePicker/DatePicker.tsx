@@ -179,14 +179,15 @@ const DatePicker = ({
                 className={`${
                   index == dayMonth && compDate.getMonth() == date.getMonth()
                     ? "selected"
-                    : compDate < date
+                    : compDate < date || compDate.getDay() == 6
                     ? "over"
                     : ""
                 }`}
                 onClick={() => {
                   if (
-                    date.getMonth() <= compDate.getMonth() &&
-                    date.getDate() <= compDate.getDate()
+                    (date.getMonth() <= compDate.getMonth() &&
+                      date.getDate() <= compDate.getDate()) ||
+                    date.getMonth() < compDate.getMonth()
                   ) {
                     setSelectedDate({
                       month: months[month],

@@ -26,7 +26,8 @@ export interface User {
   meetingAmount: number;
   listOfDoctors: string[];
   listOfPatients: string[];
-  meetings: string[];
+  meetingsDoctors: string[];
+  meetingsPatients: string[];
   live: boolean;
   createdAt: string;
   messages: IAlert[];

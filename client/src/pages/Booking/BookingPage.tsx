@@ -1,6 +1,7 @@
 import "./app.scss";
 import { useState, useEffect } from "react";
 import DatePicker from "../../components/DatePicker/DatePicker";
+import BlockIcon from "@mui/icons-material/Block";
 import { useSchedual } from "../../hooks/useSchedual";
 import { useParams } from "react-router-dom";
 import { ITimeSpan, Schedule } from "../../types/type";
@@ -35,13 +36,18 @@ const BookingPage = () => {
           {selectedDate?.month && <h1>{selectedDate.month}</h1>}
         </div>
         {error ? (
-          <h1 className="messageDoc">The doctor is not working today😢</h1>
+          <>
+            <h1 className="messageDoc">
+              <BlockIcon fontSize="large" />
+            </h1>
+            <h2 className="messageDoc">Not Working Today</h2>
+          </>
         ) : null}
         {availableMeetings?.times?.length == 0 && !error ? (
-          <h1 className="messageDoc">No Meetings left 😢 </h1>
+          <h1 className="messageDoc">No Meetings Left 😢 </h1>
         ) : null}
         {!availableMeetings?.times && (
-          <h1 className="messageDoc">No Meetings left😢 </h1>
+          <h1 className="messageDoc">No Meetings Left😢 </h1>
         )}
         {!error &&
           availableMeetings?.times?.map((meeting, index: number) => {

@@ -7,6 +7,7 @@ import { logout } from "../../features/userSlice";
 import "./app.scss";
 import { socket } from "../../App";
 import { useEffect, useState } from "react";
+import { newMessage } from "../../features/messagesSlice";
 const Navbar = () => {
   const [width, setWidth] = useState<number>(window.innerWidth);
   const [open, setOpen] = useState<boolean>(false);
@@ -100,6 +101,16 @@ const Navbar = () => {
                 onClick={() => {
                   localStorage.setItem("user", JSON.stringify(null));
                   dispatch(logout());
+                  dispatch(
+                    newMessage({
+                      id: crypto.randomUUID(),
+                      message: "User Logged Out",
+                      senderId: crypto.randomUUID(),
+                      senderName: "System",
+                      time: 3000,
+                      type: "SYSTEM",
+                    })
+                  );
                   socket.emit("userLoggedOut");
                 }}
               >
@@ -119,7 +130,11 @@ const Navbar = () => {
           </div>
         )}
         {open ? (
-          <motion.div initial={{opacity:0}} whileInView={{opacity:1}} className="openMenu">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="openMenu"
+          >
             <button
               title="Open Side Menu"
               onClick={() => setOpen((prev) => !prev)}

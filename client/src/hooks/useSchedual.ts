@@ -18,7 +18,6 @@ export function useSchedual() {
     instance
       .post("http://localhost:3001/users/schdeual", { weeklySchedual })
       .then(() => {
-        console.log("updated");
         dispatch(
           newMessage({
             id: crypto.randomUUID(),
@@ -27,6 +26,17 @@ export function useSchedual() {
             senderName: "System",
             time: 3000,
             type: "MESSAGE",
+          })
+        );
+        dispatch(
+          newMessage({
+            id: crypto.randomUUID(),
+            message:
+              "All of the schedualed meetings are going to exists but from now on it won't",
+            senderId: crypto.randomUUID(),
+            senderName: "System",
+            time: 7000,
+            type: "SYSTEM",
           })
         );
       })
@@ -70,16 +80,6 @@ export function useSchedual() {
       })
       .catch((err) => {
         setError(true);
-        dispatch(
-          newMessage({
-            id: crypto.randomUUID(),
-            message: "Not a working Day",
-            senderId: "System",
-            senderName: "System",
-            time: 3000,
-            type: "DELETE",
-          })
-        );
       });
   }
   return { postSchedual, getMeetings, getSchedual };

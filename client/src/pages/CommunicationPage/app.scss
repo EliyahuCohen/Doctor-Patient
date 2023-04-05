@@ -63,8 +63,25 @@
   }
 }
 ::-webkit-scrollbar {
-  width: 0;
+  width: 6px;
+  height: 6px;
+  &:active {
+    cursor: grab;
+  }
+  @media screen and (max-width: 900px) {
+    width: 4px;
+  }
 }
+
+::-webkit-scrollbar-thumb {
+  background: #5555557a;
+  border-radius: 100vh;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .sendingMessage {
   position: fixed;
   bottom: 0;

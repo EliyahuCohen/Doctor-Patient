@@ -28,7 +28,6 @@ const OneProfile = () => {
   }, []);
   useEffect(() => {
     if (user != null) {
-      console.log(user);
       getInfo();
     }
   }, [user != null]);

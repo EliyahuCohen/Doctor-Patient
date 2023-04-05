@@ -1,5 +1,5 @@
 import "./app.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import { useDispatch } from "react-redux";
@@ -11,12 +11,10 @@ interface IMyDate {
 
 const DatePicker = ({
   setSelectedDate,
-  selectedDate,
 }: {
   setSelectedDate: React.Dispatch<
     React.SetStateAction<{ month: string; day: number } | null>
   >;
-  selectedDate: { month: string; day: number } | null;
 }) => {
   const date = new Date();
   const [year, setYear] = useState<number>(date.getFullYear());
@@ -25,6 +23,8 @@ const DatePicker = ({
   const [dayMonth, setDayMonth] = useState<number>(date.getDate() - 1);
   const firstDayOfMonth = new Date(year, month, 1);
   const firstDayOfWeek = firstDayOfMonth.getDay();
+  const dispatch = useDispatch();
+
   const months: string[] = [
     "January",
     "February",
@@ -89,10 +89,11 @@ const DatePicker = ({
       maxDays: 31,
     },
   ];
+
   useEffect(() => {
     setSelectedDate({ month: months[month], day: date.getDate() });
   }, []);
-  const dispatch = useDispatch();
+
   return (
     <div className="info">
       <div className="headerWordsWrapper">

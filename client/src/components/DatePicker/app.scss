@@ -1,6 +1,9 @@
 .info {
-  width: fit-content;
   width: 100%;
+  margin: 0 auto;
+}
+.newOne {
+  border: 5px solid black;
 }
 
 .calanderWrapper {
@@ -28,11 +31,11 @@
     border-radius: 8px;
     padding: 1em;
     user-select: none;
-    cursor: pointer;
     text-align: center;
+    cursor: pointer;
   }
 
-  span:not(.selected, .over) {
+  span:not(.selected, .over, .dateDays > span, .notThis) {
     &:hover {
       border: 1px solid #ff7f75;
     }
@@ -47,15 +50,28 @@
   background: #ea4c89;
   color: #fff;
 }
+.dateDays {
+  margin-top: 1rem;
+}
 @media screen and (max-width: 950px) {
   .dateDays,
   .dateNumber {
     grid-template-columns: repeat(7, minmax(30px, 1fr));
     span {
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 65px;
       padding: 0.9 0.5em;
       font-size: small;
+      @media screen and (max-width: 750px) {
+        width: 50px;
+        height: 50px;
+      }
     }
   }
+
   .info {
     margin: 0 auto;
   }

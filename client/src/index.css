@@ -3,6 +3,9 @@
 * {
   font-family: "Poppins";
 }
+span.space {
+  padding: 0 0.05rem;
+}
 .spinner {
   height: 50px;
   width: 50px;

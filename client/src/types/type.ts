@@ -45,7 +45,7 @@ export interface IMessage {
     | "NIGHT"
     | "AFTERNOON"
     | "OVERDATE";
-  time: 2000 | 3000 | 4000 | 5000;
+  time: 2000 | 3000 | 4000 | 5000 | 7000;
 }
 
 export interface IAlert {

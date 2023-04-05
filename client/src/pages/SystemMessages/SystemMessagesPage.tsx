@@ -23,38 +23,44 @@ const SystemMessagesPage = () => {
         <option value="2">WARNING</option>
         <option value="3">DANGER</option>
       </select>
-      {messages &&
-        messages.map((message: IAlert, index: number) => {
-          if (
-            choice == 0 ||
-            (choice == 1 && message.type == 1) ||
-            (choice == 2 && message.type == 2) ||
-            (choice == 3 && message.type == 3)
-          ) {
-            return (
-              <motion.div
-                layout
-                transition={{ duration: 1 }}
-                key={(index + message.message + message.type).toString()}
-              >
-                <div
-                  className={`systemAlert ${
-                    message.type == 1 ? "good" : message.type == 3 ? "bad" : ""
-                  }`}
+      <div>
+        {messages &&
+          messages.map((message: IAlert, index: number) => {
+            if (
+              choice == 0 ||
+              (choice == 1 && message.type == 1) ||
+              (choice == 2 && message.type == 2) ||
+              (choice == 3 && message.type == 3)
+            ) {
+              return (
+                <motion.div
+                  layout
+                  transition={{ duration: 1 }}
+                  key={(index + message.message + message.type).toString()}
                 >
-                  {message.type == 2 ? (
-                    <PriorityHighIcon fontSize="large" />
-                  ) : message.type == 1 ? (
-                    <CheckIcon />
-                  ) : (
-                    <HighlightOffIcon />
-                  )}
-                  <strong>{message.message}</strong>
-                </div>
-              </motion.div>
-            );
-          }
-        })}
+                  <div
+                    className={`systemAlert ${
+                      message.type == 1
+                        ? "good"
+                        : message.type == 3
+                        ? "bad"
+                        : ""
+                    }`}
+                  >
+                    {message.type == 2 ? (
+                      <PriorityHighIcon fontSize="large" />
+                    ) : message.type == 1 ? (
+                      <CheckIcon />
+                    ) : (
+                      <HighlightOffIcon />
+                    )}
+                    <strong>{message.message}</strong>
+                  </div>
+                </motion.div>
+              );
+            }
+          })}
+      </div>
     </div>
   );
 };

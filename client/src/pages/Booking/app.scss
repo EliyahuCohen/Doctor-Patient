@@ -58,6 +58,9 @@
   text-align: center;
   color: #ff786e;
   margin-top: 1.5rem;
+  @media screen and (max-width: 950px) {
+    font-size: 1.5em;
+  }
 }
 .book {
   padding: 0.5rem 0.8rem;
@@ -76,6 +79,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media screen and (max-width: 950px) {
+    font-size: smaller;
+  }
   .leftSide {
     display: flex;
     align-items: center;

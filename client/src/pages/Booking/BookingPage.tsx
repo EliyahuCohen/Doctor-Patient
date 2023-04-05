@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import DatePicker from "../../components/DatePicker/DatePicker";
 import BlockIcon from "@mui/icons-material/Block";
 import { useSchedual } from "../../hooks/useSchedual";
-import { useMeetings } from "../../hooks/useMeetings";
 import { useParams } from "react-router-dom";
-import { ITimeSpan, Schedule } from "../../types/type";
+import { Schedule } from "../../types/type";
+import OneMeeting from "../../components/OneMeeting/OneMeeting";
 
 const BookingPage = () => {
   const { id } = useParams();
@@ -17,9 +17,8 @@ const BookingPage = () => {
   const [selectedDate, setSelectedDate] = useState<{
     month: string;
     day: number;
-  } | null>(null);
+  } | null>({ month: (date.getMonth() + 1).toString(), day: date.getDate() });
   const { getMeetings } = useSchedual();
-  const { postMeeting } = useMeetings();
   useEffect(() => {
     const d = new Date(`${selectedDate?.month}-${selectedDate?.day}-2023`);
     getMeetings(d, id!, d.getDay(), setAvailableMeetings, setError);
@@ -27,10 +26,7 @@ const BookingPage = () => {
   return (
     <div className="wrapperDate">
       <div className="bookingWrapper">
-        <DatePicker
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
-        />
+        <DatePicker setSelectedDate={setSelectedDate} />
       </div>
       <div className="bookingWrapper2">
         <div className="selectedDate">
@@ -54,49 +50,16 @@ const BookingPage = () => {
         {!error &&
           availableMeetings?.times?.map((meeting, index: number) => {
             return (
-              <div key={meeting.startTime + index} className="meeting">
-                <div className="leftSide">
-                  <div className="dateTime1">
-                    <p>{selectedDate?.day}</p>
-                    <p>{selectedDate?.month.substring(3, -1)}</p>
-                  </div>
-                  <div className="dateTime2">
-                    <p>
-                      {meeting.startTime}:00 - {meeting.endTime}:00
-                    </p>
-                    <p>
-                      Friday • {meeting.startTime} AM •{" "}
-                      {(meeting.endTime - meeting.startTime) * 60} minutes{" "}
-                    </p>
-                  </div>
-                </div>
-                <span
-                  onClick={(e) => {
-                    postMeeting(
-                      new Date(
-                        `${selectedDate?.month}-${
-                          selectedDate!.day + 1
-                        }-${date.getFullYear()}`
-                      ),
-                      id,
-                      meeting.endTime,
-                      meeting.startTime
-                    );
-                    const tempMeetings: ITimeSpan[] = [];
-                    availableMeetings.times.forEach((e) => {
-                      if (e.endTime != meeting.endTime) {
-                        tempMeetings.push(e);
-                      }
-                    });
-                    setAvailableMeetings((prev) => {
-                      return { day: prev?.day!, times: tempMeetings };
-                    });
-                  }}
-                  className="book"
-                >
-                  Book
-                </span>
-              </div>
+              <OneMeeting
+                availableMeetings={availableMeetings}
+                date={date}
+                id={id}
+                index={index}
+                meeting={meeting}
+                selectedDate={selectedDate}
+                setAvailableMeetings={setAvailableMeetings}
+                key={meeting.endTime + index}
+              />
             );
           })}
       </div>

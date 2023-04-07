@@ -69,3 +69,13 @@ export interface ScheduleDay {
   schedule: Schedule;
   day: string;
 }
+export interface IMeet {
+  date: Date;
+  startTime: number;
+  endTime: number;
+  doctorId: string;
+  patientId: string;
+  title: string;
+  completed: boolean;
+  _id: string;
+}

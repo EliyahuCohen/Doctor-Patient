@@ -128,7 +128,7 @@
   justify-content: center;
   align-content: center;
   padding: 2rem;
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 950px) {
     grid-template-columns: 100%;
     .message {
       margin: auto 1rem;
@@ -208,7 +208,13 @@ a {
   justify-content: center;
   align-items: center;
   * {
+    transition: 0.3s;
+
     margin: 5px;
+    &:hover {
+      transition: 0.3s;
+      transform: translateY(-2px);
+    }
   }
 }
 .lib {
@@ -216,4 +222,45 @@ a {
 }
 .what {
   color: #10a37f;
+}
+.meetingsWrapper {
+  padding: 0 1rem;
+  p.message {
+    padding: 1rem;
+  }
+}
+.oneMeeting {
+  padding: 1rem;
+  margin: 0.5rem auto;
+  width: 100%;
+  background: #f1f5fa;
+  border-radius: 12px;
+  color: #64646e;
+  max-width: 500px;
+  @media screen and (max-width: 950px) {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100%;
+  }
+  @media screen and (max-width: 800px) {
+    font-size: smaller;
+  }
+  * {
+    background: transparent;
+  }
+  .startMeetingTime {
+    color: #b4b6be;
+    font-size: smaller;
+  }
+}
+.firstMeeting {
+  background: #feeaf1;
+}
+.btn {
+  padding: 0.3rem 1rem;
+  border: 2px solid #10a37f;
+  border-radius: 100vh;
+  margin: 1rem;
 }

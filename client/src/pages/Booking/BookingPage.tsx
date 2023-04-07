@@ -2,6 +2,7 @@ import "./app.scss";
 import { useState, useEffect } from "react";
 import DatePicker from "../../components/DatePicker/DatePicker";
 import BlockIcon from "@mui/icons-material/Block";
+import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import { useSchedual } from "../../hooks/useSchedual";
 import { useParams } from "react-router-dom";
 import { Schedule } from "../../types/type";
@@ -14,14 +15,16 @@ const BookingPage = () => {
     null
   );
   const [date, setDate] = useState<Date>(new Date());
+  const [loading, setLoading] = useState<boolean>(true);
   const [selectedDate, setSelectedDate] = useState<{
     month: string;
     day: number;
   } | null>({ month: (date.getMonth() + 1).toString(), day: date.getDate() });
   const { getMeetings } = useSchedual();
   useEffect(() => {
+    setLoading(true);
     const d = new Date(`${selectedDate?.month}-${selectedDate?.day}-2023`);
-    getMeetings(d, id!, d.getDay(), setAvailableMeetings, setError);
+    getMeetings(d, id!, d.getDay(), setAvailableMeetings, setError, setLoading);
   }, [selectedDate]);
   return (
     <div className="wrapperDate">
@@ -47,6 +50,9 @@ const BookingPage = () => {
         {!availableMeetings?.times && (
           <h1 className="messageDoc">No Meetings Left😢 </h1>
         )}
+        <div className="loadingIcon">
+          {!error && loading && <HourglassEmptyIcon fontSize="large" />}
+        </div>
         {!error &&
           availableMeetings?.times?.map((meeting, index: number) => {
             return (

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { UserType } from "../features/userSlice";
 import { newMessage } from "../features/messagesSlice";
+import { IMeet } from "../types/type";
 
 export function useMeetings() {
   const { token } = useSelector(
@@ -27,7 +28,6 @@ export function useMeetings() {
         startTime,
       })
       .then((res) => {
-        //saying somthing or saving
         dispatch(
           newMessage({
             id: crypto.randomUUID(),
@@ -43,6 +43,20 @@ export function useMeetings() {
         console.log(err);
       });
   }
+  async function getUpcomingMeetings(
+    setUpcomingDoctors: React.Dispatch<React.SetStateAction<IMeet[]>>,
+    setUpcomingPatients: React.Dispatch<React.SetStateAction<IMeet[]>>
+  ) {
+    instance
+      .get("http://localhost:3001/meeting/upcoming-meetings")
+      .then((res) => {
+        setUpcomingDoctors(res.data.meetingsDoctors);
+        setUpcomingPatients(res.data.meetingsPatients);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
-  return { postMeeting };
+  return { postMeeting, getUpcomingMeetings };
 }

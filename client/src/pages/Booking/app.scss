@@ -58,9 +58,7 @@
   text-align: center;
   color: #ff786e;
   margin-top: 1.5rem;
-  @media screen and (max-width: 950px) {
-    font-size: 1.5em;
-  }
+  font-size: 1.2rem;
 }
 .book {
   padding: 0.5rem 0.8rem;
@@ -107,5 +105,25 @@
       font-size: smaller;
       color: #494a57;
     }
+  }
+}
+.loadingIcon {
+  margin-top: 1rem;
+  text-align: center;
+  * {
+    color: #ff786e;
+    animation: spin 2s;
+    transform-origin: center;
+    animation-iteration-count: infinite;
+  }
+}
+@keyframes spin {
+  0% {
+    transition: 0.3s;
+    transform: rotate(0deg);
+  }
+  100% {
+    transition: 0.3s;
+    transform: rotate(360deg);
   }
 }

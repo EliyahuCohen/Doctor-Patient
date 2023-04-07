@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { isValidObjectId, ObjectId } from "mongoose";
-import Meet from "../Models/Meeting.model";
-import User, { ITimeSpan, Schedule } from "../Models/User.model";
+import Meet, { IMeet } from "../Models/Meeting.model";
+import User, { ITimeSpan } from "../Models/User.model";
 
 export async function createMeeting(
   req: Request<
@@ -25,16 +25,19 @@ export async function createMeeting(
     return res.status(400).json({ message: "All fields are required" });
   else {
     const date = new Date(dateString);
-    const meeting = await Meet.create({
-      date,
-      doctorId,
-      endTime,
-      patientId: USER_ID,
-      startTime,
-    });
+
     const patient = await User.findById(USER_ID);
     const doctor = await User.findById(doctorId);
     if (patient && doctor) {
+      const meeting = await Meet.create({
+        date,
+        doctorId,
+        endTime,
+        patientId: USER_ID,
+        startTime,
+        title: `Meeting with ${doctor.fName + " " + doctor.lName}`,
+        completed: false,
+      });
       patient.meetingsDoctors.push(meeting._id);
       doctor.meetingsPatients.push(meeting._id);
       await doctor.save();
@@ -48,7 +51,6 @@ export async function createMeeting(
     return res.status(400).json({ message: "Cant do that" });
   }
 }
-
 export async function getMeetings(
   req: Request<
     { doctorId: string | ObjectId },
@@ -91,4 +93,36 @@ export async function getMeetings(
       .status(400)
       .json({ message: "Not a working day in our company" });
   }
+}
+export async function getUserUpcomingMeetings(req: Request, res: Response) {
+  const { USER_ID } = req.body;
+  if (!isValidObjectId(USER_ID))
+    return res.status(400).json({ message: "Invalid use ID" });
+  const user = await User.findById(USER_ID);
+  if (user) {
+    const meetingsDoctors: IMeet[] = [];
+    const meetingsPatients: IMeet[] = [];
+    for (let i = 0; i < user.meetingsDoctors.length; i++) {
+      const meeting = await Meet.findOne({
+        _id: user.meetingsDoctors[i]._id,
+        date: { $gte: new Date() },
+        completed: false,
+      });
+      if (meeting) {
+        meetingsDoctors.push(meeting);
+      }
+    }
+    for (let i = 0; i < user.meetingsPatients.length; i++) {
+      const meeting = await Meet.findOne({
+        _id: user.meetingsPatients[i]._id,
+        date: { $gte: new Date() },
+        completed: false,
+      });
+      if (meeting) {
+        meetingsPatients.push(meeting);
+      }
+    }
+    return res.status(200).json({ meetingsDoctors, meetingsPatients });
+  }
+  return res.status(404).json({ message: "No such User" });
 }

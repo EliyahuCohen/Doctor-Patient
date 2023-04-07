@@ -67,7 +67,8 @@ export function useSchedual() {
     doctorId: string,
     day: number,
     setAvailableMeetings: React.Dispatch<React.SetStateAction<Schedule | null>>,
-    setError: React.Dispatch<React.SetStateAction<boolean>>
+    setError: React.Dispatch<React.SetStateAction<boolean>>,
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) {
     instance
       .post(`http://localhost:3001/meeting/get-meetings/${doctorId}`, {
@@ -75,6 +76,7 @@ export function useSchedual() {
         day,
       })
       .then((res) => {
+        setLoading(false);
         setError(false);
         setAvailableMeetings(res.data);
       })

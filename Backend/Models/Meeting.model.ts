@@ -1,15 +1,17 @@
 import mongoose, { Schema, Types } from "mongoose";
 
 const { ObjectId } = mongoose.Types;
-export interface Meet {
+export interface IMeet {
   date: Date;
   startTime: number;
   endTime: number;
   doctorId: typeof ObjectId;
   patientId: typeof ObjectId;
+  title: string;
+  completed: boolean;
 }
 
-const meetingSchema: Schema = new mongoose.Schema<Meet>(
+const meetingSchema: Schema = new mongoose.Schema<IMeet>(
   {
     date: {
       type: Date,
@@ -31,8 +33,17 @@ const meetingSchema: Schema = new mongoose.Schema<Meet>(
       type: Types.ObjectId,
       required: true,
     },
+    title: {
+      type: String,
+      required: true,
+    },
+    completed: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   { timestamps: true }
 );
 
-export default mongoose.model<Meet>("meeting", meetingSchema);
+export default mongoose.model<IMeet>("meeting", meetingSchema);

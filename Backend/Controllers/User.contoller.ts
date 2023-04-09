@@ -2,7 +2,7 @@ import User, { Schedule } from "../Models/User.model";
 import { createAccessToken, ValidateEmailAndPassword } from "../Utils/helpers";
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
-import mongoose, { isValidObjectId } from "mongoose";
+import { isValidObjectId } from "mongoose";
 import { io } from "../server";
 import { usersID } from "../socket";
 
@@ -220,7 +220,9 @@ export async function postSchedual(
     const ws: Schedule[] = weeklySchedual.map((one) => {
       return one.schedule;
     });
-    user.schedule = ws;
+    if (user.schedule) {
+      user.schedule = ws;
+    }
     user.messages.push({ message: "You updated your schedual list", type: 2 });
     return await user.save().then((r) => {
       const ws: ScheduleDay[] = r.schedule.map((one) => {
@@ -241,7 +243,8 @@ export async function getSchedual(
   const { USER_ID } = req.body;
   if (isValidObjectId(USER_ID)) {
     const user = await User.findById(USER_ID);
-    if (!user) return res.status(404).json({ message: "No such user" });
+    if (!user || user.role != 1)
+      return res.status(404).json({ message: "No such user" });
     const ws: ScheduleDay[] = user.schedule.map((one) => {
       return {
         day: "",

@@ -75,16 +75,21 @@ export async function getMeetings(
     // more things
     const schedual = user.schedule[day];
     const timesTemp: ITimeSpan[] = [];
-    for (let i = 0; i < schedual.times.length; i++) {
-      for (let j = 0; j < meetingInWantedDate.length; j++) {
-        if (schedual.times[i].startTime == meetingInWantedDate[j].startTime) {
-          schedual.times[i] = { endTime: 0, startTime: 0 };
+    if (schedual.times) {
+      for (let i = 0; i < schedual.times.length; i++) {
+        for (let j = 0; j < meetingInWantedDate.length; j++) {
+          if (schedual.times[i].startTime == meetingInWantedDate[j].startTime) {
+            schedual.times[i] = { endTime: 0, startTime: 0 };
+          }
         }
       }
-    }
-    for (let j = 0; j < schedual.times.length; j++) {
-      if (schedual.times[j].startTime != 0 && schedual.times[j].endTime != 0) {
-        timesTemp.push(schedual.times[j]);
+      for (let j = 0; j < schedual.times.length; j++) {
+        if (
+          schedual.times[j].startTime != 0 &&
+          schedual.times[j].endTime != 0
+        ) {
+          timesTemp.push(schedual.times[j]);
+        }
       }
     }
     schedual.times = timesTemp as any;

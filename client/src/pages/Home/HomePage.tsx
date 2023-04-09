@@ -19,7 +19,7 @@ const HomePage = () => {
           className="first"
           initial={{ opacity: 0, y: -200 }}
           transition={{ duration: 1 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
         >
           <h1>
             Providing the best medical care and
@@ -55,7 +55,7 @@ const HomePage = () => {
         <motion.div
           initial={{ opacity: 0, y: 200 }}
           transition={{ duration: 1 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
         >
           <motion.img src={image} alt="image of doctors" />
         </motion.div>

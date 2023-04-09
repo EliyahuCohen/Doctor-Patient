@@ -178,7 +178,9 @@ a {
   align-items: center;
   grid-template-columns: 1fr 3fr 1fr;
   justify-content: space-between;
-
+  strong {
+    text-transform: capitalize;
+  }
   @media screen and (max-width: 900px) {
     padding: 0.5rem;
     * {

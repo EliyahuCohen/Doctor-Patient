@@ -14,22 +14,21 @@ export function useLogin(
   const { saveLocalStorage } = useSaveLocalStorage();
   const dispatch = useDispatch();
   async function loginFunc() {
-    return await axios
-      .post("http://localhost:3001/users/login", prop)
-      .then((res) => {
-        setMyError(() => "");
-        dispatch(setUser(res.data));
-        localStorage.setItem("user", JSON.stringify(res.data));
-        if (res.data.user.role == 0) {
-          dispatch(setLiveUsers(res.data.usersId));
-        }
-        saveLocalStorage(res.data);
-        socket.emit("userConnected", res.data.user);
-      })
-      .catch((err) => {
-        console.log("error", err.response.data.message);
-        setMyError(() => err.response.data.message);
-      });
+    try {
+      const res = await axios.post("http://localhost:3001/users/login", prop);
+      setMyError(() => "");
+      dispatch(setUser(res.data));
+      localStorage.setItem("user", JSON.stringify(res.data));
+      if (res?.data?.user?.role === 0) {
+        dispatch(setLiveUsers(res.data.usersId));
+      }
+      saveLocalStorage(res.data);
+      socket.emit("userConnected", res.data.user);
+    } catch (err: any) {
+      console.log("error", err);
+      setMyError(() => err?.response?.data?.message);
+    }
   }
+
   return { loginFunc };
 }

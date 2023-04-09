@@ -16,7 +16,6 @@ const initialState: UserType = {
       JSON.parse(localStorage.getItem("user")!).user) ||
     null,
 };
-
 const userSlice = createSlice({
   name: "user",
   initialState,

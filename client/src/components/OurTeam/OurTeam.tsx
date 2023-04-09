@@ -10,7 +10,7 @@ const OurTeam = () => {
   return (
     <motion.div
       initial={{ y: -200, opacity: 0 }}
-      whileInView={{ y: 0, opacity: 1 }}
+      animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
       className="OurTeamWrapper"
     >
@@ -20,7 +20,7 @@ const OurTeam = () => {
       <div className="doctorsGrid">
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
-          whileInView={{ scale: 1, opacity: 1 }}
+          animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
@@ -32,7 +32,7 @@ const OurTeam = () => {
         </motion.div>
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
-          whileInView={{ scale: 1, opacity: 1 }}
+          animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
@@ -44,7 +44,7 @@ const OurTeam = () => {
         </motion.div>
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
-          whileInView={{ scale: 1, opacity: 1 }}
+          animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
@@ -56,7 +56,7 @@ const OurTeam = () => {
         </motion.div>
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
-          whileInView={{ scale: 1, opacity: 1 }}
+          animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
@@ -68,7 +68,7 @@ const OurTeam = () => {
         </motion.div>
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
-          whileInView={{ scale: 1, opacity: 1 }}
+          animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
@@ -80,7 +80,7 @@ const OurTeam = () => {
         </motion.div>
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
-          whileInView={{ scale: 1, opacity: 1 }}
+          animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5 }}
           className="oneDoctor"
         >

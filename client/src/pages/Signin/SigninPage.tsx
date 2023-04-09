@@ -28,7 +28,7 @@ const SigninPage = () => {
           <p>or</p>
           <span></span>
         </div>
-        <div>
+        <form>
           <label htmlFor="email">Email</label>
           <input
             value={User.email}
@@ -38,11 +38,13 @@ const SigninPage = () => {
             type="email"
             required
             placeholder="someone@gmail.com"
+            autoComplete="email"
             id="email"
           />
           <label htmlFor="pass">Password</label>
           <input
             value={User.password}
+            autoComplete="current-password"
             onChange={(e) => setUser({ ...User, password: e.target.value })}
             name="Password (at least 8 charecters)"
             className="input5"
@@ -52,7 +54,7 @@ const SigninPage = () => {
             required
             pattern="[A-Za-z\d@./!@#$%^&*({})]{8,}$"
           />
-        </div>
+        </form>
         <div>
           <button
             className="click"
@@ -64,7 +66,7 @@ const SigninPage = () => {
               }
             }}
           >
-            Login in
+            Log in
           </button>
           <div className="error">{myError}</div>
         </div>

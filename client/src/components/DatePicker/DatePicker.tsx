@@ -102,51 +102,34 @@ const DatePicker = ({
           <strong style={{ marginLeft: "1rem" }}>{year}</strong>
         </div>
         <div className="navigationBtns">
-          <button
-            onClick={(e) =>
-              setMonth((prev) => {
-                if (prev - 1 >= 1 && prev - 1 >= date.getMonth()) {
-                  return prev - 1;
-                } else {
-                  dispatch(
-                    newMessage({
-                      id: crypto.randomUUID(),
-                      message: "Can't go back less than the current date",
-                      senderId: crypto.randomUUID(),
-                      senderName: "System",
-                      time: 4000,
-                      type: "OVERDATE",
-                    })
-                  );
-                  return prev;
-                }
-              })
-            }
-          >
-            <NavigateBeforeIcon className="navigationIcon" />
-          </button>
-          <button
-            onClick={(e) => {
-              let value = month;
-              if (value + 1 <= 11) {
-                value += 1;
-              } else {
-                dispatch(
-                  newMessage({
-                    id: crypto.randomUUID(),
-                    message: "Can't go fowared more than the end of year date",
-                    senderId: crypto.randomUUID(),
-                    senderName: "System",
-                    time: 4000,
-                    type: "OVERDATE",
-                  })
-                );
+          {month > date.getMonth() && (
+            <button
+              onClick={(e) =>
+                setMonth((prev) => {
+                  if (prev - 1 >= 1 && prev - 1 >= date.getMonth()) {
+                    return prev - 1;
+                  } else {
+                    return prev;
+                  }
+                })
               }
-              setMonth(value);
-            }}
-          >
-            <NavigateNextIcon className="navigationIcon" />
-          </button>
+            >
+              <NavigateBeforeIcon className="navigationIcon" />
+            </button>
+          )}
+          {month < 11 && (
+            <button
+              onClick={(e) => {
+                let value = month;
+                if (value + 1 <= 11) {
+                  value += 1;
+                }
+                setMonth(value);
+              }}
+            >
+              <NavigateNextIcon className="navigationIcon" />
+            </button>
+          )}
         </div>
       </div>
       <div className="calanderWrapper">

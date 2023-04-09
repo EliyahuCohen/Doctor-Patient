@@ -127,3 +127,53 @@ export async function getUserUpcomingMeetings(req: Request, res: Response) {
   }
   return res.status(404).json({ message: "No such User" });
 }
+export async function meetingCompleted(req: Request, res: Response) {
+  const { meetingId, USER_ID } = req.body;
+  if (!isValidObjectId(USER_ID) || !isValidObjectId(USER_ID))
+    return res.status(400).json({ message: "Invalid Object ID" });
+  const meeting = await Meet.findOne({ _id: meetingId });
+  if (!meeting)
+    return res.status(404).json({ message: "No such meeting in db" });
+  const doctor = await User.findById(meeting.doctorId);
+  const patient = await User.findById(meeting.patientId);
+  if (doctor && patient) {
+    doctor.meetingsPatients.splice(
+      doctor.meetingsPatients.findIndex((one) => one == meeting._id),
+      1
+    );
+    patient.meetingsDoctors.splice(
+      patient.meetingsDoctors.findIndex((one) => one == meeting._id),
+      1
+    );
+  }
+  await doctor?.save();
+  await patient?.save();
+  meeting.completed = true;
+  await meeting.save();
+  return res.status(200).json({ message: "Meeting updated" });
+}
+export async function cancelMeeting(req: Request, res: Response) {
+  const { USER_ID } = req.body;
+  const { meetingId } = req.params;
+  if (!isValidObjectId(USER_ID) || !isValidObjectId(USER_ID))
+    return res.status(400).json({ message: "Invalid Object ID" });
+  const meeting = await Meet.findOne({ _id: meetingId });
+  if (!meeting)
+    return res.status(404).json({ message: "No such meeting in db" });
+  const doctor = await User.findById(meeting.doctorId);
+  const patient = await User.findById(meeting.patientId);
+  if (doctor && patient) {
+    doctor.meetingsPatients.splice(
+      doctor.meetingsPatients.findIndex((one) => one == meeting._id),
+      1
+    );
+    patient.meetingsDoctors.splice(
+      patient.meetingsDoctors.findIndex((one) => one == meeting._id),
+      1
+    );
+  }
+  await doctor?.save();
+  await patient?.save();
+  await Meet.findByIdAndDelete(meeting._id);
+  return res.status(200).json({ message: "Meeting Was Canceled" });
+}

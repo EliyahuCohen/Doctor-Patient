@@ -230,6 +230,9 @@ a {
   }
 }
 .oneMeeting {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 1rem;
   margin: 0.5rem auto;
   width: 100%;
@@ -239,10 +242,29 @@ a {
   max-width: 500px;
   @media screen and (max-width: 950px) {
     display: flex;
-    flex-direction: row-reverse;
     align-items: center;
+    * {
+      font-size: 1.1em;
+    }
     justify-content: space-between;
     max-width: 100%;
+  }
+  .deleteAndCheck {
+    opacity: 0;
+    scale: 0;
+    cursor: pointer;
+    transition: 0.3s;
+    .check {
+      color: #10a37f;
+    }
+  }
+  &:hover {
+    transition: 0.3s;
+
+    .deleteAndCheck {
+      opacity: 1;
+      scale: 1;
+    }
   }
   @media screen and (max-width: 800px) {
     font-size: smaller;

@@ -7,7 +7,8 @@ export interface IMeet {
   endTime: number;
   doctorId: typeof ObjectId;
   patientId: typeof ObjectId;
-  title: string;
+  patientName: string;
+  doctorName: string;
   completed: boolean;
 }
 
@@ -33,7 +34,11 @@ const meetingSchema: Schema = new mongoose.Schema<IMeet>(
       type: Types.ObjectId,
       required: true,
     },
-    title: {
+    patientName: {
+      type: String,
+      required: true,
+    },
+    doctorName: {
       type: String,
       required: true,
     },

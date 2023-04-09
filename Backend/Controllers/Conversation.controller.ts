@@ -21,6 +21,22 @@ export async function getConversation(req: Request, res: Response) {
   const { USER_ID } = req.body as Req;
   const { personId } = req.params;
   //checking for existing conversation between the two
+  const isInDoctorsList = await User.findById(USER_ID);
+  if (!isInDoctorsList) return res.status(404).json({ message: "No a Person" });
+  let status: Boolean = false;
+  for (let i = 0; i < isInDoctorsList.listOfDoctors.length; i++) {
+    if (isInDoctorsList.listOfDoctors[i] == (personId as any)) {
+      status = true;
+      break;
+    }
+  }
+  for (let i = 0; i < isInDoctorsList.listOfPatients.length; i++) {
+    if (isInDoctorsList.listOfPatients[i] == (personId as any)) {
+      status = true;
+      break;
+    }
+  }
+  if (!status) return res.status(404).json({ message: "Not in doctors list" });
   const conversationExists: IConversation | null = await Conversation.findOne({
     participants: { $all: [USER_ID, personId] },
   });
@@ -55,7 +71,7 @@ export async function PostNewMessage(req: Request, res: Response) {
   await conversation.save();
   const otherUser = usersID.filter((one) => one.userId == personId)[0];
   if (otherUser) {
-    let senderName:string = await User.findById(USER_ID).then(
+    let senderName: string = await User.findById(USER_ID).then(
       (res) => res?.fName + " " + res?.lName!
     );
     io.to(otherUser.socketId).emit("messageSent", {

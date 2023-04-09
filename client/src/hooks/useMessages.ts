@@ -2,9 +2,11 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { UserType } from "../features/userSlice";
 import { IMessage } from "../pages/CommunicationPage/Communication";
+import { useNavigate } from "react-router-dom";
 export function useMessages(
   setMessages: React.Dispatch<React.SetStateAction<IMessage[]>>
 ) {
+  const navigate = useNavigate();
   const { token } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
@@ -14,9 +16,12 @@ export function useMessages(
     },
   });
   function getConversation(personId: string) {
-    instance.get(`http://localhost:3001/messages/${personId}`).then((res) => {
-      setMessages(res.data.messages);
-    });
+    instance
+      .get(`http://localhost:3001/messages/${personId}`)
+      .then((res) => {
+        setMessages(res.data.messages);
+      })
+      .catch((err) => navigate("/dashboard"));
   }
   function sendNewMessage(message: string, personId: string) {
     instance

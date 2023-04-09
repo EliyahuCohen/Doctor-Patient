@@ -75,7 +75,8 @@ export interface IMeet {
   endTime: number;
   doctorId: string;
   patientId: string;
-  title: string;
+  patientName: string;
+  doctorName: string;
   completed: boolean;
   _id: string;
 }

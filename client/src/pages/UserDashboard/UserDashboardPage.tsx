@@ -127,7 +127,9 @@ const UserDashboardPage = () => {
                             {meeting.startTime}:00{" "}
                             <span>{meeting.startTime > 12 ? "PM" : "AM"}</span>
                           </p>
-                          <p className="meetingTitle">{meeting.title}</p>
+                          <p className="meetingTitle">
+                            Meeting With {meeting.doctorName}
+                          </p>
                         </div>
                       );
                     })}
@@ -149,7 +151,9 @@ const UserDashboardPage = () => {
                             {meeting.startTime}:00{" "}
                             <span>{meeting.startTime > 12 ? "PM" : "AM"}</span>
                           </p>
-                          <p className="meetingTitle">{meeting.title}</p>
+                          <p className="meetingTitle">
+                            Meeting With {meeting.patientName}
+                          </p>
                         </div>
                       );
                     })}

@@ -35,7 +35,8 @@ export async function createMeeting(
         endTime,
         patientId: USER_ID,
         startTime,
-        title: `Meeting with ${doctor.fName + " " + doctor.lName}`,
+        doctorName: doctor.fName + " " + doctor.lName,
+        patientName: patient.fName + " " + patient.lName,
         completed: false,
       });
       patient.meetingsDoctors.push(meeting._id);

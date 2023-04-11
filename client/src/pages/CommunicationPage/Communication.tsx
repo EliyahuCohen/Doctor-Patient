@@ -9,6 +9,7 @@ import { socket } from "../../App";
 export interface IMessage {
   message: string;
   sender: string;
+  read: boolean;
   createdAt: Date;
 }
 
@@ -40,6 +41,7 @@ const Communication = () => {
             createdAt: sock.createdAt,
             message: sock.message,
             sender: sock.senderId,
+            read: false,
           },
         ]);
       }

@@ -5,6 +5,7 @@ import { Request, Response } from "express";
 import { isValidObjectId } from "mongoose";
 import { io } from "../server";
 import { usersID } from "../socket";
+import Conversation, { IConversation } from "../Models/Conversation.model";
 
 export async function signup(req: Request, res: Response) {
   const { fName, lName, password, email, location } = req.body;

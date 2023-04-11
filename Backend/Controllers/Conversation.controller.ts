@@ -41,6 +41,10 @@ export async function getConversation(req: Request, res: Response) {
     participants: { $all: [USER_ID, personId] },
   });
   if (conversationExists) {
+    conversationExists.messages.forEach((message) => {
+      message.read = true;
+    });
+    await (conversationExists as any).save();
     return res.status(200).json(conversationExists);
   } else {
     //creating a new conversation between two of these people
@@ -68,7 +72,6 @@ export async function PostNewMessage(req: Request, res: Response) {
     createdAt: date,
     read: false,
   });
-  await conversation.save();
   const otherUser = usersID.filter((one) => one.userId == personId)[0];
   if (otherUser) {
     let senderName: string = await User.findById(USER_ID).then(
@@ -83,5 +86,9 @@ export async function PostNewMessage(req: Request, res: Response) {
       senderId: USER_ID,
     });
   }
-  return res.status(201).json({ sender: USER_ID, message, createdAt: date });
+  await conversation.save();
+
+  return res
+    .status(201)
+    .json({ sender: USER_ID, message, createdAt: date, read: false });
 }

@@ -1,4 +1,5 @@
-import mongoose, { ObjectId, Schema, Types } from "mongoose";
+import mongoose, { ObjectId, Schema } from "mongoose";
+
 export interface IMessage {
   sender: ObjectId;
   message: string;
@@ -10,6 +11,7 @@ export interface IConversation {
   participants: mongoose.Types.ObjectId[];
   messages: IMessage[];
 }
+
 export const messageSchema: Schema = new mongoose.Schema<IMessage>({
   sender: {
     type: mongoose.Types.ObjectId,
@@ -21,10 +23,6 @@ export const messageSchema: Schema = new mongoose.Schema<IMessage>({
   },
   message: {
     type: String,
-    required: true,
-  },
-  read: {
-    type: Boolean,
     required: true,
   },
 });
@@ -43,6 +41,7 @@ export const ConversationSchema = new mongoose.Schema<IConversation>(
   },
   { timestamps: true }
 );
+
 export default mongoose.model<IConversation>(
   "conversation",
   ConversationSchema

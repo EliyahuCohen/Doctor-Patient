@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Login } from "../../types/type";
 import { check } from "../../Utils/functions";
 import { useLogin } from "../../hooks/useLogin";
@@ -10,6 +10,7 @@ const SigninPage = () => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const { loginFunc } = useLogin(User, setMyError);
   return (
@@ -60,7 +61,7 @@ const SigninPage = () => {
             className="click"
             onClick={() => {
               if (check(5)) {
-                loginFunc();
+                loginFunc().then(() => navigate("/dashboard"));
               } else {
                 setMyError("");
               }

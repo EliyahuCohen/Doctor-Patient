@@ -1,22 +1,23 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { newMessage } from "../features/messagesSlice";
-import { UserType } from "../features/userSlice";
+import { UserType, updateUserInfo } from "../features/userSlice";
 import { User } from "../types/type";
+import { useSaveLocalStorage } from "./useSaveLocalStorage";
 
 export function useUpdateRole(userId: string) {
   const dispatch = useDispatch();
   const { token } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
+  const instance = axios.create({
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   async function updateRole(
     setUser: React.Dispatch<React.SetStateAction<User | null>>
   ) {
-    const instance = axios.create({
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
     instance
       .patch(`http://localhost:3001/users/updateRole/${userId}`)
       .then(function (res) {
@@ -48,5 +49,13 @@ export function useUpdateRole(userId: string) {
         console.log(err);
       });
   }
-  return { updateRole };
+  async function updateUser(user: User) {
+    instance
+      .patch(`http://localhost:3001/users/update/${userId}`, { user })
+      .then((res) => {
+        dispatch(updateUserInfo(res.data));
+      })
+      .catch((err) => console.log(err.response));
+  }
+  return { updateRole, updateUser };
 }

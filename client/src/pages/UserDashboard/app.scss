@@ -279,8 +279,10 @@ a {
     font-size: smaller;
   }
 }
-.firstMeeting {
-  background: #feeaf1;
+.oneMeeting {
+  @media screen and (max-width: 1200px) {
+    font-size: small;
+  }
 }
 .btn {
   padding: 0.3rem 1rem;

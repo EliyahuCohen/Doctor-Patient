@@ -5,8 +5,8 @@ import { Request, Response } from "express";
 import { isValidObjectId } from "mongoose";
 import { io } from "../server";
 import { usersID } from "../socket";
-import Conversation, { IConversation } from "../Models/Conversation.model";
-
+import { ScheduleDay } from "../types/types";
+//post
 export async function signup(req: Request, res: Response) {
   const { fName, lName, password, email, location } = req.body;
   if (!fName || !lName || !password || !email || !location) {
@@ -54,6 +54,7 @@ export async function login(req: Request, res: Response) {
   }
   return res.status(400).json({ message: "Incorrect password" });
 }
+//get
 export async function getAllUsers(req: Request, res: Response) {
   const { USER_ID } = req.body;
   const user = await User.findById(USER_ID);
@@ -76,13 +77,103 @@ export async function findOneUser(req: Request, res: Response) {
   if (!user) return res.status(404).json({ message: "No such user!" });
   return res.status(200).json(user);
 }
+export async function getAllDoctors(req: Request, res: Response) {
+  const doctors = await User.find({ role: 1, approved: true });
+  return res.status(200).json(doctors);
+}
+export async function postSchedual(
+  req: Request<{}, {}, { USER_ID: any; weeklySchedual: ScheduleDay[] }>,
+  res: Response
+) {
+  const { USER_ID, weeklySchedual } = req.body;
+  if (isValidObjectId(USER_ID)) {
+    const user = await User.findById(USER_ID);
+    if (!user) return res.status(404).json({ message: "No such user" });
+    const ws: Schedule[] = weeklySchedual.map((one) => {
+      return one.schedule;
+    });
+    if (user.schedule) {
+      user.schedule = ws;
+    }
+    user.messages.push({ message: "You updated your schedual list", type: 2 });
+    return await user.save().then((r) => {
+      const ws: ScheduleDay[] = r.schedule.map((one) => {
+        return {
+          day: "",
+          schedule: { day: one.day, times: one.times },
+        };
+      });
+      return res.status(200).json(ws);
+    });
+  }
+  return res.status(400).json({ message: "Invalid user ID" });
+}
+export async function getUserDoctorsAndPatients(req: Request, res: Response) {
+  const { USER_ID } = req.body;
+  if (!isValidObjectId(USER_ID))
+    return res.status(400).json({ message: "Not valid object id" });
+  const user = await User.findById(USER_ID);
+  if (!user) return res.status(404).json({ message: "No Such user" });
+  let patientsArray: any = [];
+  let doctorsArray: any = [];
+
+  for (let i = 0; i < user.listOfDoctors.length; i++) {
+    const temp = await User.findOne({
+      _id: user.listOfDoctors[i],
+      approved: true,
+    });
+    if (temp) {
+      doctorsArray.push(temp);
+    }
+  }
+  for (let i = 0; i < user.listOfPatients.length; i++) {
+    const temp = await User.findOne({
+      _id: user.listOfPatients[i],
+      approved: true,
+    });
+    if (temp) {
+      patientsArray.push(temp);
+    }
+  }
+  res.status(200).json({ doctorsArray, patientsArray });
+}
+export async function getSystemMessages(req: Request, res: Response) {
+  const { USER_ID } = req.body;
+  if (!isValidObjectId(USER_ID))
+    return res.status(400).json({ message: "Not valid object id" });
+  const messages = await User.findOne(
+    { _id: USER_ID },
+    { messages: 1, _id: 0 }
+  );
+  res.status(200).json(messages?.messages);
+}
+export async function getSchedual(
+  req: Request<{}, {}, { USER_ID: any }>,
+  res: Response
+) {
+  const { USER_ID } = req.body;
+  if (isValidObjectId(USER_ID)) {
+    const user = await User.findById(USER_ID);
+    if (!user || user.role != 1)
+      return res.status(404).json({ message: "No such user" });
+    const ws: ScheduleDay[] = user.schedule.map((one) => {
+      return {
+        day: "",
+        schedule: { day: one.day, times: one.times },
+      } as any;
+    });
+    return res.status(200).json({ schedual: ws });
+  }
+  return res.status(400).json({ message: "Invalid user ID" });
+}
+//update
 export async function updateUser(req: Request, res: Response) {
   const { id } = req.params;
   if (!isValidObjectId(id))
     return res.status(403).json({ message: "Invalid user ID" });
-  if (req.body.role != 0)
+  if (req.body.role == 1)
     return res.status(403).json({ message: "Not able to change the role" });
-  await User.updateOne({ _id: id }, { $set: { ...req.body } });
+  await User.updateOne({ _id: id }, { $set: { ...req.body.user } });
   const user = await User.findById(id);
   if (!user) return res.status(404).json({ message: "No such user!" });
   user?.messages.push({
@@ -91,16 +182,6 @@ export async function updateUser(req: Request, res: Response) {
   });
   await user?.save();
   return res.status(200).json(user);
-}
-export async function deleteUser(req: Request, res: Response) {
-  const { id } = req.params;
-  if (!isValidObjectId(id))
-    return res.status(403).json({ message: "Invalid user ID" });
-  const deleted = await User.findByIdAndDelete(id);
-  if (deleted) {
-    return res.status(202).json({ message: "User deleted" });
-  }
-  return res.status(400).json({ message: "User dose NOT exists" });
 }
 export async function updatePermissions(req: Request, res: Response) {
   const { USER_ID } = req.body;
@@ -139,16 +220,6 @@ export async function updatePermissions(req: Request, res: Response) {
     return res.status(202).json({ message: "User was updated" });
   });
 }
-export async function getSystemMessages(req: Request, res: Response) {
-  const { USER_ID } = req.body;
-  if (!isValidObjectId(USER_ID))
-    return res.status(400).json({ message: "Not valid object id" });
-  const messages = await User.findOne(
-    { _id: USER_ID },
-    { messages: 1, _id: 0 }
-  );
-  res.status(200).json(messages?.messages);
-}
 export async function updateDoctorsList(req: Request, res: Response) {
   const { id } = req.params;
   const { USER_ID } = req.body;
@@ -173,86 +244,14 @@ export async function updateDoctorsList(req: Request, res: Response) {
   }
   return res.status(400).json({ message: "No Such User Id" });
 }
-export async function getAllDoctors(req: Request, res: Response) {
-  const doctors = await User.find({ role: 1, approved: true });
-  return res.status(200).json(doctors);
-}
-export async function getUserDoctorsAndPatients(req: Request, res: Response) {
-  const { USER_ID } = req.body;
-  if (!isValidObjectId(USER_ID))
-    return res.status(400).json({ message: "Not valid object id" });
-  const user = await User.findById(USER_ID);
-  if (!user) return res.status(404).json({ message: "No Such user" });
-  const patientsArray: any = [];
-  const doctorsArray: any = [];
-
-  for (let i = 0; i < user.listOfDoctors.length; i++) {
-    const temp = await User.findOne({
-      _id: user.listOfDoctors[i],
-      approved: true,
-    });
-    if (temp) {
-      doctorsArray.push(temp);
-    }
+//delete
+export async function deleteUser(req: Request, res: Response) {
+  const { id } = req.params;
+  if (!isValidObjectId(id))
+    return res.status(403).json({ message: "Invalid user ID" });
+  const deleted = await User.findByIdAndDelete(id);
+  if (deleted) {
+    return res.status(202).json({ message: "User deleted" });
   }
-  for (let i = 0; i < user.listOfPatients.length; i++) {
-    const temp = await User.findOne({
-      _id: user.listOfPatients[i],
-      approved: true,
-    });
-    if (temp) {
-      patientsArray.push(temp);
-    }
-  }
-  res.status(200).json({ doctorsArray, patientsArray });
-}
-export interface ScheduleDay {
-  schedule: Schedule;
-  day: string;
-}
-export async function postSchedual(
-  req: Request<{}, {}, { USER_ID: any; weeklySchedual: ScheduleDay[] }>,
-  res: Response
-) {
-  const { USER_ID, weeklySchedual } = req.body;
-  if (isValidObjectId(USER_ID)) {
-    const user = await User.findById(USER_ID);
-    if (!user) return res.status(404).json({ message: "No such user" });
-    const ws: Schedule[] = weeklySchedual.map((one) => {
-      return one.schedule;
-    });
-    if (user.schedule) {
-      user.schedule = ws;
-    }
-    user.messages.push({ message: "You updated your schedual list", type: 2 });
-    return await user.save().then((r) => {
-      const ws: ScheduleDay[] = r.schedule.map((one) => {
-        return {
-          day: "",
-          schedule: { day: one.day, times: one.times },
-        };
-      });
-      return res.status(200).json(ws);
-    });
-  }
-  return res.status(400).json({ message: "Invalid user ID" });
-}
-export async function getSchedual(
-  req: Request<{}, {}, { USER_ID: any }>,
-  res: Response
-) {
-  const { USER_ID } = req.body;
-  if (isValidObjectId(USER_ID)) {
-    const user = await User.findById(USER_ID);
-    if (!user || user.role != 1)
-      return res.status(404).json({ message: "No such user" });
-    const ws: ScheduleDay[] = user.schedule.map((one) => {
-      return {
-        day: "",
-        schedule: { day: one.day, times: one.times },
-      } as any;
-    });
-    return res.status(200).json({ schedual: ws });
-  }
-  return res.status(400).json({ message: "Invalid user ID" });
+  return res.status(400).json({ message: "User dose NOT exists" });
 }

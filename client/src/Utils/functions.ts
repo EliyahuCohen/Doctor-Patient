@@ -9,6 +9,10 @@ import {
 } from "../features/adminSlice";
 import { updateRole } from "../features/userSlice";
 
+export function shuffleArray(array: any[]) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
 export function moveFoword(
   index: number,
   props: Register,

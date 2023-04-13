@@ -21,6 +21,33 @@
   .headline {
     text-transform: uppercase;
     font-size: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .updateInfo {
+    color: #10a37f;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+  .widthFull {
+    width: 100%;
+    &:hover {
+      color: #fff;
+      background: #10a37f;
+    }
+  }
+  .isMaleSection {
+    label {
+      cursor: pointer;
+    }
+    div {
+      width: 100%;
+      display: grid;
+      align-items: center;
+      grid-template-columns: 3fr 1fr;
+      position: relative;
+    }
   }
   .row {
     display: flex;
@@ -33,6 +60,17 @@
         font-weight: bold;
         padding: 0 1rem 0 0;
       }
+    }
+  }
+  .rowInput {
+    padding: 0 1rem;
+    input {
+      display: block;
+      width: 100%;
+      border: 0;
+      padding: 0.5rem 1rem;
+      outline: none;
+      border-bottom: 1px solid #10a37f;
     }
   }
   .fitEmoji {

@@ -3,6 +3,7 @@ import { isValidObjectId, ObjectId } from "mongoose";
 import Meet, { IMeet } from "../Models/Meeting.model";
 import User, { ITimeSpan } from "../Models/User.model";
 
+//post
 export async function createMeeting(
   req: Request<
     {},
@@ -52,6 +53,7 @@ export async function createMeeting(
     return res.status(400).json({ message: "Cant do that" });
   }
 }
+//get
 export async function getMeetings(
   req: Request<
     { doctorId: string | ObjectId },
@@ -132,6 +134,7 @@ export async function getUserUpcomingMeetings(req: Request, res: Response) {
   }
   return res.status(404).json({ message: "No such User" });
 }
+//update
 export async function meetingCompleted(req: Request, res: Response) {
   const { meetingId, USER_ID } = req.body;
   if (!isValidObjectId(USER_ID) || !isValidObjectId(USER_ID))
@@ -157,6 +160,7 @@ export async function meetingCompleted(req: Request, res: Response) {
   await meeting.save();
   return res.status(200).json({ message: "Meeting updated" });
 }
+//delete
 export async function cancelMeeting(req: Request, res: Response) {
   const { USER_ID } = req.body;
   const { meetingId } = req.params;

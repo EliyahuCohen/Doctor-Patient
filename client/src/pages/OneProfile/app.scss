@@ -16,6 +16,7 @@
     color: #229f97;
   }
 }
+
 .profileWrapper {
   margin-top: 6rem;
   display: flex;
@@ -140,6 +141,17 @@
         transition: 0.3s;
         color: #229f97;
       }
+    }
+  }
+}
+.second {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  p.image {
+    &:nth-child(1) {
+      margin: 0 auto;
     }
   }
 }

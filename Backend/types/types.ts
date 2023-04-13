@@ -1,3 +1,5 @@
+import { Schedule } from "../Models/User.model";
+
 export class SendMessage {
   message: string;
   createdAt: Date;
@@ -17,4 +19,8 @@ export class SendMessage {
     this.type = type;
     this.time = time;
   }
+}
+export interface ScheduleDay {
+  schedule: Schedule;
+  day: string;
 }

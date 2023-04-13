@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { UserType } from "../features/userSlice";
 import { IMessage } from "../pages/CommunicationPage/Communication";
 import { useNavigate } from "react-router-dom";
+import sendmessage from "../assets/sendmessage.mp3";
 export function useMessages(
   setMessages: React.Dispatch<React.SetStateAction<IMessage[]>>
 ) {
@@ -27,6 +28,7 @@ export function useMessages(
     instance
       .post("http://localhost:3001/messages/message", { message, personId })
       .then((res) => {
+        new Audio(sendmessage).play();
         const date = new Date();
         setMessages((prev) => [...prev, res.data]);
       });

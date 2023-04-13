@@ -10,13 +10,13 @@ interface Req {
   USER_ID: mongoose.Types.ObjectId;
   personId: mongoose.Types.ObjectId;
 }
-
 interface ReqMessage {
   USER_ID: mongoose.Types.ObjectId;
   personId: mongoose.Types.ObjectId;
   message: string;
 }
 
+//get
 export async function getConversation(req: Request, res: Response) {
   const { USER_ID } = req.body as Req;
   const { personId } = req.params;
@@ -55,6 +55,7 @@ export async function getConversation(req: Request, res: Response) {
     res.status(201).json(newConversation);
   }
 }
+//post
 export async function PostNewMessage(req: Request, res: Response) {
   const { USER_ID, message, personId } = req.body as ReqMessage;
   const conversation = await Conversation.findOne({

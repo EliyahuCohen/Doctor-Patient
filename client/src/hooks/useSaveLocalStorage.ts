@@ -4,7 +4,10 @@ import { setUser, UserType } from "../features/userSlice";
 export function useSaveLocalStorage() {
   const dispatch = useDispatch();
 
-  function saveLocalStorage(user: UserType) {}
+  function saveLocalStorage(user: UserType) {
+    localStorage.setItem("user", JSON.stringify(user));
+    dispatch(setUser(user));
+  }
   function createIfDontHave() {
     if (
       localStorage.getItem("user") == null ||

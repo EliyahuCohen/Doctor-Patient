@@ -24,6 +24,9 @@ const userSlice = createSlice({
       state.token = action.payload.token;
       state.user = action.payload.user;
     },
+    updateUserInfo: (state: UserType, action) => {
+      state.user = action.payload;
+    },
     logout: (state) => {
       state.token = null;
       state.user = null;
@@ -47,6 +50,6 @@ const userSlice = createSlice({
     },
   },
 });
-export const { setUser, logout, updateDoctorList, updateRole } =
+export const { setUser, logout, updateDoctorList, updateRole, updateUserInfo } =
   userSlice.actions;
 export default userSlice.reducer;

@@ -8,7 +8,7 @@ const About = () => {
       <div className="divs">
         <motion.img
           initial={{ x: -250, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
+          whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 1 }}
           src={image}
           alt="about section picture"

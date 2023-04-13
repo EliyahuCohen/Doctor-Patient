@@ -44,7 +44,7 @@ const OneProfile = () => {
       <div className="profileWrapper">
         <span className="line2"></span>
       </div>
-      <div className="profileWrapper">
+      <div className="profileWrapper second">
         <p className="image">{user.role == 1 ? "👨‍⚕️" : "😷"}</p>
         <div className="leftProfile">
           <h2>

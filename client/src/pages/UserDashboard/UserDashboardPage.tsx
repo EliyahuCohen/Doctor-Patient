@@ -11,7 +11,7 @@ import UserDashborad from "../../components/DashboardUser/UserDashborad";
 import { useMeetings } from "../../hooks/useMeetings";
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-
+import { shuffleArray } from "../../Utils/functions";
 const UserDashboardPage = () => {
   const { token, user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
@@ -79,7 +79,7 @@ const UserDashboardPage = () => {
       </div>
       <div className="list">
         <div className="users">
-          {doctors.concat(patients).map((user) => {
+          {shuffleArray(doctors.concat(patients)).map((user) => {
             if (user.role == show || show == 0)
               return <UserDashborad key={user._id} user={user} />;
           })}

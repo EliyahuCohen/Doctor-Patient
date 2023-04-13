@@ -22,6 +22,27 @@
     color: #f29890;
   }
 }
+.moreBtn {
+  max-width: 600px;
+  display: flex;
+  margin: 0 auto;
+  justify-content: right;
+  .icon {
+    transition: 0.2s;
+    border-radius: 100vh;
+    color: #fff;
+    border: 2px solid #ff786e;
+    transition: 1s;
+    background: #ff786e;
+    &:hover {
+      transition: 1s;
+      rotate: 360deg;
+      color: #ff786e;
+      background: #fff;
+      border: 2px solid #ff786e;
+    }
+  }
+}
 .wrapperDate {
   max-width: 1700px;
   margin: 0 auto;

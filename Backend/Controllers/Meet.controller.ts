@@ -95,6 +95,12 @@ export async function getMeetings(
       }
     }
     schedual.times = timesTemp as any;
+    if (date.getDate() == new Date().getDate() + 1) {
+      let result = schedual.times.filter(
+        (one) => one.startTime >= new Date().getHours()
+      );
+      schedual.times = result as any;
+    }
     return res.status(200).json(schedual);
   } else {
     return res

@@ -7,10 +7,13 @@ import { useSchedual } from "../../hooks/useSchedual";
 import { useParams } from "react-router-dom";
 import { Schedule } from "../../types/type";
 import OneMeeting from "../../components/OneMeeting/OneMeeting";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
 const BookingPage = () => {
   const { id } = useParams();
   const [error, setError] = useState<boolean>(false);
+  const [limit, setLimit] = useState<number>(5);
   const [availableMeetings, setAvailableMeetings] = useState<Schedule | null>(
     null
   );
@@ -55,19 +58,42 @@ const BookingPage = () => {
         </div>
         {!error &&
           availableMeetings?.times?.map((meeting, index: number) => {
-            return (
-              <OneMeeting
-                availableMeetings={availableMeetings}
-                date={date}
-                id={id}
-                index={index}
-                meeting={meeting}
-                selectedDate={selectedDate}
-                setAvailableMeetings={setAvailableMeetings}
-                key={meeting.endTime + index}
-              />
-            );
+            if (index < limit) {
+              return (
+                <OneMeeting
+                  availableMeetings={availableMeetings}
+                  date={date}
+                  id={id}
+                  index={index}
+                  meeting={meeting}
+                  selectedDate={selectedDate}
+                  setAvailableMeetings={setAvailableMeetings}
+                  key={meeting.endTime + index}
+                />
+              );
+            }
           })}
+        {!error &&
+          availableMeetings?.times &&
+          availableMeetings?.times.length > 5 && (
+            <div className="moreBtn">
+              {limit == 5 ? (
+                <ExpandMoreIcon
+                  className="icon"
+                  titleAccess="More Meetings"
+                  fontSize="medium"
+                  onClick={() => setLimit(availableMeetings!.times!.length)}
+                />
+              ) : (
+                <KeyboardArrowUpIcon
+                  className="icon"
+                  titleAccess="Less Meetings"
+                  onClick={() => setLimit(5)}
+                  fontSize="medium"
+                />
+              )}
+            </div>
+          )}
       </div>
     </div>
   );

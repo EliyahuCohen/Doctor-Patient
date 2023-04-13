@@ -15,7 +15,7 @@ const About = () => {
         />
         <motion.div
           initial={{ x: 250, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
+          whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 1 }}
         >
           <h2>About Us</h2>

@@ -22,11 +22,26 @@
     color: #f29890;
   }
 }
+@keyframes upDown {
+  0% {
+    transition: 0.3s;
+    transform: translateY(0px);
+  }
+  50% {
+    transition: 0.3s;
+    transform: translateY(10px);
+  }
+  100% {
+    transition: 0.3s;
+    transform: translateY(0);
+  }
+}
 .moreBtn {
   max-width: 600px;
   display: flex;
   margin: 0 auto;
-  justify-content: right;
+  justify-content: center;
+  animation: upDown 3s infinite;
   .icon {
     transition: 0.2s;
     border-radius: 100vh;
@@ -78,8 +93,22 @@
 .messageDoc {
   text-align: center;
   color: #ff786e;
-  margin-top: 1.5rem;
-  font-size: 1.2rem;
+  margin-top: 3.5rem;
+  font-size: 1.5rem;
+}
+.notMore {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.emptyIcon {
+  text-align: center;
+  margin-top: 5rem;
+  font-size: 5rem !important;
+  color: #f29890;
+  rotate: -45deg;
 }
 .book {
   padding: 0.5rem 0.8rem;
@@ -136,15 +165,5 @@
     animation: spin 2s;
     transform-origin: center;
     animation-iteration-count: infinite;
-  }
-}
-@keyframes spin {
-  0% {
-    transition: 0.3s;
-    transform: rotate(0deg);
-  }
-  100% {
-    transition: 0.3s;
-    transform: rotate(360deg);
   }
 }

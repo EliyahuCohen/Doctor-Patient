@@ -1,5 +1,5 @@
 import "./app.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import DatePicker from "../../components/DatePicker/DatePicker";
 import BlockIcon from "@mui/icons-material/Block";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
@@ -44,14 +44,20 @@ const BookingPage = () => {
             <h1 className="messageDoc">
               <BlockIcon fontSize="large" />
             </h1>
-            <h2 className="messageDoc">Not Working Today</h2>
+            <h2 className="messageDoc">Not a Working Today</h2>
           </>
         ) : null}
         {availableMeetings?.times?.length == 0 && !error ? (
-          <h1 className="messageDoc">No Meetings Left 😢 </h1>
+          <div className="notMore">
+            <h1 className="messageDoc">No Meetings Available </h1>
+            <HourglassEmptyIcon className="emptyIcon" />
+          </div>
         ) : null}
         {!availableMeetings?.times && (
-          <h1 className="messageDoc">No Meetings Left😢 </h1>
+          <div className="notMore">
+            <h1 className="messageDoc">No Meetings Available </h1>
+            <HourglassEmptyIcon className="emptyIcon" />
+          </div>
         )}
         <div className="loadingIcon">
           {!error && loading && <HourglassEmptyIcon fontSize="large" />}
@@ -99,4 +105,4 @@ const BookingPage = () => {
   );
 };
 
-export default BookingPage;
+export default memo(BookingPage);

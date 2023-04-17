@@ -13,7 +13,7 @@ export function useLogin(
 ) {
   const { saveLocalStorage } = useSaveLocalStorage();
   const dispatch = useDispatch();
-  async function loginFunc() {
+  async function loginFunc(navigate: any) {
     try {
       const res = await axios.post("http://localhost:3001/users/login", prop);
       setMyError(() => "");
@@ -23,6 +23,7 @@ export function useLogin(
         dispatch(setLiveUsers(res.data.usersId));
       }
       saveLocalStorage(res.data);
+      navigate("/dahsboard");
       socket.emit("userConnected", res.data.user);
     } catch (err: any) {
       console.log("error", err);

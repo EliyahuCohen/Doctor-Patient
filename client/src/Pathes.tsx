@@ -9,6 +9,7 @@ import {
   SystemMessagesPage,
   UserDashboardPage,
   BookingPage,
+  UserManagment,
 } from "./pages/index";
 import { Navigate } from "react-router-dom";
 import { User } from "./types/type";
@@ -81,6 +82,11 @@ const routes: RouteType[] = [
     path: "booking/:id",
     element: ({ user }: { user: User }) =>
       user != null && user.role != 0 ? <BookingPage /> : <Navigate to="/" />,
+  },
+  {
+    path: "userDetials/:id",
+    element: ({ user }: { user: User }) =>
+      user != null && user.role == 1 ? <UserManagment /> : <Navigate to="/" />,
   },
 ];
 

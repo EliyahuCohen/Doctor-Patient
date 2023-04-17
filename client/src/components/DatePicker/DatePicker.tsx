@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from "react";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import { useDispatch } from "react-redux";
-import { newMessage } from "../../features/messagesSlice";
 interface IMyDate {
   monthName: string;
   maxDays: 28 | 29 | 30 | 31;

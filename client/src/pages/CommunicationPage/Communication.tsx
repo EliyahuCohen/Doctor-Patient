@@ -75,7 +75,7 @@ const Communication = () => {
           })}
         </div>
       </div>
-      <form className="sendingMessage" action="">
+      <form className="sendingMessage">
         <input ref={inputRef} type="text" placeholder={`Write a message...`} />
         <button onClick={(e) => handleClick(e)}>
           <SendOutlinedIcon

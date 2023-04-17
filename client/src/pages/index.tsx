@@ -8,3 +8,4 @@ export { default as UserDashboardPage } from "./UserDashboard/UserDashboardPage"
 export { default as Communication } from "./CommunicationPage/Communication";
 export { default as SystemMessagesPage } from "./SystemMessages/SystemMessagesPage";
 export { default as BookingPage } from "./Booking/BookingPage";
+export { default as UserManagment } from "./UserManagment/UserManagment";

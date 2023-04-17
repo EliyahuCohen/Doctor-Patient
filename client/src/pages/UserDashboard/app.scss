@@ -290,3 +290,33 @@ a {
   border-radius: 100vh;
   margin: 1rem;
 }
+.searchField {
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  input {
+    width: 100%;
+    max-width: 450px;
+    transition: 0.3s;
+    padding: 0.3rem 0.5rem;
+    margin-top: 2rem;
+    border: none;
+    outline: none;
+    &:focus {
+      transition: 0.3s;
+      border-bottom: 2px solid #ea4c89;
+    }
+  }
+  @media screen and (max-width: 950px) {
+    width: 100%;
+    input {
+      max-width: 100%;
+      border-bottom: 2px solid #10a37f;
+      padding-left: 0;
+    }
+  }
+}
+.meetingTime {
+  font-size: smaller;
+  font-weight: bolder;
+}

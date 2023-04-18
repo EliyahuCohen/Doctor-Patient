@@ -11,7 +11,6 @@ import UserDashborad from "../../components/DashboardUser/UserDashborad";
 import { useMeetings } from "../../hooks/useMeetings";
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import { shuffleArray } from "../../Utils/functions";
 import { format } from "date-fns";
 const UserDashboardPage = () => {
   const { token, user } = useSelector(
@@ -31,6 +30,7 @@ const UserDashboardPage = () => {
   useEffect(() => {
     getUpcomingMeetings(setUpcomingDoctors, setUpcomingPatients);
   }, []);
+
   return (
     <div className="dashboardWrapper">
       <div className="headingMessage">
@@ -85,47 +85,43 @@ const UserDashboardPage = () => {
           placeholder="Search..."
         />
       </div>
+
       <div className="list">
         <div className="users">
-          {doctors
-            .concat(patients)
-            .filter(
-              (us, index, arr) =>
-                arr.findIndex(
-                  (user) => user._id === us._id && user.role === us.role
-                ) === index
-            )
-            .map((us) => {
-              if (
-                us.role == show ||
-                (show == 0 &&
-                  (us.email
+          {show == 2 && patients.length == 0 && (
+            <h3 style={{ textAlign: "center" }}>No Patients</h3>
+          )}
+          {show == 1 && doctors.length == 0 && (
+            <h3 style={{ textAlign: "center" }}>No Doctors</h3>
+          )}
+          {doctors.concat(patients).map((us) => {
+            if (
+              us.role == show ||
+              (show == 0 &&
+                (us.email
+                  .toLocaleLowerCase()
+                  .includes(searchText.toLocaleLowerCase()) ||
+                  us.fName
                     .toLocaleLowerCase()
                     .includes(searchText.toLocaleLowerCase()) ||
-                    us.fName
-                      .toLocaleLowerCase()
-                      .includes(searchText.toLocaleLowerCase()) ||
-                    us.lName
-                      .toLocaleLowerCase()
-                      .includes(searchText.toLocaleLowerCase()) ||
-                    us.location
-                      .toLocaleLowerCase()
-                      .includes(searchText.toLocaleLowerCase())))
-              )
-                if (
-                  user?.listOfPatients.includes(us._id) ||
-                  (user?.listOfPatients.includes(us._id) &&
-                    user?.listOfDoctors.includes(us._id))
-                ) {
-                  return (
-                    <Link to={`/userDetials/${us._id}`} key={us._id}>
-                      <UserDashborad key={us._id} user={us} />
-                    </Link>
-                  );
-                } else {
-                  return <UserDashborad key={us._id} user={us} />;
-                }
-            })}
+                  us.lName
+                    .toLocaleLowerCase()
+                    .includes(searchText.toLocaleLowerCase()) ||
+                  us.location
+                    .toLocaleLowerCase()
+                    .includes(searchText.toLocaleLowerCase())))
+            ) {
+              if (user?.listOfPatients.includes(us._id)) {
+                return (
+                  <Link to={`/userDetials/${us._id}`} key={us._id}>
+                    <UserDashborad key={us._id} user={us} />
+                  </Link>
+                );
+              } else {
+                return <UserDashborad key={us._id} user={us} />;
+              }
+            }
+          })}
         </div>
         <div>
           <div className="meetingsWrapper">
@@ -159,14 +155,15 @@ const UserDashboardPage = () => {
                 {tabNumber == 1 &&
                   upcomingDoctors.map((meeting: IMeet, index: number) => {
                     return (
-                      <div
-                        className={
-                          index == 0 ? "oneMeeting firstMeeting" : `oneMeeting`
-                        }
-                        key={meeting._id}
-                      >
+                      <div className="oneMeeting" key={meeting._id + index}>
                         <div>
                           <p className="meetingTime">
+                            <strong>{meeting.startTime}:00 </strong>
+                            <span className="nightDay">
+                              {meeting.startTime > 12 ? " pm " : " am "}
+                            </span>
+                          </p>
+                          <p className="rightSide">
                             {format(
                               new Date(
                                 `${new Date(meeting.date).getMonth() + 1}-${
@@ -176,20 +173,17 @@ const UserDashboardPage = () => {
                               "dd/MM/yyyy"
                             )}
                           </p>
-                          <p className="startMeetingTime">
-                            {meeting.startTime}:00{" "}
-                            <span>{meeting.startTime > 12 ? "PM" : "AM"}</span>
-                          </p>
-                          <p className="meetingTitle">
-                            Meeting With {meeting.doctorName}
-                          </p>
                         </div>
-                        <div className="deleteAndCheck">
+                        <div className="secondMeetingPart">
+                          <p>Meetings with {meeting.doctorName}</p>
+                          <p>{(meeting.endTime - meeting.startTime) * 60}min</p>
+                        </div>
+                        <div className="iconDiv">
                           {meeting.doctorId == user?._id && (
                             <CheckIcon
+                              color="success"
                               fontSize="small"
-                              className="check"
-                              titleAccess="Meeting Completed"
+                              titleAccess="Meeting Complete"
                               onClick={() =>
                                 meetingCompleted(
                                   meeting._id,
@@ -201,9 +195,9 @@ const UserDashboardPage = () => {
                             />
                           )}
                           <DeleteOutlineOutlinedIcon
+                            color="error"
                             fontSize="small"
-                            titleAccess="Meeting Canceled"
-                            className="trash"
+                            titleAccess="Cancle Meeting"
                             onClick={() =>
                               cancelMeeting(
                                 meeting._id,
@@ -221,14 +215,15 @@ const UserDashboardPage = () => {
                   upcomingPatients.length > 0 &&
                   upcomingPatients.map((meeting: IMeet, index: number) => {
                     return (
-                      <div
-                        className={
-                          index == 0 ? "oneMeeting firstMeeting" : `oneMeeting`
-                        }
-                        key={meeting._id}
-                      >
+                      <div className="oneMeeting" key={meeting._id + index}>
                         <div>
                           <p className="meetingTime">
+                            <strong>{meeting.startTime}:00 </strong>
+                            <span className="nightDay">
+                              {meeting.startTime > 12 ? " pm " : " am "}
+                            </span>
+                          </p>
+                          <p className="rightSide">
                             {format(
                               new Date(
                                 `${new Date(meeting.date).getMonth() + 1}-${
@@ -238,20 +233,17 @@ const UserDashboardPage = () => {
                               "dd/MM/yyyy"
                             )}
                           </p>
-                          <p className="startMeetingTime">
-                            {meeting.startTime}:00{" "}
-                            <span>{meeting.startTime > 12 ? "PM" : "AM"}</span>
-                          </p>
-                          <p className="meetingTitle">
-                            Meeting With {meeting.patientName}
-                          </p>
                         </div>
-                        <div className="deleteAndCheck">
+                        <div className="secondMeetingPart">
+                          <p>Meetings with {meeting.patientName}</p>
+                          <p>{(meeting.endTime - meeting.startTime) * 60}min</p>
+                        </div>
+                        <div className="iconDiv">
                           {meeting.doctorId == user?._id && (
                             <CheckIcon
+                              color="success"
                               fontSize="small"
-                              className="check"
-                              titleAccess="Meeting Completed"
+                              titleAccess="Meeting Complete"
                               onClick={() =>
                                 meetingCompleted(
                                   meeting._id,
@@ -263,9 +255,9 @@ const UserDashboardPage = () => {
                             />
                           )}
                           <DeleteOutlineOutlinedIcon
+                            color="error"
                             fontSize="small"
-                            titleAccess="Meeting Canceled"
-                            className="trash"
+                            titleAccess="Cancle Meeting"
                             onClick={() =>
                               cancelMeeting(
                                 meeting._id,

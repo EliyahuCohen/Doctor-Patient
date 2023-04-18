@@ -231,59 +231,6 @@ a {
     padding: 1rem;
   }
 }
-.oneMeeting {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  margin: 0.5rem auto;
-  width: 100%;
-  background: #f1f5fa;
-  border-radius: 12px;
-  color: #64646e;
-  max-width: 500px;
-  @media screen and (max-width: 950px) {
-    display: flex;
-    align-items: center;
-    * {
-      font-size: 1.1em;
-    }
-    justify-content: space-between;
-    max-width: 100%;
-  }
-  .deleteAndCheck {
-    opacity: 0;
-    scale: 0;
-    cursor: pointer;
-    transition: 0.3s;
-    .check {
-      color: #10a37f;
-    }
-  }
-  &:hover {
-    transition: 0.3s;
-
-    .deleteAndCheck {
-      opacity: 1;
-      scale: 1;
-    }
-  }
-  @media screen and (max-width: 800px) {
-    font-size: smaller;
-  }
-  * {
-    background: transparent;
-  }
-  .startMeetingTime {
-    color: #b4b6be;
-    font-size: smaller;
-  }
-}
-.oneMeeting {
-  @media screen and (max-width: 1200px) {
-    font-size: small;
-  }
-}
 .btn {
   padding: 0.3rem 1rem;
   border: 2px solid #10a37f;
@@ -316,7 +263,55 @@ a {
     }
   }
 }
+.oneMeeting {
+  padding: 1rem 0 0 1rem;
+  position: relative;
+  &:not(:first-child) {
+    margin-top: 1.5rem;
+  }
+  div {
+    &:first-child {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .rightSide {
+        color: darkgray;
+        font-size: smaller;
+      }
+    }
+  }
+}
+
 .meetingTime {
-  font-size: smaller;
-  font-weight: bolder;
+  color: rgba(0, 0, 0, 0.778);
+  .nightDay {
+    font-size: smaller;
+    color: rgba(0, 0, 0, 0.592);
+  }
+}
+.secondMeetingPart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-radius: 10vh;
+  p {
+    &:last-child {
+      color: rgba(0, 0, 0, 0.707);
+      font-size: smaller;
+    }
+  }
+}
+.iconDiv {
+  display: flex;
+  justify-content: right;
+  * {
+    opacity: 0.7;
+    transition: 0.3s;
+    &:hover {
+      cursor: pointer;
+      transition: 0.3s;
+      opacity: 1;
+    }
+  }
 }

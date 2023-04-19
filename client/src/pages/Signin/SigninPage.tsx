@@ -4,7 +4,10 @@ import { Login } from "../../types/type";
 import { check } from "../../Utils/functions";
 import { useLogin } from "../../hooks/useLogin";
 import "./app.scss";
+import { useDispatch } from "react-redux";
+import { newMessage } from "../../features/messagesSlice";
 const SigninPage = () => {
+  const dispatch = useDispatch();
   const [myError, setMyError] = useState<string>("");
   const [User, setUser] = useState<Login>({
     email: "",
@@ -18,7 +21,21 @@ const SigninPage = () => {
       <div>
         <h1>Welcome back </h1>
 
-        <div className="btn">
+        <div
+          className="btn"
+          onClick={() =>
+            dispatch(
+              newMessage({
+                id: crypto.randomUUID(),
+                message: "Sorry the service is not available",
+                senderId: crypto.randomUUID(),
+                senderName: "System",
+                time: 5000,
+                type: "DELETE",
+              })
+            )
+          }
+        >
           <img
             src="https://www.vectorlogo.zone/logos/google/google-icon.svg"
             alt=""

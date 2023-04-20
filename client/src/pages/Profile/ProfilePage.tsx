@@ -59,6 +59,12 @@ const ProfilePage = () => {
         >
           Manage Work Time
         </button>
+        <button
+          onClick={() => setSelected(3)}
+          className={`${selected == 3 ? "selected" : ""}`}
+        >
+          Prescritption
+        </button>
       </div>
       <div className="profileWrapper">
         {selected == 1 && (
@@ -205,6 +211,11 @@ const ProfilePage = () => {
         {theUser && theUser.role == 1 && selected == 2 && (
           <div className="workTime">
             <TimeSelect />
+          </div>
+        )}
+        {user && selected == 3 && (
+          <div>
+            <h1>Prescription List:</h1>
           </div>
         )}
       </div>

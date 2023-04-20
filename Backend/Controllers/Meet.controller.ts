@@ -109,6 +109,7 @@ export async function getMeetings(
   }
 }
 export async function getUserUpcomingMeetings(req: Request, res: Response) {
+  //showing meetings with doctor also of the future meetings but with patinets the doctor need to see only his today's meetings make sence
   const { USER_ID } = req.body;
   if (!isValidObjectId(USER_ID))
     return res.status(400).json({ message: "Invalid use ID" });
@@ -126,10 +127,14 @@ export async function getUserUpcomingMeetings(req: Request, res: Response) {
         meetingsDoctors.push(meeting);
       }
     }
+    const date = new Date();
     for (let i = 0; i < user.meetingsPatients.length; i++) {
       const meeting = await Meet.findOne({
         _id: user.meetingsPatients[i]._id,
-        date: { $gte: new Date() },
+        date: new Date(
+          `${date.getMonth() + 1}-${date.getDate() + 1}-${date.getFullYear()}`
+        ),
+
         completed: false,
       });
       if (meeting) {

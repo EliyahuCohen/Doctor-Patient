@@ -28,6 +28,9 @@
   }
 }
 .profileWrapper {
+  * {
+    background: transparent;
+  }
   .innerWrraper {
     max-width: 500px;
   }

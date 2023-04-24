@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GrStatusGood, GrStatusWarning } from "react-icons/gr";
 import { BiErrorAlt } from "react-icons/bi";
-import { motion } from "framer-motion";
+import { motion, useAnimate, usePresence } from "framer-motion";
 import "./app.scss";
 import { IAlert } from "../../types/type";
 import { useGetSystemMessages } from "../../hooks/useGetSystemMessages";
@@ -29,31 +29,11 @@ const SystemMessagesPage = () => {
               (choice == 3 && message.type == 3)
             ) {
               return (
-                <motion.div
-                  layout
-                  transition={{ duration: 1 }}
-                  key={(index + message.message + message.type).toString()}
-                >
-                  <motion.div
-                    layout
-                    className={`systemAlert ${
-                      message.type == 1
-                        ? "good"
-                        : message.type == 3
-                        ? "bad"
-                        : ""
-                    }`}
-                  >
-                    {message.type == 2 ? (
-                      <GrStatusWarning fontSize="large" />
-                    ) : message.type == 1 ? (
-                      <GrStatusGood />
-                    ) : (
-                      <BiErrorAlt />
-                    )}
-                    <strong>{message.message}</strong>
-                  </motion.div>
-                </motion.div>
+                <OneMessageAlert
+                  key={message.message + index}
+                  index={index}
+                  message={message}
+                />
               );
             }
           })}
@@ -63,3 +43,51 @@ const SystemMessagesPage = () => {
 };
 
 export default SystemMessagesPage;
+
+const OneMessageAlert = ({
+  message,
+  index,
+}: {
+  message: IAlert;
+  index: number;
+}) => {
+  const [scope, animate] = useAnimate();
+  const [isPresence, safeToRemove] = usePresence();
+  useEffect(() => {
+    async function checkAnimation() {
+      if (isPresence) {
+        await animate(
+          scope.current,
+          {
+            opacity: [0, 1],
+          },
+          { duration: 0.5, delay: 0.1 * index }
+        );
+      }
+    }
+    checkAnimation();
+  }, []);
+  return (
+    <motion.div
+      ref={scope}
+      transition={{ duration: 1 }}
+      key={(index + message.message + message.type).toString()}
+    >
+      <motion.div
+        layout
+        className={`systemAlert ${
+          message.type == 1 ? "good" : message.type == 3 ? "bad" : ""
+        }`}
+      >
+        {message.type == 2 ? (
+          <GrStatusWarning fontSize="large" />
+        ) : message.type == 1 ? (
+          <GrStatusGood />
+        ) : (
+          <BiErrorAlt />
+        )}
+        <strong>{message.message}</strong>
+      </motion.div>
+    </motion.div>
+  );
+};

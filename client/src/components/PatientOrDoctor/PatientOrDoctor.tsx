@@ -3,26 +3,32 @@ import { FaTooth, FaGlasses, FaStethoscope } from "react-icons/fa";
 import { SlUserFemale } from "react-icons/sl";
 import "./app.scss";
 import { MdOutlineExpandMore, MdOutlinePersonPin } from "react-icons/md";
-import { motion } from "framer-motion";
+import { motion, useAnimate, usePresence } from "framer-motion";
 import { useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { UserType } from "../../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useUpdateRole } from "../../hooks/useUpdateRole";
+
 const PatientOrDoctor = ({
   user,
   status,
   setDoctors,
   setMoreDoctors,
   canRemove,
+  index,
 }: {
   status: boolean;
   user: User;
   setDoctors: React.Dispatch<React.SetStateAction<User[]>>;
   setMoreDoctors: React.Dispatch<React.SetStateAction<User[] | null>>;
   canRemove: boolean;
+  index: number;
 }) => {
   const dispatch = useDispatch();
+  const [scope, animate] = useAnimate();
+  const [isPresence, safeToRemove] = usePresence();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { user: TheUser } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
@@ -38,8 +44,23 @@ const PatientOrDoctor = ({
     }
     updateUserDoctorsList(user._id);
   }
+
+  useEffect(() => {
+    async function checkAnimation() {
+      if (isPresence) {
+        await animate(
+          scope.current,
+          {
+            opacity: [0, 1],
+          },
+          { duration: 0.5, delay: 0.2 * index }
+        );
+      }
+    }
+    checkAnimation();
+  }, []);
   return (
-    <motion.div className="oneUserWrapper">
+    <motion.div ref={scope} className="oneUserWrapper">
       <div className="topPart">
         <div className="userProfile">
           <div className="side1">

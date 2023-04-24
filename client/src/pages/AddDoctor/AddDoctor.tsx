@@ -4,8 +4,8 @@ import { User } from "../../types/type";
 import { useGetAllDoctors } from "../../hooks/useGetAllDoctors";
 import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+import { MdPersonRemove } from "react-icons/md";
+import { MdPersonAddAlt1 } from "react-icons/md";
 import { useUpdateDoctorList } from "../../hooks/useUpdateDoctorList";
 const AddDoctor = () => {
   const { user } = useSelector(
@@ -64,14 +64,14 @@ const AddDoctor = () => {
                       title={"remove doctor"}
                       onClick={() => updateList(doc._id)}
                     >
-                      <RemoveIcon className="icon" fontSize="medium" />
+                      <MdPersonRemove className="icon" fontSize="medium" />
                     </button>
                   ) : (
                     <button
                       title={"add doctor"}
                       onClick={() => updateList(doc._id)}
                     >
-                      <AddIcon className="icon" fontSize="medium" />
+                      <MdPersonAddAlt1 className="icon" fontSize="medium" />
                     </button>
                   )}
                 </div>

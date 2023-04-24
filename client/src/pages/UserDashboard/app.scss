@@ -1,317 +1,46 @@
 .dashboardWrapper {
-  padding: 1rem;
+  margin: 6rem auto;
   max-width: 1700px;
-  margin: 0 auto;
-  margin-top: 3rem;
-  .headingMessage {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: center;
-    align-items: center;
-    img {
-      width: 100%;
-      max-width: 700px;
-    }
-
-    @media screen and (max-width: 1000px) {
-      grid-template-columns: 1fr;
-    }
-    div {
-      background: #10a37f;
-      height: fit-content;
-      padding: 6rem 3rem;
-      border-radius: 3rem;
-    }
-    padding: 2rem 1rem;
-    h1,
-    p {
-      color: #fff;
-      background: transparent;
-    }
-    p {
-      margin-top: 1rem;
-      max-width: 650px;
-    }
-    h1 {
-      font-size: 3em;
-      @media screen and (max-width: 1000px) {
-        font-size: 2rem;
+  padding: 1rem;
+  display: flex;
+  @media screen and (max-width: 1200px) {
+    padding: 0;
+  }
+  .sidebar {
+    flex: 0.2;
+    @media screen and (max-width: 1200px) {
+      flex: 0.1;
+      div {
+        justify-content: center;
       }
     }
-  }
-}
-.sections {
-  display: flex;
-  justify-content: center;
-  p {
-    transition: 0.3s;
-    text-align: center;
-    padding: 0.3em 1rem;
-    border: 2px solid #10a37f;
-    border-radius: 100vh;
-    cursor: pointer;
-    color: #10a37f;
-    &:not(:first-child) {
-      margin-left: 1rem;
-    }
-    &:hover {
-      transition: 0.3s;
-      color: #fff;
-      background: #10a37f;
+    div {
+      cursor: pointer;
+      padding: 1rem;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      border-radius: 15px;
+      p {
+        background: transparent;
+        margin-left: 1rem;
+        @media screen and (max-width: 1200px) {
+          display: none;
+        }
+      }
+      &:hover {
+        background: #10a37e08;
+      }
     }
   }
   .selected {
-    color: #fff;
-    background: #10a37f;
-  }
-  @media screen and (max-width: 900px) {
-    flex-wrap: wrap;
-    p {
-      margin: 0.5rem auto;
-    }
-  }
-}
-.sectionWrapper {
-  padding: 0 3rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  button {
-    margin: 0;
-    .icon {
-      background: transparent;
-    }
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: 0.3s;
-    border-radius: 100vh;
-    border: 2px solid;
-    width: 100%;
-    &:hover {
-      transition: 0.3s;
-      color: #10a37f;
-      background: #fff;
-      border: 2px solid #10a37f;
-    }
-  }
-  @media screen and (max-width: 900px) {
-    flex-direction: column-reverse;
-    &:first-child {
-      margin-bottom: 3rem;
-    }
-    .adding {
-      margin-bottom: 1rem;
-    }
-  }
-}
-
-.female {
-  width: fit-content;
-  background: #ea4c89 !important;
-  border-radius: 100vh;
-  padding: 0.2em 0.8em;
-  color: #fff;
-  margin: 0 auto;
-}
-.male {
-  margin: 0 auto;
-  width: fit-content;
-  background: #3886e6 !important;
-  padding: 0.2em 0.8em;
-  border-radius: 100vh;
-  color: #fff;
-}
-.list {
-  display: grid;
-  grid-template-columns: 60% 40%;
-  justify-content: center;
-  align-content: center;
-  padding: 2rem;
-  @media screen and (max-width: 950px) {
-    grid-template-columns: 100%;
-    .message {
-      margin: auto 1rem;
-      margin-top: 0;
-      grid-row: 1;
-    }
-  }
-}
-.message {
-  font-size: larger;
-  text-align: center;
-  margin-top: 1rem;
-  text-transform: capitalize;
-  * {
-    background: transparent;
-    z-index: 100;
-  }
-}
-a {
-  text-decoration: none;
-  color: black;
-}
-.systemMessage {
-  text-align: center;
-  padding: 1rem;
-  text-transform: uppercase;
-}
-
-.gender {
-  padding: 0.3rem 1rem;
-  background: #3886e6;
-  border-radius: 100vh;
-  color: #fff;
-}
-.userInfo {
-  display: flex;
-  * {
-    &:not(:first-child) {
-      padding: 0 1rem;
-    }
-  }
-}
-.userLine {
-  border-bottom: 1px solid #10a37f;
-  padding: 1rem;
-  display: grid;
-  align-items: center;
-  grid-template-columns: 1fr 3fr 1fr;
-  justify-content: space-between;
-  strong {
-    text-transform: capitalize;
-  }
-  @media screen and (max-width: 900px) {
-    padding: 0.5rem;
     * {
-      margin: 0 auto;
-    }
-    grid-template-columns: 1fr;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #10a37f;
-    border-radius: 10px;
-    margin-top: 10px;
-    div {
-      &:not(.male, .female) {
-        padding: 1rem;
-      }
+      color: #10a37f;
     }
   }
-}
-.email {
-  text-decoration: underline;
-  cursor: pointer;
-  color: #3886e6;
-}
-.icons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  * {
-    transition: 0.3s;
-
-    margin: 5px;
-    &:hover {
-      transition: 0.3s;
-      transform: translateY(-2px);
-    }
-  }
-}
-.lib {
-  color: #3886e6;
-}
-.what {
-  color: #10a37f;
-}
-.meetingsWrapper {
-  padding: 0 1rem;
-  p.message {
-    padding: 1rem;
-  }
-}
-.btn {
-  padding: 0.3rem 1rem;
-  border: 2px solid #10a37f;
-  border-radius: 100vh;
-  margin: 1rem;
-}
-.searchField {
-  max-width: 1700px;
-  margin: 0 auto;
-  padding: 0 2.5rem;
-  input {
-    width: 100%;
-    max-width: 450px;
-    transition: 0.3s;
-    padding: 0.3rem 0.5rem;
-    margin-top: 2rem;
-    border: none;
-    outline: none;
-    &:focus {
-      transition: 0.3s;
-      border-bottom: 2px solid #ea4c89;
-    }
-  }
-  @media screen and (max-width: 950px) {
-    width: 100%;
-    input {
-      max-width: 100%;
-      border-bottom: 2px solid #10a37f;
-      padding-left: 0;
-    }
-  }
-}
-.oneMeeting {
-  padding: 1rem 0 0 1rem;
-  position: relative;
-  &:not(:first-child) {
-    margin-top: 1.5rem;
-  }
-  div {
-    &:first-child {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .rightSide {
-        color: darkgray;
-        font-size: smaller;
-      }
-    }
-  }
-}
-
-.meetingTime {
-  color: rgba(0, 0, 0, 0.778);
-  .nightDay {
-    font-size: smaller;
-    color: rgba(0, 0, 0, 0.592);
-  }
-}
-.secondMeetingPart {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 0;
-  border-radius: 10vh;
-  p {
-    &:last-child {
-      color: rgba(0, 0, 0, 0.707);
-      font-size: smaller;
-    }
-  }
-}
-.iconDiv {
-  display: flex;
-  justify-content: right;
-  * {
-    opacity: 0.7;
-    transition: 0.3s;
-    &:hover {
-      cursor: pointer;
-      transition: 0.3s;
-      opacity: 1;
-    }
+  .result {
+    padding: 0 1rem;
+    margin-top: 1rem;
+    flex: 0.8;
   }
 }

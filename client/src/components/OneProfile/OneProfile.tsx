@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useGetOneUser } from "../../hooks/useGetOneUser";
 import { User } from "../../types/type";
 import { useGetDoctorsAndPatients } from "../../hooks/useGetDoctorsAndPatients";
-import AdminUserLine from "../../components/AdminUserLine/AdminUserLine";
+import AdminUserLine from "../AdminUserLine/AdminUserLine";
 import { useUpdateRole } from "../../hooks/useUpdateRole";
 
 const OneProfile = () => {
@@ -53,6 +53,9 @@ const OneProfile = () => {
               {user.role == 1 ? " (Doctor)" : " (Patient)"}
             </span>
           </h2>
+          <div className="smallImage">
+            <p>{user.role == 1 ? "👨‍⚕️" : "😷"}</p>
+          </div>
           <div className="info">
             <p>
               <span>Location:</span>

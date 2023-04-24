@@ -199,6 +199,7 @@ const RegisterPage = () => {
                 <option value="family-doctor">Family Doctor</option>
                 <option value="optometrist">Optometrist</option>
                 <option value="dermatologist">Dermatologist</option>
+                <option value="dentist">Dentist</option>
               </select>
             </div>
           ) : null}

@@ -10,13 +10,15 @@ import { adminUsers } from "./features/adminSlice";
 import { useSaveLocalStorage } from "./hooks/useSaveLocalStorage";
 import Messages from "./components/Messages/Messages";
 import routes, { RouteType } from "./Pathes";
-import { CircularProgress } from "@mui/material";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { handleSocket, sendMessageTime, updateStatus } from "./Utils/functions";
+import { useLogin } from "./hooks/useLogin";
 
 export const socket = io("http://localhost:3001");
 
 const App = () => {
   const { createIfDontHave } = useSaveLocalStorage();
+  const { checkTokenValidity } = useLogin();
   const dispatch = useDispatch();
   const date = new Date();
   const { users } = useSelector(
@@ -26,6 +28,7 @@ const App = () => {
     (state: { userSlice: UserType }) => state.userSlice
   );
   useEffect(() => {
+    checkTokenValidity();
     sendMessageTime(dispatch);
     createIfDontHave();
   }, []);
@@ -39,7 +42,7 @@ const App = () => {
   return (
     <div style={{ overflowX: "hidden" }}>
       <Router>
-        <Suspense fallback={<CircularProgress />}>
+        <Suspense fallback={<AiOutlineLoading3Quarters />}>
           <Messages />
           <Navbar />
           <Routes>

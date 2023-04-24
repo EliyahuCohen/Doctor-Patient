@@ -1,8 +1,10 @@
 import "./app.scss";
 import { useState, useEffect } from "react";
 import { ScheduleDay } from "../../types/type";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteOutlineOutlined from "@mui/icons-material/DeleteOutlineOutlined";
+import { MdPersonRemove } from "react-icons/md";
+import { FiTrash } from "react-icons/fi";
+import { BsPlus } from "react-icons/bs";
+
 import { useSchedual } from "../../hooks/useSchedual";
 
 const TimeSelect = () => {
@@ -78,7 +80,12 @@ const TimeSelect = () => {
       </div>
       <div className="times">
         <div className="icon">
-          <AddIcon fontSize="medium" className="i" onClick={addHours} />
+          <BsPlus
+            fontSize="medium"
+            title="add doctor"
+            className="i"
+            onClick={addHours}
+          />
         </div>
       </div>
       {daysList[selected].schedule.times.length == 0 ? (
@@ -122,11 +129,11 @@ const TimeSelect = () => {
                   )}
                 </select>
               </div>
-              <DeleteOutlineOutlined
+              <FiTrash
                 onClick={() => {
                   removeHour(index);
                 }}
-                titleAccess="delete meeting time"
+                title="delete meeting time"
                 fontSize="medium"
                 className="trash"
               />

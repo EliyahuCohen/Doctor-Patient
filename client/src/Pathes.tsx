@@ -3,17 +3,14 @@ import {
   Communication,
   HomePage,
   OneProfile,
-  ProfilePage,
   RegisterPage,
   SigninPage,
-  SystemMessagesPage,
   UserDashboardPage,
-  BookingPage,
-  UserManagment,
 } from "./pages/index";
 import { Navigate } from "react-router-dom";
 import { User } from "./types/type";
 import AddDoctor from "./pages/AddDoctor/AddDoctor";
+import BookingPage from "./pages/Booking/BookingPage";
 
 export interface RouteType {
   element: JSX.Element | React.ElementType<any>;
@@ -29,11 +26,6 @@ const routes: RouteType[] = [
     path: "/admin",
     element: ({ user }: { user: User }) =>
       user != null && user?.role == 0 ? <AdminPage /> : <Navigate to="/" />,
-  },
-  {
-    path: "/profile",
-    element: ({ user }: { user: User }) =>
-      user != null ? <ProfilePage /> : <Navigate to="/" />,
   },
   {
     path: "/profile/:id",
@@ -65,15 +57,6 @@ const routes: RouteType[] = [
       user != null && user.approved ? <Communication /> : <Navigate to="/" />,
   },
   {
-    path: "/system-messages",
-    element: ({ user }: { user: User }) =>
-      user != null && user.role != 0 ? (
-        <SystemMessagesPage />
-      ) : (
-        <Navigate to="/" />
-      ),
-  },
-  {
     path: "/dashboard/add-doctor",
     element: ({ user }: { user: User }) =>
       user != null && user.role != 0 ? <AddDoctor /> : <Navigate to="/" />,
@@ -84,9 +67,8 @@ const routes: RouteType[] = [
       user != null && user.role != 0 ? <BookingPage /> : <Navigate to="/" />,
   },
   {
-    path: "userDetials/:id",
-    element: ({ user }: { user: User }) =>
-      user != null && user.role == 1 ? <UserManagment /> : <Navigate to="/" />,
+    path: "*",
+    element: ({ user }: { user: User }) => <Navigate to="/" />,
   },
 ];
 

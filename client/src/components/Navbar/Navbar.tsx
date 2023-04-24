@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { UserType } from "../../features/userSlice";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import { AiOutlineMail } from "react-icons/ai";
 import { logout } from "../../features/userSlice";
 import "./app.scss";
 import { socket } from "../../App";
@@ -50,11 +50,6 @@ const Navbar = () => {
               </>
             ) : (
               <div className="flex">
-                {user.role != 0 ? (
-                  <NavLink to="system-messages" title="system messages">
-                    <EmailOutlinedIcon style={{ marginTop: "7px" }} />
-                  </NavLink>
-                ) : null}
                 {user.role == 0 ? (
                   <>
                     <NavLink
@@ -63,13 +58,6 @@ const Navbar = () => {
                       title="Dashboard page"
                     >
                       Dashboard
-                    </NavLink>
-                    <NavLink
-                      className="link"
-                      to="/profile"
-                      title="Profile page"
-                    >
-                      <p className="specialLink">{user.fName}</p>
                     </NavLink>
                   </>
                 ) : (
@@ -80,15 +68,6 @@ const Navbar = () => {
                       title="Dashboard page"
                     >
                       Dashboard
-                    </NavLink>
-                    <NavLink
-                      className="link"
-                      to="/profile"
-                      title="Profile page"
-                    >
-                      <p className="specialLink" title="Profile">
-                        {user.fName}
-                      </p>
                     </NavLink>
                   </>
                 )}
@@ -163,15 +142,6 @@ const Navbar = () => {
               </>
             ) : (
               <div className="flex">
-                {user.role != 0 ? (
-                  <NavLink
-                    onClick={() => setOpen(false)}
-                    to="system-messages"
-                    title="system messages"
-                  >
-                    <EmailOutlinedIcon style={{ marginTop: "7px" }} />
-                  </NavLink>
-                ) : null}
                 {user.role == 0 ? (
                   <>
                     <NavLink

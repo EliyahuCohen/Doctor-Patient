@@ -169,6 +169,7 @@ export async function getSchedual(
 //update
 export async function updateUser(req: Request, res: Response) {
   const { id } = req.params;
+  console.log(req.body);
   if (!isValidObjectId(id))
     return res.status(403).json({ message: "Invalid user ID" });
   if (req.body.role == 1)
@@ -240,7 +241,7 @@ export async function updateDoctorsList(req: Request, res: Response) {
     }
     await user?.save();
     await doctor?.save();
-    return res.status(201).json({ message: "Updated" });
+    return res.status(201).json(user);
   }
   return res.status(400).json({ message: "No Such User Id" });
 }
@@ -254,4 +255,8 @@ export async function deleteUser(req: Request, res: Response) {
     return res.status(202).json({ message: "User deleted" });
   }
   return res.status(400).json({ message: "User dose NOT exists" });
+}
+//validation
+export async function checkAccess(req: Request, res: Response) {
+  return res.status(200).json({ message: "Validation Successful" });
 }

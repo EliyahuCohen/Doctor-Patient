@@ -1,7 +1,7 @@
 .profileWrapper:first-child {
   flex-direction: column;
   .line2 {
-    width: 100%;
+    width: 95%;
     height: 3px;
     background: #229f97;
     border-radius: 100vh;
@@ -18,16 +18,15 @@
 }
 
 .profileWrapper {
-  margin-top: 6rem;
   display: flex;
   justify-content: space-between;
+  margin: 0 auto;
   @media screen and (max-width: 1200px) {
     flex-direction: column;
-    margin: 4rem auto;
     justify-content: center;
     align-items: center;
     .workTime {
-      margin-top: 2rem;
+      margin-top: 3rem;
     }
   }
 
@@ -45,6 +44,15 @@
       margin-bottom: 2rem;
       border-radius: 0;
       width: 100%;
+      display: none;
+    }
+  }
+  .smallImage {
+    p {
+      font-size: 2rem;
+    }
+    @media screen and (min-width: 1000px) {
+      display: none;
     }
   }
   .leftProfile {
@@ -147,6 +155,10 @@
 .second {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  @media screen and (max-width: 1000px) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
   justify-content: center;
   align-items: center;
   p.image {

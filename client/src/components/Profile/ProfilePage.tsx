@@ -1,19 +1,30 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import TimeSelect from "../../components/TimeSelect/TimeSelect";
+import TimeSelect from "../TimeSelect/TimeSelect";
 import { UserType } from "../../features/userSlice";
 import { useGetOneUser } from "../../hooks/useGetOneUser";
 import { User } from "../../types/type";
-import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
+import { FiEdit3 } from "react-icons/fi";
+import { CgRename } from "react-icons/cg";
 import "./app.scss";
 import { useUpdateRole } from "../../hooks/useUpdateRole";
+import { TbGenderFemme } from "react-icons/tb";
+import { FaFemale, FaMale } from "react-icons/fa";
+import { GrStatusGood } from "react-icons/gr";
+import { BiMailSend } from "react-icons/bi";
+import {
+  MdOutlineAdminPanelSettings,
+  MdOutlineLocationOn,
+} from "react-icons/md";
+import { RiStethoscopeLine } from "react-icons/ri";
+import { ImSleepy } from "react-icons/im";
+import { VscWorkspaceTrusted } from "react-icons/vsc";
 
-const ProfilePage = () => {
+const ProfilePage = ({ selected }: { selected: number }) => {
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
   const [theUser, setTheUser] = useState<User | null>(null);
-  const [selected, setSelected] = useState<1 | 2 | 3>(1);
   const [updateOpen, setUpodateOpen] = useState<boolean>(false);
   const { getUser } = useGetOneUser(user?._id!, setTheUser);
   const { updateUser } = useUpdateRole(user!._id);
@@ -46,42 +57,26 @@ const ProfilePage = () => {
   }, []);
   return (
     <>
-      <div className="filtering">
-        <button
-          onClick={() => setSelected(1)}
-          className={`${selected == 1 ? "selected" : ""}`}
-        >
-          Edit User{" "}
-        </button>
-        <button
-          onClick={() => setSelected(2)}
-          className={`${selected == 2 ? "selected" : ""}`}
-        >
-          Manage Work Time
-        </button>
-        <button
-          onClick={() => setSelected(3)}
-          className={`${selected == 3 ? "selected" : ""}`}
-        >
-          Prescritption
-        </button>
-      </div>
       <div className="profileWrapper">
+        <p className="headline">
+          Personal information
+          <FiEdit3
+            title="edit"
+            className="updateInfo"
+            onClick={() => {
+              setUpodateOpen((prev) => !prev);
+            }}
+            fontSize="1.5rem"
+          />
+        </p>
         {selected == 1 && (
           <div className="innerWrraper">
-            <p className="headline">
-              Personal information
-              <ModeEditOutlinedIcon
-                className="updateInfo"
-                onClick={() => {
-                  setUpodateOpen((prev) => !prev);
-                }}
-                fontSize="medium"
-              />
-            </p>
             <div className="row">
               <p>
-                <span className="fitEmoji">🖋️</span>Full Name:
+                <span className="fitEmoji">
+                  <CgRename color="#5bc0de  " />
+                </span>
+                Full Name:
               </p>
               <p>
                 {theUser?.fName} {theUser?.lName}
@@ -107,9 +102,21 @@ const ProfilePage = () => {
             </div>
             <div className="row">
               <p>
-                <span className="fitEmoji">👫</span>Gender:
+                <span className="fitEmoji">
+                  <TbGenderFemme
+                    color="d770ff
+ "
+                  />
+                </span>
+                Gender:
               </p>
-              <p>{theUser?.isMale ? "👨 " : "👩"}</p>
+              <p>
+                {theUser?.isMale ? (
+                  <FaMale color="#40c4ff  " style={{ fontSize: "1.5rem" }} />
+                ) : (
+                  <FaFemale color="#ff7eb9  " style={{ fontSize: "1.5rem" }} />
+                )}
+              </p>
             </div>
             <div className="rowInput" style={{ marginTop: "1rem" }}>
               {updateOpen ? (
@@ -139,7 +146,10 @@ const ProfilePage = () => {
             </div>
             <div className="row">
               <p>
-                <span className="fitEmoji">📍</span>Location:
+                <span className="fitEmoji">
+                  <MdOutlineLocationOn color="#6ab04c  " />
+                </span>
+                Location:
               </p>
               <p>{theUser?.location}</p>
             </div>
@@ -155,14 +165,20 @@ const ProfilePage = () => {
             </div>
             <div className="row">
               <p>
-                <span className="fitEmoji">📧 </span>Email:
+                <span className="fitEmoji">
+                  <BiMailSend color="#f4b400  " />{" "}
+                </span>
+                Email:
               </p>
               <p>{theUser?.email}</p>
             </div>
             {theUser?.role != 0 && (
               <div className="row">
                 <p>
-                  <span className="fitEmoji">✔️ </span>Status:
+                  <span className="fitEmoji">
+                    <GrStatusGood color="#d770ff " />
+                  </span>
+                  Status:
                 </p>
                 <p>{theUser?.approved ? "Approved" : "Pending"}</p>
               </div>
@@ -170,11 +186,13 @@ const ProfilePage = () => {
             <div className="row">
               <p>
                 <span className="fitEmoji">
-                  {theUser?.role == 0
-                    ? "👨‍⚖️ "
-                    : theUser?.role == 1
-                    ? "👨‍⚕️"
-                    : "🧑"}
+                  {theUser?.role == 0 ? (
+                    <MdOutlineAdminPanelSettings color="#dc3545   " />
+                  ) : theUser?.role == 1 ? (
+                    <RiStethoscopeLine color="#17a2b8   " />
+                  ) : (
+                    <ImSleepy color="#007bff    " />
+                  )}
                 </span>
                 Role:
               </p>
@@ -189,7 +207,10 @@ const ProfilePage = () => {
             {theUser?.role == 1 ? (
               <div className="row">
                 <p>
-                  <span className="fitEmoji">💉</span>Speciality:
+                  <span className="fitEmoji">
+                    <VscWorkspaceTrusted color="#5e5ce6 " />
+                  </span>
+                  Speciality:
                 </p>
                 <p>{theUser?.speciality}</p>
               </div>
@@ -211,11 +232,6 @@ const ProfilePage = () => {
         {theUser && theUser.role == 1 && selected == 2 && (
           <div className="workTime">
             <TimeSelect />
-          </div>
-        )}
-        {user && selected == 3 && (
-          <div>
-            <h1>Prescription List:</h1>
           </div>
         )}
       </div>

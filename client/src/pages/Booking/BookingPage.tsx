@@ -1,15 +1,14 @@
 import "./app.scss";
 import { useState, useEffect, memo } from "react";
 import DatePicker from "../../components/DatePicker/DatePicker";
-import BlockIcon from "@mui/icons-material/Block";
-import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import { useSchedual } from "../../hooks/useSchedual";
 import { useParams } from "react-router-dom";
 import { Schedule } from "../../types/type";
 import OneMeeting from "../../components/OneMeeting/OneMeeting";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-
+import { MdExpandMore } from "react-icons/md";
+import { MdExpandLess } from "react-icons/md";
+import { TbHourglassEmpty } from "react-icons/tb";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 const BookingPage = () => {
   const { id } = useParams();
   const [error, setError] = useState<boolean>(false);
@@ -42,7 +41,7 @@ const BookingPage = () => {
         {error ? (
           <>
             <h1 className="messageDoc">
-              <BlockIcon fontSize="large" />
+              <TbHourglassEmpty fontSize="large" />
             </h1>
             <h2 className="messageDoc">Not a Working Today</h2>
           </>
@@ -50,17 +49,17 @@ const BookingPage = () => {
         {availableMeetings?.times?.length == 0 && !error ? (
           <div className="notMore">
             <h1 className="messageDoc">No Meetings Available </h1>
-            <HourglassEmptyIcon className="emptyIcon" />
+            <TbHourglassEmpty className="emptyIcon" />
           </div>
         ) : null}
         {!availableMeetings?.times && (
           <div className="notMore">
             <h1 className="messageDoc">No Meetings Available </h1>
-            <HourglassEmptyIcon className="emptyIcon" />
+            <TbHourglassEmpty className="emptyIcon" />
           </div>
         )}
         <div className="loadingIcon">
-          {!error && loading && <HourglassEmptyIcon fontSize="large" />}
+          {!error && loading && <AiOutlineLoading3Quarters fontSize="large" />}
         </div>
         {!error &&
           availableMeetings?.times?.map((meeting, index: number) => {
@@ -84,16 +83,16 @@ const BookingPage = () => {
           availableMeetings?.times.length > 5 && (
             <div className="moreBtn">
               {limit == 5 ? (
-                <ExpandMoreIcon
+                <MdExpandMore
                   className="icon"
-                  titleAccess="More Meetings"
+                  title="More Meetings"
                   fontSize="medium"
                   onClick={() => setLimit(availableMeetings!.times!.length)}
                 />
               ) : (
-                <KeyboardArrowUpIcon
+                <MdExpandLess
                   className="icon"
-                  titleAccess="Less Meetings"
+                  title="Less Meetings"
                   onClick={() => setLimit(5)}
                   fontSize="medium"
                 />

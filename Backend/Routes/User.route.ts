@@ -13,6 +13,7 @@ import {
   postSchedual,
   getSchedual,
   updateDoctorsList,
+  checkAccess,
 } from "../Controllers/User.contoller";
 import { requiredAuthentication } from "../Middlewares/RequireAuth";
 
@@ -21,6 +22,7 @@ const router = express.Router();
 router.post("/signup", signup);
 router.post("/login", login);
 router.use(requiredAuthentication);
+router.use("/checkAccess", checkAccess);
 router.get("/all", getAllUsers);
 router.get("/users", getUserDoctorsAndPatients);
 router.get("/one/:id", findOneUser);

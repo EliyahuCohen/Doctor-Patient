@@ -1,7 +1,6 @@
 import "./app.scss";
 import { useState, useEffect, useRef } from "react";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import { MdNavigateNext } from "react-icons/md";
 import { useDispatch } from "react-redux";
 interface IMyDate {
   monthName: string;
@@ -113,7 +112,10 @@ const DatePicker = ({
                 })
               }
             >
-              <NavigateBeforeIcon className="navigationIcon" />
+              <MdNavigateNext
+                style={{ rotate: "-90deg" }}
+                className="navigationIcon"
+              />
             </button>
           )}
           {month < 11 && (
@@ -126,7 +128,7 @@ const DatePicker = ({
                 setMonth(value);
               }}
             >
-              <NavigateNextIcon className="navigationIcon" />
+              <MdNavigateNext className="navigationIcon" />
             </button>
           )}
         </div>

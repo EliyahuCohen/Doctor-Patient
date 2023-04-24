@@ -2,12 +2,15 @@
   div {
     max-height: 80vh;
     overflow-y: scroll !important;
+    @media screen and (max-width: 900px) {
+      margin-right: 0;
+    }
   }
   ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
     @media screen and (max-width: 900px) {
-      width: 4px;
+      width: 0;
     }
   }
   ::-webkit-scrollbar-thumb {
@@ -20,10 +23,7 @@
   }
 
   max-width: 1700px;
-  padding: 1rem;
-  margin: 5rem auto;
   select {
-    margin-top: 2rem;
     @media screen and (max-width: 750px) {
       width: 100%;
     }
@@ -73,6 +73,9 @@
     .iconAlert {
       background: transparent;
       color: #fff;
+    }
+    @media screen and (max-width: 1200px) {
+      font-size: smaller;
     }
   }
   .good {

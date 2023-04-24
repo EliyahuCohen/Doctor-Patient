@@ -15,7 +15,7 @@ const SigninPage = () => {
   });
   const navigate = useNavigate();
 
-  const { loginFunc } = useLogin(User, setMyError);
+  const { loginFunc } = useLogin();
   return (
     <div className="wrapper">
       <div>
@@ -78,7 +78,7 @@ const SigninPage = () => {
             className="click"
             onClick={() => {
               if (check(5)) {
-                loginFunc(navigate);
+                loginFunc(navigate, User, setMyError);
               } else {
                 setMyError("");
               }

@@ -1,11 +1,9 @@
 export { default as HomePage } from "./Home/HomePage";
 export { default as AdminPage } from "./Admin/AdminPage";
-export { default as ProfilePage } from "./Profile/ProfilePage";
-export { default as OneProfile } from "./OneProfile/OneProfile";
+export { default as ProfilePage } from "../components/Profile/ProfilePage";
+export { default as OneProfile } from "../components/OneProfile/OneProfile";
 export { default as RegisterPage } from "./Register/RegisterPage";
 export { default as SigninPage } from "./Signin/SigninPage";
 export { default as UserDashboardPage } from "./UserDashboard/UserDashboardPage";
 export { default as Communication } from "./CommunicationPage/Communication";
-export { default as SystemMessagesPage } from "./SystemMessages/SystemMessagesPage";
-export { default as BookingPage } from "./Booking/BookingPage";
-export { default as UserManagment } from "./UserManagment/UserManagment";
+export { default as SystemMessagesPage } from "../components/SystemMessages/SystemMessagesPage";

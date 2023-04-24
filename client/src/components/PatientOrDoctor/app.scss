@@ -1,0 +1,142 @@
+.oneUserWrapper {
+  &:not(:first-child) {
+    margin-top: 1rem;
+  }
+  padding: 1rem;
+  cursor: pointer;
+  background: #10a37e1b;
+  border-radius: 12px;
+  * {
+    background: transparent;
+  }
+  .userProfile {
+    display: flex;
+    align-items: center;
+    .names {
+      margin-left: 1rem;
+    }
+  }
+  .side1 {
+    padding: 0.3rem 0.6rem;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    transition: 0.3s;
+    width: fit-content;
+    &:hover {
+      background: #10a37f;
+      transition: 0.3s;
+      color: #fff;
+      * {
+        color: #fff;
+        background: transparent;
+      }
+    }
+    * {
+      transition: 0.3s;
+      font-size: large;
+      &:hover {
+        color: #fff;
+        background: transparent;
+      }
+    }
+  }
+}
+.topPart {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .expandIcon {
+    transition: 0.3s;
+    font-size: larger;
+    border-radius: 100vh;
+    border: 2px solid #10a37f;
+    color: #10a37f;
+  }
+}
+.flipped {
+  transition: 0.3s;
+  rotate: -180deg;
+}
+.bottomPart {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  * {
+    text-decoration: none;
+    font-size: small;
+    margin-top: 0.5rem;
+    &:not(:first-child) {
+      margin-left: 1rem;
+    }
+  }
+  .adding {
+    color: #fff;
+    padding: 0.3rem 1rem;
+    border-radius: 100vh;
+    background: #2b86ff;
+    transition: 0.3s;
+    &:hover {
+      transition: 0.3s;
+      color: #2b86ff;
+      background: #fff;
+      border: 1px solid #2b86ff;
+    }
+  }
+  .removing {
+    color: #fff;
+    padding: 0.3rem 1rem;
+    border-radius: 100vh;
+    transition: 0.3s;
+    background: #dc143c;
+    &:hover {
+      transition: 0.3s;
+      color: #dc143c;
+      background: #fff;
+      border: 1px solid #dc143c;
+    }
+  }
+  .emailBtn {
+    padding: 0.3rem 1rem;
+    background: #f29890;
+    color: #fff;
+    transition: 0.3s;
+    border-radius: 100vh;
+    &:hover {
+      transition: 0.3s;
+      color: #f29890;
+      background: #fff;
+      border: 1px solid #f29890;
+    }
+  }
+  .meetingBtn {
+    padding: 0.3rem 1rem;
+    background: #ff6723;
+    color: #fff;
+    transition: 0.3s;
+    border-radius: 100vh;
+    &:hover {
+      transition: 0.3s;
+      color: #ff6723;
+      background: #fff;
+      border: 1px solid #ff6723;
+    }
+  }
+  .talkBtn {
+    padding: 0.3rem 1rem;
+    background: #10a37f;
+    color: #fff;
+    transition: 0.3s;
+    border-radius: 100vh;
+    &:hover {
+      transition: 0.3s;
+      color: #10a37f;
+      background: #fff;
+      border: 1px solid #10a37f;
+    }
+  }
+}

@@ -1,11 +1,11 @@
 import { IMessage } from "../../types/type";
 import { useEffect } from "react";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import PriorityHighOutlinedIcon from "@mui/icons-material/PriorityHighOutlined";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import BedtimeIcon from "@mui/icons-material/Bedtime";
+import { AiOutlineMail } from "react-icons/ai";
+import { MdOutlineDelete } from "react-icons/md";
+import { FiSun } from "react-icons/fi";
+import { MdOutlineWarningAmber } from "react-icons/md";
+import { MdOutlineNightsStay } from "react-icons/md";
+import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import "./app.scss";
 import { useDispatch } from "react-redux";
 import { deleteMessage } from "../../features/messagesSlice";
@@ -20,17 +20,17 @@ const Message = ({ message, senderName, type, time, id }: IMessage) => {
     <div className="messageWrraper">
       <div className="message">
         {type == "MESSAGE" ? (
-          <EmailOutlinedIcon fontSize="large" className="success" />
+          <AiOutlineMail fontSize="1.5rem" className="success" />
         ) : type == "DELETE" ? (
-          <DeleteOutlineOutlinedIcon fontSize="large" className="delete" />
+          <MdOutlineDelete fontSize="1.5rem" className="delete" />
         ) : type == "SYSTEM" ? (
-          <PriorityHighOutlinedIcon fontSize="large" className="system" />
+          <MdOutlineWarningAmber fontSize="1.5rem" className="system" />
         ) : type == "AFTERNOON" ? (
-          <LightModeIcon fontSize="large" className="system" />
+          <FiSun fontSize="1.5rem" className="system" />
         ) : type == "DARK" ? (
-          <BedtimeIcon fontSize="large" className="dark" />
+          <MdOutlineNightsStay fontSize="1.5rem" className="dark" />
         ) : (
-          <ErrorOutlineIcon fontSize="large" className="delete" />
+          <MdOutlineReportGmailerrorred fontSize="1.5rem" className="delete" />
         )}
         <div>
           <strong>{senderName}</strong>

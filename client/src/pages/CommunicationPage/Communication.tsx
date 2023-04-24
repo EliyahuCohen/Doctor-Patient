@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import formatDistance from "date-fns/esm/formatDistance";
 import { useParams } from "react-router-dom";
 import { useMessages } from "../../hooks/useMessages";
-import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
+import { RiSendPlaneLine } from "react-icons/ri";
 import "./app.scss";
 import { socket } from "../../App";
 
@@ -78,7 +78,7 @@ const Communication = () => {
       <form className="sendingMessage">
         <input ref={inputRef} type="text" placeholder={`Write a message...`} />
         <button onClick={(e) => handleClick(e)}>
-          <SendOutlinedIcon
+          <RiSendPlaneLine
             fontSize="large"
             style={{
               color: "#9aa2f3",

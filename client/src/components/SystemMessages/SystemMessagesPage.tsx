@@ -1,12 +1,9 @@
-import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
-import { UserType } from "../../features/userSlice";
-import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
-import CheckIcon from "@mui/icons-material/Check";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { useState } from "react";
+import { GrStatusGood, GrStatusWarning } from "react-icons/gr";
+import { BiErrorAlt } from "react-icons/bi";
 import { motion } from "framer-motion";
 import "./app.scss";
-import { IAlert, IMessage } from "../../types/type";
+import { IAlert } from "../../types/type";
 import { useGetSystemMessages } from "../../hooks/useGetSystemMessages";
 const SystemMessagesPage = () => {
   const [choice, setChoice] = useState<0 | 1 | 2 | 3>(0);
@@ -14,7 +11,6 @@ const SystemMessagesPage = () => {
   const a = useGetSystemMessages(setMessages);
   return (
     <div className="systemWrapper">
-      <h1>System Messages</h1>
       <select
         onChange={(e) => setChoice(parseInt(e.target.value) as 0 | 1 | 2 | 3)}
       >
@@ -38,7 +34,8 @@ const SystemMessagesPage = () => {
                   transition={{ duration: 1 }}
                   key={(index + message.message + message.type).toString()}
                 >
-                  <div
+                  <motion.div
+                    layout
                     className={`systemAlert ${
                       message.type == 1
                         ? "good"
@@ -48,14 +45,14 @@ const SystemMessagesPage = () => {
                     }`}
                   >
                     {message.type == 2 ? (
-                      <PriorityHighIcon fontSize="large" />
+                      <GrStatusWarning fontSize="large" />
                     ) : message.type == 1 ? (
-                      <CheckIcon />
+                      <GrStatusGood />
                     ) : (
-                      <HighlightOffIcon />
+                      <BiErrorAlt />
                     )}
                     <strong>{message.message}</strong>
-                  </div>
+                  </motion.div>
                 </motion.div>
               );
             }

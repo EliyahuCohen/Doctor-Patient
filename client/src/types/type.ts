@@ -80,3 +80,18 @@ export interface IMeet {
   completed: boolean;
   _id: string;
 }
+export interface IMedication {
+  name: string;
+  dosage: string;
+  frequency: string;
+  instructions: string;
+}
+
+export interface IPrescription {
+  title: string;
+  doctorId: string;
+  doctorName: string;
+  patinetId: string;
+  medications: IMedication[];
+  endDate: Date;
+}

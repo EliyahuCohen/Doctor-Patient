@@ -4,12 +4,12 @@ import { SlUserFemale } from "react-icons/sl";
 import "./app.scss";
 import { MdOutlineExpandMore, MdOutlinePersonPin } from "react-icons/md";
 import { motion, useAnimate, usePresence } from "framer-motion";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { UserType } from "../../features/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useUpdateRole } from "../../hooks/useUpdateRole";
+import { usePrescriptions } from "../../hooks/usePrescriptions";
 
 const PatientOrDoctor = ({
   user,
@@ -18,6 +18,8 @@ const PatientOrDoctor = ({
   setMoreDoctors,
   canRemove,
   index,
+  setModalUser,
+  isMore,
 }: {
   status: boolean;
   user: User;
@@ -25,8 +27,12 @@ const PatientOrDoctor = ({
   setMoreDoctors: React.Dispatch<React.SetStateAction<User[] | null>>;
   canRemove: boolean;
   index: number;
+  setModalUser?: React.Dispatch<React.SetStateAction<User | null>>;
+  isMore: boolean;
 }) => {
-  const dispatch = useDispatch();
+  //state to contain the open and close state of the modal
+
+  //
   const [scope, animate] = useAnimate();
   const [isPresence, safeToRemove] = usePresence();
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -34,6 +40,7 @@ const PatientOrDoctor = ({
     (state: { userSlice: UserType }) => state.userSlice
   );
   const { updateUserDoctorsList } = useUpdateRole(TheUser!._id);
+  const { submitPrescription } = usePrescriptions();
   function removeAddDoctors() {
     if (status) {
       setDoctors((prev) => [...prev, user]);
@@ -95,14 +102,17 @@ const PatientOrDoctor = ({
           <a className="emailBtn" href={`mailto:${user.email} `} title="email">
             Email
           </a>
-          {user.role == 1 && canRemove && (
+
+          {user.role == 1 && canRemove && !isMore && (
             <Link className="meetingBtn" to={`/booking/${user._id}`}>
               Schedual
             </Link>
           )}
-          <Link className="talkBtn" to={`/communication/${user._id}`}>
-            Let's Talk
-          </Link>
+          {!isMore && (
+            <Link className="talkBtn" to={`/communication/${user._id}`}>
+              Let's Talk
+            </Link>
+          )}
           {user.role == 1 && canRemove && (
             <div className="addDoctor" onClick={removeAddDoctors}>
               {status ? (
@@ -112,10 +122,15 @@ const PatientOrDoctor = ({
               )}
             </div>
           )}
+          {!canRemove && (
+            <div className="prescription" onClick={() => setModalUser!(user)}>
+              Prescription
+            </div>
+          )}
         </div>
       ) : null}
     </motion.div>
   );
 };
 
-export default PatientOrDoctor;
+export default React.memo(PatientOrDoctor);

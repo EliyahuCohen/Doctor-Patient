@@ -1,0 +1,69 @@
+.onePrescription {
+  padding: 1rem;
+  border-radius: 15px;
+  background: #f2f0fe;
+  color: #554f6a;
+  margin-top: 1rem;
+  border: 1px solid #554f6a;
+  * {
+    background: transparent;
+  }
+  .firstLine {
+    display: flex;
+    align-items: center;
+  }
+  .medTitle {
+    margin-left: 1rem;
+  }
+  .list {
+    text-decoration: underline;
+  }
+  .listOfMedication {
+    padding: 1rem 2rem;
+    @media screen and (max-width: 800px) {
+      padding: 1rem 0;
+    }
+  }
+  .oneMed {
+    margin-top: 0.5rem;
+    &:not(:first-child) {
+      margin-top: 1rem;
+    }
+    p {
+      padding-left: 1rem;
+      color: #554f6ad8;
+      span {
+        font-weight: bold;
+      }
+    }
+  }
+  .endLine {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    @media screen and (max-width: 750px) {
+      flex-direction: column;
+      align-items: self-start;
+      * {
+        margin: 0.5rem auto;
+      }
+    }
+  }
+  .expriesIn {
+    font-size: smaller;
+    padding: 0.3rem 1rem;
+    border-radius: 15px;
+    background: #10a37f;
+    color: #5a4422;
+    font-weight: bold;
+    border: 1px solid #554f6a;
+    color: #f2f0fe;
+  }
+  .treatingDoctor {
+    span {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+}

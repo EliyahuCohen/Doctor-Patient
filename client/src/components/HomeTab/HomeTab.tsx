@@ -26,4 +26,4 @@ const HomeTab = () => {
   );
 };
 
-export default HomeTab;
+export default React.memo(HomeTab);

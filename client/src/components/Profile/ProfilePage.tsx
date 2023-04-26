@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import TimeSelect from "../TimeSelect/TimeSelect";
 import { UserType } from "../../features/userSlice";
@@ -58,17 +58,19 @@ const ProfilePage = ({ selected }: { selected: number }) => {
   return (
     <>
       <div className="profileWrapper">
-        <p className="headline">
-          Personal information
-          <FiEdit3
-            title="edit"
-            className="updateInfo"
-            onClick={() => {
-              setUpodateOpen((prev) => !prev);
-            }}
-            fontSize="1.5rem"
-          />
-        </p>
+        {selected == 1 && (
+          <p className="headline">
+            Personal information
+            <FiEdit3
+              title="edit"
+              className="updateInfo"
+              onClick={() => {
+                setUpodateOpen((prev) => !prev);
+              }}
+              fontSize="1.5rem"
+            />
+          </p>
+        )}
         {selected == 1 && (
           <div className="innerWrraper">
             <div className="row">
@@ -239,4 +241,4 @@ const ProfilePage = ({ selected }: { selected: number }) => {
   );
 };
 
-export default ProfilePage;
+export default React.memo(ProfilePage);

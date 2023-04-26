@@ -10,7 +10,7 @@ interface Req {
   USER_ID: mongoose.Types.ObjectId;
   personId: mongoose.Types.ObjectId;
 }
-interface ReqMessage {
+export interface ReqMessage {
   USER_ID: mongoose.Types.ObjectId;
   personId: mongoose.Types.ObjectId;
   message: string;

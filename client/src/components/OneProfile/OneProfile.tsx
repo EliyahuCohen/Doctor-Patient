@@ -1,5 +1,5 @@
 import "./app.scss";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useGetOneUser } from "../../hooks/useGetOneUser";
 import { User } from "../../types/type";
@@ -172,4 +172,4 @@ const OneProfile = () => {
   );
 };
 
-export default OneProfile;
+export default React.memo(OneProfile);

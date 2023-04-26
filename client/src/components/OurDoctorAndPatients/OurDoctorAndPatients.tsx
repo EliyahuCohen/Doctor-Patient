@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./app.scss";
 import { User } from "../../types/type";
 import { useGetUserDoctorPatients } from "../../hooks/useGetUserDoctorPatients";
@@ -7,11 +7,13 @@ import { UserType } from "../../features/userSlice";
 import PatientOrDoctor from "../PatientOrDoctor/PatientOrDoctor";
 import { MdOutlineExpandMore } from "react-icons/md";
 import { useGetAllDoctors } from "../../hooks/useGetAllDoctors";
+import PrescriptionModal from "../PrescriptionModal/PrescriptionModal";
 const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
   const [patients, setPatients] = useState<User[]>([]);
   const [doctors, setDoctors] = useState<User[]>([]);
   const [moreDoctors, setMoreDoctors] = useState<User[] | null>([]);
   const [isFetched, setIsFetched] = useState<boolean>(false);
+  const [modalUser, setModalUser] = useState<User | null>(null);
   const { getDoctors } = useGetAllDoctors(setMoreDoctors);
   const { token } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
@@ -22,6 +24,11 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
   useGetUserDoctorPatients(setDoctors, setPatients, token);
   return (
     <div className="allUsers">
+      {modalUser ? (
+        <div className="absoluteModal">
+          <PrescriptionModal setUser={setModalUser} user={modalUser} />
+        </div>
+      ) : null}
       <header>{selected == 1 ? <h2>Doctors</h2> : <h2>Patients</h2>}</header>
       <div className="users">
         {selected == 1 ? (
@@ -31,6 +38,7 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
             doctors.map((doctor, index) => {
               return (
                 <PatientOrDoctor
+                  isMore={false}
                   status={false}
                   user={doctor}
                   key={doctor._id}
@@ -47,12 +55,14 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
             return (
               <PatientOrDoctor
                 status={false}
+                setMoreDoctors={setMoreDoctors}
                 user={patient}
                 key={patient._id}
                 setDoctors={setDoctors}
-                setMoreDoctors={setMoreDoctors}
                 index={index}
                 canRemove={false}
+                isMore={false}
+                setModalUser={setModalUser}
               />
             );
           })
@@ -62,16 +72,17 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
         <p className="moreDoctorP">more doctors ({moreDoctors.length})</p>
       )}
       <div className="users">
-        {moreDoctors?.map((doctor, index) => {
+        {moreDoctors?.map((moreDoctor, index) => {
           return (
             <PatientOrDoctor
               status={true}
-              user={doctor}
+              user={moreDoctor}
               index={index}
-              key={doctor._id}
+              key={moreDoctor._id}
               setDoctors={setDoctors}
               setMoreDoctors={setMoreDoctors}
               canRemove={true}
+              isMore={true}
             />
           );
         })}
@@ -88,4 +99,4 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
   );
 };
 
-export default OurDoctorAndPatients;
+export default React.memo(OurDoctorAndPatients);

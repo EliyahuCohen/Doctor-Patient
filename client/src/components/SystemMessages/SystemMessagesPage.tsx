@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { GrStatusGood, GrStatusWarning } from "react-icons/gr";
 import { BiErrorAlt } from "react-icons/bi";
-import { motion, useAnimate, usePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import "./app.scss";
 import { IAlert } from "../../types/type";
 import { useGetSystemMessages } from "../../hooks/useGetSystemMessages";
@@ -42,7 +42,7 @@ const SystemMessagesPage = () => {
   );
 };
 
-export default SystemMessagesPage;
+export default React.memo(SystemMessagesPage);
 
 const OneMessageAlert = ({
   message,
@@ -51,25 +51,8 @@ const OneMessageAlert = ({
   message: IAlert;
   index: number;
 }) => {
-  const [scope, animate] = useAnimate();
-  const [isPresence, safeToRemove] = usePresence();
-  useEffect(() => {
-    async function checkAnimation() {
-      if (isPresence) {
-        await animate(
-          scope.current,
-          {
-            opacity: [0, 1],
-          },
-          { duration: 0.5, delay: 0.1 * index }
-        );
-      }
-    }
-    checkAnimation();
-  }, []);
   return (
     <motion.div
-      ref={scope}
       transition={{ duration: 1 }}
       key={(index + message.message + message.type).toString()}
     >

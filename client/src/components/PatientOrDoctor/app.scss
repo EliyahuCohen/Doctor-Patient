@@ -79,6 +79,7 @@
     padding: 0.3rem 1rem;
     border-radius: 100vh;
     background: #2b86ff;
+    margin-top: 0;
     transition: 0.3s;
     &:hover {
       transition: 0.3s;
@@ -88,6 +89,7 @@
     }
   }
   .removing {
+    margin-top: 0;
     color: #fff;
     padding: 0.3rem 1rem;
     border-radius: 100vh;
@@ -137,6 +139,19 @@
       color: #10a37f;
       background: #fff;
       border: 1px solid #10a37f;
+    }
+  }
+  .prescription {
+    padding: 0.3rem 1rem;
+    background: #554f6a;
+    color: #fff;
+    transition: 0.3s;
+    border-radius: 100vh;
+    &:hover {
+      transition: 0.3s;
+      color: #554f6a;
+      background: #fff;
+      border: 1px solid #554f6a;
     }
   }
 }

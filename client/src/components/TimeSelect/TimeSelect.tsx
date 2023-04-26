@@ -1,7 +1,6 @@
 import "./app.scss";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { ScheduleDay } from "../../types/type";
-import { MdPersonRemove } from "react-icons/md";
 import { FiTrash } from "react-icons/fi";
 import { BsPlus } from "react-icons/bs";
 
@@ -148,4 +147,4 @@ const TimeSelect = () => {
   );
 };
 
-export default TimeSelect;
+export default React.memo(TimeSelect);

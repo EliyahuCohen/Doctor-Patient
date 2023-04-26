@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { User } from "../../types/type";
+import React from "react";
 
 const AdminUserLine = ({ user, status }: { user: User; status: boolean }) => {
   const navigate = useNavigate();
@@ -33,4 +34,4 @@ const AdminUserLine = ({ user, status }: { user: User; status: boolean }) => {
   );
 };
 
-export default AdminUserLine;
+export default React.memo(AdminUserLine);

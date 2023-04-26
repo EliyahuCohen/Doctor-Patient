@@ -145,7 +145,7 @@ export async function getSystemMessages(req: Request, res: Response) {
     { _id: USER_ID },
     { messages: 1, _id: 0 }
   );
-  res.status(200).json(messages?.messages);
+  res.status(200).json(messages?.messages.reverse());
 }
 export async function getSchedual(
   req: Request<{}, {}, { USER_ID: any }>,

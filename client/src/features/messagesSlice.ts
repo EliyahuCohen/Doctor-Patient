@@ -19,7 +19,7 @@ const messageSlice = createSlice({
       }
       state.messages.push(action.payload);
     },
-    deleteMessage: (state, action: { payload: string }) => {
+    deleteMessage: (state: messagesType, action: { payload: string }) => {
       state.messages.splice(
         state.messages.findIndex((mess) => mess.id == action.payload),
         1

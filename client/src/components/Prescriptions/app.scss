@@ -1,0 +1,13 @@
+.myPrescriptions {
+  padding-top: 0.1rem;
+  .thePrescriptions {
+    max-height: 90vh;
+    overflow-y: scroll;
+  }
+  h1 {
+    color: #10a37f;
+    @media screen and (max-width: 900px) {
+      text-align: center;
+    }
+  }
+}

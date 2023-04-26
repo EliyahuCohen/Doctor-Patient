@@ -1,5 +1,5 @@
 import { IMessage } from "../../types/type";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { AiOutlineMail } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
 import { FiSun } from "react-icons/fi";
@@ -41,4 +41,4 @@ const Message = ({ message, senderName, type, time, id }: IMessage) => {
   );
 };
 
-export default Message;
+export default React.memo(Message);

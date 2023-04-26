@@ -130,6 +130,18 @@ export function handleSocket(socket: Socket, dispatch: any) {
       new Audio(messageSent).play();
     }
   });
+  socket.on("newPrescription", (sock) => {
+    dispatch(
+      newMessage({
+        id: crypto.randomUUID(),
+        message: sock.message,
+        senderId: crypto.randomUUID(),
+        senderName: "System",
+        time: 4000,
+        type: "MESSAGE",
+      })
+    );
+  });
 }
 export function updateStatus(socket: Socket, dispatch: any, user: User | null) {
   socket.on("userLoggedIn", (sock: User) => {

@@ -1,6 +1,6 @@
 import { useMeetings } from "../../hooks/useMeetings";
 import { ITimeSpan, Schedule } from "../../types/type";
-
+import React from "react";
 interface IMeet {
   availableMeetings: Schedule | null;
   meeting: ITimeSpan | null;
@@ -76,4 +76,4 @@ const OneMeeting = ({
   );
 };
 
-export default OneMeeting;
+export default React.memo(OneMeeting);

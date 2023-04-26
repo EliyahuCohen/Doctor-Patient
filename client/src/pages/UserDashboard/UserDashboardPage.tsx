@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
 import "./app.scss";
 import SystemMessagesPage from "../../components/SystemMessages/SystemMessagesPage";
-import Prescription from "../../components/Prescriptions/Prescription";
+import Prescription from "../../components/Prescriptions/Prescriptions";
 import ProfilePage from "../../components/Profile/ProfilePage";
 import OurDoctorAndPatients from "../../components/OurDoctorAndPatients/OurDoctorAndPatients";
 import HomeTab from "../../components/HomeTab/HomeTab";
@@ -18,6 +18,7 @@ const UserDashboardPage = () => {
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
+
   const [selected, setSelected] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(1);
   function changeTab(tabNumber: 1 | 2 | 3 | 4 | 5 | 6 | 7) {
     setSelected(tabNumber);
@@ -67,7 +68,7 @@ const UserDashboardPage = () => {
           onClick={() => changeTab(6)}
         >
           <CgPill />
-          <p>Prescriptions</p>
+          <p>My Prescriptions</p>
         </div>
         {user?.role == 1 && user.approved && (
           <div

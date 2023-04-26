@@ -1,5 +1,5 @@
 import "./app.scss";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { MdNavigateNext } from "react-icons/md";
 import { useDispatch } from "react-redux";
 interface IMyDate {
@@ -113,7 +113,7 @@ const DatePicker = ({
               }
             >
               <MdNavigateNext
-                style={{ rotate: "-90deg" }}
+                style={{ rotate: "-180deg", fontSize: "1.5rem" }}
                 className="navigationIcon"
               />
             </button>
@@ -128,7 +128,10 @@ const DatePicker = ({
                 setMonth(value);
               }}
             >
-              <MdNavigateNext className="navigationIcon" />
+              <MdNavigateNext
+                style={{ fontSize: "1.5rem" }}
+                className="navigationIcon"
+              />
             </button>
           )}
         </div>
@@ -192,4 +195,4 @@ const DatePicker = ({
   );
 };
 
-export default DatePicker;
+export default React.memo(DatePicker);

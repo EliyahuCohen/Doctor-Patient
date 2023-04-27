@@ -40,11 +40,7 @@ export async function newPrescription(req: Request, res: Response) {
       .then((r) => {
         const userId = usersID.filter((one) => one.userId == patinetId)[0];
         if (userId.socketId.length > 0) {
-          io.to(userId.socketId).emit("newPrescription", {
-            message: `New Prescription From ${doctorName}`,
-            personId: doctorId,
-            USER_ID,
-          } as ReqMessage);
+          io.to(userId.socketId).emit("newPrescription", r);
         }
         return res
           .status(201)

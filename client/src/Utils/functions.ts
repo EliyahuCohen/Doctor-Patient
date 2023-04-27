@@ -134,13 +134,14 @@ export function handleSocket(socket: Socket, dispatch: any) {
     dispatch(
       newMessage({
         id: crypto.randomUUID(),
-        message: sock.message,
+        message: `New Prescription By ${sock.doctorName} `,
         senderId: crypto.randomUUID(),
         senderName: "System",
         time: 4000,
         type: "MESSAGE",
       })
     );
+    new Audio(messageSent).play();
   });
 }
 export function updateStatus(socket: Socket, dispatch: any, user: User | null) {

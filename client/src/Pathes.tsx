@@ -9,7 +9,6 @@ import {
 } from "./pages/index";
 import { Navigate } from "react-router-dom";
 import { User } from "./types/type";
-import AddDoctor from "./pages/AddDoctor/AddDoctor";
 import BookingPage from "./pages/Booking/BookingPage";
 
 export interface RouteType {
@@ -55,11 +54,6 @@ const routes: RouteType[] = [
     path: "/communication/:userid",
     element: ({ user }: { user: User }) =>
       user != null && user.approved ? <Communication /> : <Navigate to="/" />,
-  },
-  {
-    path: "/dashboard/add-doctor",
-    element: ({ user }: { user: User }) =>
-      user != null && user.role != 0 ? <AddDoctor /> : <Navigate to="/" />,
   },
   {
     path: "booking/:id",

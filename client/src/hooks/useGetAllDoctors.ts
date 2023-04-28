@@ -20,7 +20,7 @@ export function useGetAllDoctors(
   ) {
     const ids: string[] = doctors.map((u) => u._id);
     instance
-      .get("https://doctor-patient-api.onrender.com/users/doctors")
+      .get("http://localhost:3001/users/doctors")
       .then((res) => {
         setIsFetched(true);
         let arr: User[] = res.data;

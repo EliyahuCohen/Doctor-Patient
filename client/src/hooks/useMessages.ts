@@ -18,7 +18,7 @@ export function useMessages(
   });
   function getConversation(personId: string) {
     instance
-      .get(`https://doctor-patient-api.onrender.com/messages/${personId}`)
+      .get(`http://localhost:3001/messages/${personId}`)
       .then((res) => {
         setMessages(res.data.messages);
       })
@@ -26,7 +26,7 @@ export function useMessages(
   }
   function sendNewMessage(message: string, personId: string) {
     instance
-      .post("https://doctor-patient-api.onrender.com/messages/message", {
+      .post("http://localhost:3001/messages/message", {
         message,
         personId,
       })

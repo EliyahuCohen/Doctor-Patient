@@ -18,9 +18,7 @@ export function useUpdateRole(userId: string) {
     setUser: React.Dispatch<React.SetStateAction<User | null>>
   ) {
     instance
-      .patch(
-        `https://doctor-patient-api.onrender.com/users/updateRole/${userId}`
-      )
+      .patch(`http://localhost:3001/users/updateRole/${userId}`)
       .then(function (res) {
         dispatch(
           newMessage({
@@ -52,7 +50,7 @@ export function useUpdateRole(userId: string) {
   }
   async function updateUser(user: User) {
     instance
-      .patch(`https://doctor-patient-api.onrender.com/users/update/${userId}`, {
+      .patch(`http://localhost:3001/users/update/${userId}`, {
         user,
       })
       .then((res) => {
@@ -72,9 +70,7 @@ export function useUpdateRole(userId: string) {
   }
   async function updateUserDoctorsList(docId: string) {
     instance
-      .patch(
-        `https://doctor-patient-api.onrender.com/users/updateDoctors/${docId}`
-      )
+      .patch(`http://localhost:3001/users/updateDoctors/${docId}`)
       .then((res) => {
         dispatch(updateUserInfo(res.data));
         dispatch(

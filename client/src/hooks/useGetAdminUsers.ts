@@ -20,7 +20,7 @@ export function useGetAdminUsers() {
       },
     });
     instance
-      .get("https://doctor-patient-api.onrender.com/users/all")
+      .get("http://localhost:3001/users/all")
       .then((res) => {
         dispatch(setAdminUsers(res.data.users));
         dispatch(setLiveUsersObject(res.data.usersId));

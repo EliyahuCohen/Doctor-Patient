@@ -20,11 +20,7 @@ export function useGetDoctorsAndPatients(
     });
     for (let i = 0; i < theUser!.listOfDoctors.length; i++) {
       instance
-        .get(
-          `https://doctor-patient-api.onrender.com/users/one/${
-            theUser!.listOfDoctors[i]
-          }`
-        )
+        .get(`http://localhost:3001/users/one/${theUser!.listOfDoctors[i]}`)
         .then((res) => {
           setUserDoctors((prev) => [...prev, res.data]);
           doctorsArray.push(res.data);
@@ -37,11 +33,7 @@ export function useGetDoctorsAndPatients(
     if (theUser!.role == 1 || theUser!.role == 0) {
       for (let i = 0; i < theUser!.listOfPatients.length; i++) {
         instance
-          .get(
-            `https://doctor-patient-api.onrender.com/users/one/${
-              theUser!.listOfPatients[i]
-            }`
-          )
+          .get(`http://localhost:3001/users/one/${theUser!.listOfPatients[i]}`)
           .then((res) => {
             setPatients((prev) => [...prev, res.data]);
           })

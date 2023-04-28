@@ -19,18 +19,13 @@ export function usePrescriptions() {
     >
   ) {
     instance
-      .get(
-        "https://doctor-patient-api.onrender.com/prescriptions/prescriptions"
-      )
+      .get("http://localhost:3001/prescriptions/prescriptions")
       .then((res) => setPrescriptions(res.data))
       .catch((err) => console.log(err));
   }
   async function submitPrescription(data: IPrescription) {
     instance
-      .post(
-        "https://doctor-patient-api.onrender.com/prescriptions/new-prescription",
-        { ...data }
-      )
+      .post("http://localhost:3001/prescriptions/new-prescription", { ...data })
       .then((res) => {
         dispatch(
           newMessage({

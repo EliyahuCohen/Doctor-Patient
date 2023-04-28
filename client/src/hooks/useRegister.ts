@@ -13,7 +13,7 @@ export function useRegister(
       prop.speciality = "family-doctor";
     }
     return await axios
-      .post("https://doctor-patient-api.onrender.com/users/signup", prop)
+      .post("http://localhost:3001/users/signup", prop)
       .then((res) => {
         setError("");
         navigate("/signin");

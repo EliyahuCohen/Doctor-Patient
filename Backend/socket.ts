@@ -5,6 +5,7 @@ export let admin: user | null = null;
 export let usersID: user[] = [];
 export function socket(io: Server) {
   io.on("connection", (socket) => {
+    console.log("connection");
     socket.on("userConnected", (data: any) => {
       if (data._id && socket) {
         if (data.role !== 0) {

@@ -91,6 +91,7 @@ export function sendMessageTime(dispatch: any) {
   );
 }
 export function handleSocket(socket: Socket, dispatch: any) {
+  console.log("something");
   socket.on("updateAdmin", (res) => {
     dispatch(removeLiveUser(res));
   });

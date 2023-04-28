@@ -95,6 +95,10 @@ nav {
   padding: 0 !important;
   margin: 0 !important;
   font-size: 1.5em;
+  background: transparent;
+  &:hover {
+    background: transparent;
+  }
 }
 .openMenu {
   width: 100%;

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { io } from "socket.io-client";
 import { Suspense } from "react";
-import "./app.css";
+import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import { UserType } from "./features/userSlice";
 import { useEffect } from "react";

@@ -17,7 +17,7 @@ export function useGetOneUser(
       },
     });
     instance
-      .get(`http://localhost:3001/users/one/${id}`)
+      .get(`https://doctor-patient-api.onrender.com/users/one/${id}`)
       .then((res) => {
         setUser(res.data);
       })

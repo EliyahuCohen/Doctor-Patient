@@ -17,7 +17,7 @@ export function useGetSystemMessages(
       },
     });
     instance
-      .get("http://localhost:3001/users/getMessages")
+      .get("https://doctor-patient-api.onrender.com/users/getMessages")
       .then((res) => {
         setMessages(res.data);
       })

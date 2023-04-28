@@ -20,7 +20,10 @@ export function useLogin() {
     setMyError: React.Dispatch<React.SetStateAction<string>>
   ) {
     try {
-      const res = await axios.post("http://localhost:3001/users/login", prop);
+      const res = await axios.post(
+        "https://doctor-patient-api.onrender.com/users/login",
+        prop
+      );
       setMyError(() => "");
       dispatch(setUser(res.data));
       localStorage.setItem("user", JSON.stringify(res.data));
@@ -42,10 +45,12 @@ export function useLogin() {
           Authorization: "Bearer " + token,
         },
       });
-      instance.get("http://localhost:3001/users/checkAccess").catch(() => {
-        dispatch(logout());
-        saveLocalStorage({ token: null, user: null });
-      });
+      instance
+        .get("https://doctor-patient-api.onrender.com/users/checkAccess")
+        .catch(() => {
+          dispatch(logout());
+          saveLocalStorage({ token: null, user: null });
+        });
     }
   }
 

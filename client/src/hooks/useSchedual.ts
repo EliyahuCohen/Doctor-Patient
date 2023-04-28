@@ -71,10 +71,13 @@ export function useSchedual() {
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) {
     instance
-      .post(`http://localhost:3001/meeting/get-meetings/${doctorId}`, {
-        date,
-        day,
-      })
+      .post(
+        `https://doctor-patient-api.onrender.com/meeting/get-meetings/${doctorId}`,
+        {
+          date,
+          day,
+        }
+      )
       .then((res) => {
         setLoading(false);
         setError(false);

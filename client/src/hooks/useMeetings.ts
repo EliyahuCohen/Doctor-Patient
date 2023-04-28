@@ -99,7 +99,9 @@ export function useMeetings() {
     index: number
   ) {
     instance
-      .delete(`http://localhost:3001/meeting/cancel-meeting/${meetingId}`)
+      .delete(
+        `https://doctor-patient-api.onrender.com/meeting/cancel-meeting/${meetingId}`
+      )
       .then(() => {
         if (index == 1) {
           setUpcomingDoctors((prev) => {

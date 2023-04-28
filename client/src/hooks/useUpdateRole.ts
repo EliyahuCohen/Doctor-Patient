@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { newMessage } from "../features/messagesSlice";
 import { UserType, updateUserInfo } from "../features/userSlice";
 import { User } from "../types/type";
-import { useSaveLocalStorage } from "./useSaveLocalStorage";
 
 export function useUpdateRole(userId: string) {
   const dispatch = useDispatch();
@@ -19,7 +18,9 @@ export function useUpdateRole(userId: string) {
     setUser: React.Dispatch<React.SetStateAction<User | null>>
   ) {
     instance
-      .patch(`http://localhost:3001/users/updateRole/${userId}`)
+      .patch(
+        `https://doctor-patient-api.onrender.com/users/updateRole/${userId}`
+      )
       .then(function (res) {
         dispatch(
           newMessage({
@@ -51,7 +52,9 @@ export function useUpdateRole(userId: string) {
   }
   async function updateUser(user: User) {
     instance
-      .patch(`http://localhost:3001/users/update/${userId}`, { user })
+      .patch(`https://doctor-patient-api.onrender.com/users/update/${userId}`, {
+        user,
+      })
       .then((res) => {
         dispatch(updateUserInfo(res.data));
         dispatch(
@@ -69,7 +72,9 @@ export function useUpdateRole(userId: string) {
   }
   async function updateUserDoctorsList(docId: string) {
     instance
-      .patch(`http://localhost:3001/users/updateDoctors/${docId}`)
+      .patch(
+        `https://doctor-patient-api.onrender.com/users/updateDoctors/${docId}`
+      )
       .then((res) => {
         dispatch(updateUserInfo(res.data));
         dispatch(

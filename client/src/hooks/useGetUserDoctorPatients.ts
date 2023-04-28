@@ -12,10 +12,12 @@ export function useGetUserDoctorPatients(
         Authorization: `Bearer ${token}`,
       },
     });
-    instance.get("http://localhost:3001/users/users").then((res) => {
-      setDoctors(res.data.doctorsArray);
-      setPatients(res.data.patientsArray);
-    });
+    instance
+      .get("https://doctor-patient-api.onrender.com/users/users")
+      .then((res) => {
+        setDoctors(res.data.doctorsArray);
+        setPatients(res.data.patientsArray);
+      });
   }
 
   useEffect(() => {

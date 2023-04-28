@@ -16,7 +16,9 @@ export function useUpdateDoctorList() {
   });
   async function updateList(doctorId: string) {
     instance
-      .patch(`http://localhost:3001/users/updateDoctors/${doctorId}`)
+      .patch(
+        `https://doctor-patient-api.onrender.com/users/updateDoctors/${doctorId}`
+      )
       .then((res) => {
         const date = new Date();
         dispatch(updateDoctorList(doctorId));

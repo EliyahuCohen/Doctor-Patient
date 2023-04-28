@@ -20,14 +20,14 @@
 }
 
 .savebtn {
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 
   button {
+    width: fit-content;
     transition: 0.3s;
-    padding: 0.5rem 1.2rem;
+    padding: 0.5rem 1.4rem;
     border: 2px solid #229f97;
     color: #229f97;
     border-radius: 100vh;

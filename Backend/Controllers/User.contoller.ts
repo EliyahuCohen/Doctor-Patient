@@ -169,7 +169,6 @@ export async function getSchedual(
 //update
 export async function updateUser(req: Request, res: Response) {
   const { id } = req.params;
-  console.log(req.body);
   if (!isValidObjectId(id))
     return res.status(403).json({ message: "Invalid user ID" });
   if (req.body.role == 1)

@@ -54,7 +54,6 @@ export function useUpdateRole(userId: string) {
       .patch(`http://localhost:3001/users/update/${userId}`, { user })
       .then((res) => {
         dispatch(updateUserInfo(res.data));
-        console.log(res.data);
         dispatch(
           newMessage({
             id: crypto.randomUUID(),

@@ -151,6 +151,8 @@ form {
 .subBtn {
   padding: 1rem;
   button {
+    background: transparent;
+    width: fit-content;
     padding: 0.3rem 1.5rem;
     border-radius: 100vh;
     color: #48cfaa;

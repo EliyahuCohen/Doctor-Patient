@@ -27,7 +27,6 @@ export function usePrescriptions() {
     instance
       .post("http://localhost:3001/prescriptions/new-prescription", { ...data })
       .then((res) => {
-        console.log(res.data);
         dispatch(
           newMessage({
             id: crypto.randomUUID(),

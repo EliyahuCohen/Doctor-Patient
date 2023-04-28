@@ -14,7 +14,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { handleSocket, sendMessageTime, updateStatus } from "./Utils/functions";
 import { useLogin } from "./hooks/useLogin";
 
-export const socket = io("http://localhost:3001");
+export const socket = io("https://doctor-patinet.netlify.app");
 
 const App = () => {
   const { createIfDontHave } = useSaveLocalStorage();

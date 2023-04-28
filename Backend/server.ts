@@ -27,10 +27,12 @@ app.use("/meeting", meetRouter);
 app.use("/messages", messagesRouter);
 app.use("/prescriptions", prescriptionsRouter);
 
+const port = process.env.PORT || 5000;
+
 mongoose
-  .connect(process.env.MONGO_URI || "")
+  .connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017")
   .then(() =>
-    server.listen(process.env.PORT, () => {
+    server.listen(port, () => {
       console.log(`connected to db and running on port ${process.env.PORT}`);
       socket(io);
     })

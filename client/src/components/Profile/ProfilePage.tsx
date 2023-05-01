@@ -57,8 +57,9 @@ const ProfilePage = ({ selected }: { selected: number }) => {
   }, []);
   return (
     <>
+      {theUser == null && <div className="centerLoading">Loading...</div>}
       <div className="profileWrapper">
-        {selected == 1 && (
+        {selected == 1 && theUser && (
           <p className="headline">
             Personal information
             <FiEdit3

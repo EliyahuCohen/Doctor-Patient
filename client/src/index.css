@@ -38,3 +38,11 @@ span.space {
   color: #fff;
   background: #0d978d;
 }
+.centerLoading {
+  text-align: center;
+  font-size: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}

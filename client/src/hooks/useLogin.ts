@@ -15,7 +15,6 @@ export function useLogin() {
   const { saveLocalStorage } = useSaveLocalStorage();
   const dispatch = useDispatch();
   async function loginFunc(
-    navigate: any,
     prop: Login,
     setMyError: React.Dispatch<React.SetStateAction<string>>
   ) {
@@ -28,8 +27,8 @@ export function useLogin() {
         dispatch(setLiveUsers(res.data.usersId));
       }
       saveLocalStorage(res.data);
-      navigate("/dahsboard");
       socket.emit("userConnected", res.data.user);
+      return res.data
     } catch (err: any) {
       console.log("error", err);
       setMyError(() => err?.response?.data?.message);

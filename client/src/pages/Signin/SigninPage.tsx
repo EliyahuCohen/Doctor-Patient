@@ -78,7 +78,9 @@ const SigninPage = () => {
             className="click"
             onClick={() => {
               if (check(5)) {
-                loginFunc(navigate, User, setMyError);
+                loginFunc( User, setMyError).then((res)=>{
+                   res.user.role==0?navigate("/admin"):navigate("/dashboard")
+                });
               } else {
                 setMyError("");
               }

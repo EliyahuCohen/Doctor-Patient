@@ -77,7 +77,7 @@ export async function getMeetings(
     // more things
     const schedual = user.schedule[day];
     const timesTemp: ITimeSpan[] = [];
-    if (schedual.times) {
+    if (schedual?.times) {
       for (let i = 0; i < schedual.times.length; i++) {
         for (let j = 0; j < meetingInWantedDate.length; j++) {
           if (schedual.times[i].startTime == meetingInWantedDate[j].startTime) {
@@ -93,9 +93,9 @@ export async function getMeetings(
           timesTemp.push(schedual.times[j]);
         }
       }
+      schedual.times = timesTemp as any;
     }
-    schedual.times = timesTemp as any;
-    if (date.getDate() == new Date().getDate() + 1) {
+    if (schedual?.times&& date.getDate() == new Date().getDate() + 1) {
       let result = schedual.times.filter(
         (one) => one.startTime >= new Date().getHours()
       );

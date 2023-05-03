@@ -18,9 +18,9 @@ const Navbar = () => {
     if (window.innerWidth > 650) setOpen(false);
     setWidth(window.innerWidth);
   }
-  useEffect(()=>{
+  useEffect(() => {
     const height = window.addEventListener("resize", check);
-  },[])
+  }, [])
   const dispatch = useDispatch();
   return (
     <motion.nav

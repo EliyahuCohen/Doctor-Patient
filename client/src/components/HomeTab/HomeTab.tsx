@@ -16,12 +16,12 @@ const HomeTab = () => {
           {date.getHours() < 12
             ? " morning"
             : date.getHours() > 12 && date.getHours() < 18
-            ? " afternoon"
+            ? " Afternoon"
             : " night"}
           ,
         </b>
       </h1>
-      <p className="secondLineName">{user?.fName + " " + user?.lName}</p>
+      <p className="secondLineName">{user?.fName}</p>
     </div>
   );
 };

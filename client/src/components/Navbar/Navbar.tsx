@@ -18,10 +18,9 @@ const Navbar = () => {
     if (window.innerWidth > 650) setOpen(false);
     setWidth(window.innerWidth);
   }
-  useEffect(() => {
+  useEffect(()=>{
     const height = window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, [width]);
+  },[])
   const dispatch = useDispatch();
   return (
     <motion.nav
@@ -33,7 +32,7 @@ const Navbar = () => {
         <div className="leftNav">
           <NavLink to="/">
             <h1 className="fire">
-              🔥 <span>Eden</span>
+              🔥 <span>HealthEase</span>
             </h1>
           </NavLink>
         </div>

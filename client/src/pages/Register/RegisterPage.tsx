@@ -23,7 +23,7 @@ const RegisterPage = () => {
   return (
     <div className="register">
       <Link to="/" className="headlink">
-        🔥Eden
+        🔥HealthEase
       </Link>
       <div className="points">
         {[...new Array(totalSteps)].map((step, index) => {

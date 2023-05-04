@@ -8,6 +8,7 @@ import "./app.scss";
 import { socket } from "../../App";
 import { useEffect, useState } from "react";
 import { newMessage } from "../../features/messagesSlice";
+import { MdOutlineLogout } from "react-icons/md";
 const Navbar = () => {
   const [width, setWidth] = useState<number>(window.innerWidth);
   const [open, setOpen] = useState<boolean>(false);
@@ -20,7 +21,7 @@ const Navbar = () => {
   }
   useEffect(() => {
     const height = window.addEventListener("resize", check);
-  }, [])
+  }, []);
   const dispatch = useDispatch();
   return (
     <motion.nav
@@ -92,7 +93,7 @@ const Navbar = () => {
                   socket.emit("userLoggedOut");
                 }}
               >
-                👋
+                <MdOutlineLogout style={{ fontSize: "larger" }} />
               </p>
             ) : null}
           </div>
@@ -195,7 +196,7 @@ const Navbar = () => {
                   setOpen(false);
                 }}
               >
-                👋
+                <MdOutlineLogout />
               </p>
             ) : null}
           </motion.div>

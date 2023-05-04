@@ -1,0 +1,54 @@
+.confirmWrapper {
+  z-index: 50000 !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.5),
+    rgba(16, 163, 127, 0.5) 70%
+  ) !important;
+  button {
+    width: fit-content;
+    border-radius: 100vh;
+    background: #fff;
+    margin: 1rem;
+    padding: 1rem 5rem;
+    border: 2px solid red;
+    color: red;
+    &:hover {
+      color: #fff;
+      background: red;
+    }
+    &:first-child {
+      border-color: #10a37f;
+      color: #10a37f;
+      &:hover {
+        color: #fff;
+        background: #10a37f;
+      }
+    }
+  }
+}
+
+.AlertText {
+  background: #fff;
+  text-align: center;
+  color: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.5),
+    rgba(16, 163, 127, 0.5) 70%
+  ) !important;
+  margin-bottom: 1rem;
+}
+.innerDiv {
+  background: #fff !important;
+  padding: 2rem;
+  border-radius: 18px;
+}

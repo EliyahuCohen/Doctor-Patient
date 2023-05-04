@@ -1,14 +1,23 @@
-import "./app.scss"
+import { FiChevronDown } from "react-icons/fi";
+import "./app.scss";
 import { Link } from "react-router-dom";
 
-export interface IButtonProps{
-    whereTo:string;
+export interface IButtonProps {
+  whereTo: string;
+  backgroundColor: string;
 }
 
-const GoBackButton = ({whereTo}:IButtonProps) => {
+const GoBackButton = ({ whereTo, backgroundColor }: IButtonProps) => {
   return (
-    <div>GoBackButton</div>
-  )
-}
+    <Link to={`/${whereTo}`}>
+      <div className="backBtnWrapper">
+        <FiChevronDown
+          className="backBtn"
+          style={{ backgroundColor: backgroundColor, color: "#888" }}
+        />
+      </div>
+    </Link>
+  );
+};
 
-export default GoBackButton
+export default GoBackButton;

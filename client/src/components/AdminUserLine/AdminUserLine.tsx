@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { User } from "../../types/type";
 import React from "react";
+import { FiChevronDown } from "react-icons/fi";
 
 const AdminUserLine = ({ user, status }: { user: User; status: boolean }) => {
   const navigate = useNavigate();
@@ -24,11 +25,11 @@ const AdminUserLine = ({ user, status }: { user: User; status: boolean }) => {
       <p className={`status ${user.approved ? "approved" : "pending"}`}>
         {user.approved ? "Approved" : "Pending"}
       </p>
-      <p className="delete-small">
+      <p className="delete-small time">
         {format(new Date(user.createdAt), "dd/MM/yyyy")}
       </p>
       <p title="more details" className="arrow delete-small">
-        🧐
+        <FiChevronDown className="goToUser" title="go to user" />
       </p>
     </div>
   );

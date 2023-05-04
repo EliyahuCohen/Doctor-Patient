@@ -27,6 +27,18 @@ const OneMeeting = ({
   const d = new Date(`${selectedDate?.month}-${selectedDate?.day}-2023`);
   const options: Intl.DateTimeFormatOptions = { weekday: "long" };
   const dayName = d.toLocaleDateString("en-US", options);
+
+  function bookUI() {
+    const tempMeetings: ITimeSpan[] = [];
+    availableMeetings!.times.forEach((e) => {
+      if (e.endTime != meeting!.endTime) {
+        tempMeetings.push(e);
+      }
+    });
+    setAvailableMeetings((prev: any) => {
+      return { day: prev?.day!, times: tempMeetings };
+    });
+  }
   return (
     <div key={meeting!.startTime + index} className="meeting">
       <div className="leftSide">
@@ -55,17 +67,9 @@ const OneMeeting = ({
             ),
             id,
             meeting!.endTime,
-            meeting!.startTime
+            meeting!.startTime,
+            bookUI
           );
-          const tempMeetings: ITimeSpan[] = [];
-          availableMeetings!.times.forEach((e) => {
-            if (e.endTime != meeting!.endTime) {
-              tempMeetings.push(e);
-            }
-          });
-          setAvailableMeetings((prev: any) => {
-            return { day: prev?.day!, times: tempMeetings };
-          });
         }}
         title="Book Meeting"
         className="book"

@@ -30,6 +30,15 @@ export async function createMeeting(
     const patient = await User.findById(USER_ID);
     const doctor = await User.findById(doctorId);
     if (patient && doctor) {
+      const hasMeeting = await Meet.find({
+        doctorId: doctorId,
+        patientId: USER_ID,
+        date: { $gt: new Date() },
+      });
+      if (hasMeeting.length > 0)
+        return res.status(400).json({
+          message: "Can't make more than one appintment with the same doctor",
+        });
       const meeting = await Meet.create({
         date,
         doctorId,
@@ -95,7 +104,7 @@ export async function getMeetings(
       }
       schedual.times = timesTemp as any;
     }
-    if (schedual?.times&& date.getDate() == new Date().getDate() + 1) {
+    if (schedual?.times && date.getDate() == new Date().getDate() + 1) {
       let result = schedual.times.filter(
         (one) => one.startTime >= new Date().getHours()
       );

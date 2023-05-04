@@ -76,6 +76,7 @@
   }
   .adding {
     color: #fff;
+    border: 1px solid #fff;
     padding: 0.3rem 1rem;
     border-radius: 100vh;
     background: #2b86ff;
@@ -90,6 +91,7 @@
   }
   .removing {
     margin-top: 0;
+    border: 1px solid #fff;
     color: #fff;
     padding: 0.3rem 1rem;
     border-radius: 100vh;
@@ -104,13 +106,14 @@
   }
   .emailBtn {
     padding: 0.3rem 1rem;
-    background: #f29890;
+    border: 1px solid #fff;
+    background: #72baed;
     color: #fff;
     transition: 0.3s;
     border-radius: 100vh;
     &:hover {
       transition: 0.3s;
-      color: #f29890;
+      color: #72baed;
       background: #fff;
       border: 1px solid #f29890;
     }

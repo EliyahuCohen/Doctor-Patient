@@ -106,6 +106,15 @@ const ProfilePage = ({ selected }: { selected: number }) => {
             <div className="row">
               <p>
                 <span className="fitEmoji">
+                  <BiMailSend color="#f4b400  " />{" "}
+                </span>
+                Email:
+              </p>
+              <p>{theUser?.email}</p>
+            </div>
+            <div className="row">
+              <p>
+                <span className="fitEmoji">
                   <TbGenderFemme
                     color="d770ff
  "
@@ -166,15 +175,7 @@ const ProfilePage = ({ selected }: { selected: number }) => {
                 />
               ) : null}
             </div>
-            <div className="row">
-              <p>
-                <span className="fitEmoji">
-                  <BiMailSend color="#f4b400  " />{" "}
-                </span>
-                Email:
-              </p>
-              <p>{theUser?.email}</p>
-            </div>
+
             {theUser?.role != 0 && (
               <div className="row">
                 <p>

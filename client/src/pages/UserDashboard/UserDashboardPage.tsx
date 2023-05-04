@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BsGrid1X2 } from "react-icons/bs";
+import { BsCalendarDate, BsGrid1X2 } from "react-icons/bs";
 import { TbMessageCircle2 } from "react-icons/tb";
 import { BiBed } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
@@ -20,8 +20,8 @@ const UserDashboardPage = () => {
     (state: { userSlice: UserType }) => state.userSlice
   );
 
-  const [selected, setSelected] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7>(1);
-  function changeTab(tabNumber: 1 | 2 | 3 | 4 | 5 | 6 | 7) {
+  const [selected, setSelected] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8>(1);
+  function changeTab(tabNumber: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8) {
     setSelected(tabNumber);
   }
   return (
@@ -48,6 +48,7 @@ const UserDashboardPage = () => {
           <GiDoctorFace />
           <p>My Doctors</p>
         </div>
+
         {user?.role == 1 && user.approved && (
           <div
             className={`${selected == 4 ? "selected" : ""}`}
@@ -65,6 +66,13 @@ const UserDashboardPage = () => {
           <p>Messages</p>
         </div>
         <div
+          className={`${selected == 8 ? "selected" : ""}`}
+          onClick={() => {}}
+        >
+          <BsCalendarDate />
+          <p>My Appointments</p>
+        </div>
+        <div
           className={`${selected == 6 ? "selected" : ""}`}
           onClick={() => changeTab(6)}
         >
@@ -77,7 +85,7 @@ const UserDashboardPage = () => {
             onClick={() => changeTab(7)}
           >
             <AiOutlineSchedule />
-            <p>Schedual</p>
+            <p>My Shifts</p>
           </div>
         )}
       </div>

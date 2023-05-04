@@ -14,10 +14,10 @@ const HomeTab = () => {
         <b>
           Good
           {date.getHours() < 12
-            ? " morning"
+            ? " Morning"
             : date.getHours() > 12 && date.getHours() < 18
             ? " Afternoon"
-            : " night"}
+            : " Evening"}
           ,
         </b>
       </h1>

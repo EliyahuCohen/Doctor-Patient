@@ -3,10 +3,11 @@ import React, { useState, useEffect } from "react";
 import { ScheduleDay } from "../../types/type";
 import { FiTrash } from "react-icons/fi";
 import { BsPlus } from "react-icons/bs";
-
 import { useSchedual } from "../../hooks/useSchedual";
+import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
 const TimeSelect = () => {
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<number>(0);
   const [daysList, setDaysList] = useState<ScheduleDay[]>([
     { day: "Sunday", schedule: { day: 1, times: [] } },
@@ -16,7 +17,7 @@ const TimeSelect = () => {
     { day: "Thursday", schedule: { day: 5, times: [] } },
     { day: "Friday", schedule: { day: 6, times: [] } },
   ]);
-  const { postSchedual, getSchedual } = useSchedual();
+  const { getSchedual } = useSchedual();
   useEffect(() => {
     getSchedual(setDaysList, daysList);
   }, []);
@@ -140,9 +141,14 @@ const TimeSelect = () => {
           );
         })}
       </div>
-      <div className="savebtn">
-        <button onClick={() => postSchedual(daysList)}>Save Schedual</button>
-      </div>
+      {daysList.filter((one) => one.schedule.times.length == 0).length != 6 ? (
+        <div className="savebtn">
+          <button onClick={() => setModalOpen(true)}>Save Schedual</button>
+        </div>
+      ) : null}
+      {modalOpen ? (
+        <ConfirmModal daysList={daysList} setModalOpen={setModalOpen} />
+      ) : null}
     </div>
   );
 };

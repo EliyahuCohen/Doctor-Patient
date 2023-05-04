@@ -3,15 +3,14 @@ import image from "../../assets/doctor.jpg";
 import About from "../../components/About/About";
 import { motion } from "framer-motion";
 import OurTeam from "../../components/OurTeam/OurTeam";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
-import { newMessage } from "../../features/messagesSlice";
 const HomePage = () => {
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
     <div className="bigWrapper">
       <motion.div className="pageWrapper">
@@ -36,16 +35,7 @@ const HomePage = () => {
           ) : (
             <button
               onClick={() => {
-                dispatch(
-                  newMessage({
-                    id: crypto.randomUUID(),
-                    message: "Have to Login to use",
-                    senderId: crypto.randomUUID(),
-                    senderName: "System",
-                    time: 5000,
-                    type: "SYSTEM",
-                  })
-                );
+                navigate("/signin");
               }}
             >
               Make an Appoitment

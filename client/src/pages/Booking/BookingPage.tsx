@@ -9,6 +9,7 @@ import { MdExpandMore } from "react-icons/md";
 import { MdExpandLess } from "react-icons/md";
 import { TbHourglassEmpty } from "react-icons/tb";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import GoBackButton from "../../components/GoBackButton/GoBackButton";
 const BookingPage = () => {
   const { id } = useParams();
   const [error, setError] = useState<boolean>(false);
@@ -29,76 +30,83 @@ const BookingPage = () => {
     getMeetings(d, id!, d.getDay(), setAvailableMeetings, setError, setLoading);
   }, [selectedDate]);
   return (
-    <div className="wrapperDate">
-      <div className="bookingWrapper">
-        <DatePicker setSelectedDate={setSelectedDate} />
+    <div>
+      <div className="spaceForBtn">
+        <GoBackButton backgroundColor="#ffebea" whereTo="dashboard" />
       </div>
-      <div className="bookingWrapper2">
-        <div className="selectedDate">
-          {selectedDate?.day && <h1>{selectedDate.day}</h1>}
-          {selectedDate?.month && <h1>{selectedDate.month}</h1>}
+      <div className="wrapperDate">
+        <div className="bookingWrapper">
+          <DatePicker setSelectedDate={setSelectedDate} />
         </div>
-        {error ? (
-          <>
-            <h1 className="messageDoc">
-              <TbHourglassEmpty fontSize="large" />
-            </h1>
-            <h2 className="messageDoc">Not a Working Today</h2>
-          </>
-        ) : null}
-        {availableMeetings?.times?.length == 0 && !error ? (
-          <div className="notMore">
-            <h1 className="messageDoc">No Meetings Available </h1>
-            <TbHourglassEmpty className="emptyIcon" />
+        <div className="bookingWrapper2">
+          <div className="selectedDate">
+            {selectedDate?.day && <h1>{selectedDate.day}</h1>}
+            {selectedDate?.month && <h1>{selectedDate.month}</h1>}
           </div>
-        ) : null}
-        {!availableMeetings?.times && (
-          <div className="notMore">
-            <h1 className="messageDoc">No Meetings Available </h1>
-            <TbHourglassEmpty className="emptyIcon" />
-          </div>
-        )}
-        <div className="loadingIcon">
-          {!error && loading && <AiOutlineLoading3Quarters fontSize="large" />}
-        </div>
-        {!error &&
-          availableMeetings?.times?.map((meeting, index: number) => {
-            if (index < limit) {
-              return (
-                <OneMeeting
-                  availableMeetings={availableMeetings}
-                  date={date}
-                  id={id}
-                  index={index}
-                  meeting={meeting}
-                  selectedDate={selectedDate}
-                  setAvailableMeetings={setAvailableMeetings}
-                  key={meeting.endTime + index}
-                />
-              );
-            }
-          })}
-        {!error &&
-          availableMeetings?.times &&
-          availableMeetings?.times.length > 5 && (
-            <div className="moreBtn">
-              {limit == 5 ? (
-                <MdExpandMore
-                  className="icon"
-                  title="More Meetings"
-                  fontSize="medium"
-                  onClick={() => setLimit(availableMeetings!.times!.length)}
-                />
-              ) : (
-                <MdExpandLess
-                  className="icon"
-                  title="Less Meetings"
-                  onClick={() => setLimit(5)}
-                  fontSize="medium"
-                />
-              )}
+          {error ? (
+            <>
+              <h1 className="messageDoc">
+                <TbHourglassEmpty fontSize="large" />
+              </h1>
+              <h2 className="messageDoc">Not a Working Today</h2>
+            </>
+          ) : null}
+          {availableMeetings?.times?.length == 0 && !error ? (
+            <div className="notMore">
+              <h1 className="messageDoc">No Meetings Available </h1>
+              <TbHourglassEmpty className="emptyIcon" />
+            </div>
+          ) : null}
+          {!availableMeetings?.times && (
+            <div className="notMore">
+              <h1 className="messageDoc">No Meetings Available </h1>
+              <TbHourglassEmpty className="emptyIcon" />
             </div>
           )}
+          <div className="loadingIcon">
+            {!error && loading && (
+              <AiOutlineLoading3Quarters fontSize="large" />
+            )}
+          </div>
+          {!error &&
+            availableMeetings?.times?.map((meeting, index: number) => {
+              if (index < limit) {
+                return (
+                  <OneMeeting
+                    availableMeetings={availableMeetings}
+                    date={date}
+                    id={id}
+                    index={index}
+                    meeting={meeting}
+                    selectedDate={selectedDate}
+                    setAvailableMeetings={setAvailableMeetings}
+                    key={meeting.endTime + index}
+                  />
+                );
+              }
+            })}
+          {!error &&
+            availableMeetings?.times &&
+            availableMeetings?.times.length > 5 && (
+              <div className="moreBtn">
+                {limit == 5 ? (
+                  <MdExpandMore
+                    className="icon"
+                    title="More Meetings"
+                    fontSize="medium"
+                    onClick={() => setLimit(availableMeetings!.times!.length)}
+                  />
+                ) : (
+                  <MdExpandLess
+                    className="icon"
+                    title="Less Meetings"
+                    onClick={() => setLimit(5)}
+                    fontSize="medium"
+                  />
+                )}
+              </div>
+            )}
+        </div>
       </div>
     </div>
   );

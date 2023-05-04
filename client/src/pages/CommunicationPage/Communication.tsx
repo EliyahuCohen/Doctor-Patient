@@ -5,6 +5,7 @@ import { useMessages } from "../../hooks/useMessages";
 import { RiSendPlaneLine } from "react-icons/ri";
 import "./app.scss";
 import { socket } from "../../App";
+import GoBackButton from "../../components/GoBackButton/GoBackButton";
 
 export interface IMessage {
   message: string;
@@ -58,6 +59,7 @@ const Communication = () => {
   }
   return (
     <div className="communication">
+      <GoBackButton backgroundColor="#D3D3D3" whereTo="dashboard" />
       <h1>Get In Touch 💬</h1>
       <div className="messageList" ref={divRef}>
         <div>

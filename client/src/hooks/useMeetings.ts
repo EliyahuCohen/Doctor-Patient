@@ -18,7 +18,8 @@ export function useMeetings() {
     date: Date,
     doctorId: any,
     endTime: number,
-    startTime: number
+    startTime: number,
+    bookUI: () => void
   ) {
     instance
       .post("http://localhost:3001/meeting/meet", {
@@ -38,9 +39,19 @@ export function useMeetings() {
             senderId: crypto.randomUUID(),
           })
         );
+        bookUI();
       })
       .catch((err) => {
-        console.log(err);
+        dispatch(
+          newMessage({
+            id: crypto.randomUUID(),
+            message: "Can't make more than one appointment",
+            senderName: "System",
+            type: "DELETE",
+            time: 3000,
+            senderId: crypto.randomUUID(),
+          })
+        );
       });
   }
   async function getUpcomingMeetings(

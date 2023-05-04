@@ -1,19 +1,20 @@
 .bookingWrapper {
   max-width: 1700px;
   margin: 0 auto;
-  margin-top: 4rem;
   padding: 1rem;
-  margin-top: 5rem;
   display: flex;
   justify-content: space-around;
 }
-
+.spaceForBtn {
+  max-width: 1700px;
+  margin: 0 auto;
+  margin-top: 4rem;
+  padding: 1rem;
+  margin-top: 5rem;
+}
 .bookingWrapper2 {
   max-width: 1700px;
   margin: 0 auto;
-  margin-top: 1rem;
-  padding: 1rem;
-  margin-top: 5rem;
   width: 100%;
   .selectedDate {
     margin: 0 auto;
@@ -40,6 +41,7 @@
   max-width: 600px;
   display: flex;
   margin: 0 auto;
+  margin-bottom: 1rem;
   justify-content: center;
   animation: upDown 3s infinite;
   .icon {

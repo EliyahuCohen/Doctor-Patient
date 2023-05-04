@@ -87,3 +87,13 @@
     background: #ff4d4d;
   }
 }
+.innerMessage {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.timeOfMessage {
+  font-weight: bolder;
+  font-size: small;
+  color: #555;
+}

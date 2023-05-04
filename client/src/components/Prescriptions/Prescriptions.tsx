@@ -23,7 +23,12 @@ const Prescription = () => {
 
   return (
     <div className="myPrescriptions">
-      <h1>My Prescription ({prescriptions?.length || 0})</h1>
+      <h1>
+        My Prescription{" "}
+        {prescriptions != null &&
+          prescriptions.length != 0 &&
+          `(${prescriptions.length})`}
+      </h1>
       {prescriptions && prescriptions.length == 0 && (
         <h1>
           <p

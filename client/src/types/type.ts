@@ -51,6 +51,7 @@ export interface IMessage {
 export interface IAlert {
   message: string;
   type: 1 | 2 | 3;
+  createdAt: string;
 }
 export enum stage {
   ALL,

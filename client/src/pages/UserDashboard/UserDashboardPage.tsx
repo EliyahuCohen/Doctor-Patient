@@ -14,6 +14,7 @@ import ProfilePage from "../../components/Profile/ProfilePage";
 import OurDoctorAndPatients from "../../components/OurDoctorAndPatients/OurDoctorAndPatients";
 import HomeTab from "../../components/HomeTab/HomeTab";
 import { CgPill } from "react-icons/cg";
+import MyAppointments from "../../components/MyAppointments/MyAppointments";
 
 const UserDashboardPage = () => {
   const { user } = useSelector(
@@ -67,7 +68,9 @@ const UserDashboardPage = () => {
         </div>
         <div
           className={`${selected == 8 ? "selected" : ""}`}
-          onClick={() => {}}
+          onClick={() => {
+            setSelected(8);
+          }}
         >
           <BsCalendarDate />
           <p>My Appointments</p>
@@ -100,6 +103,9 @@ const UserDashboardPage = () => {
         {selected == 6 && <Prescription />}
         {user?.role == 1 && user.approved && selected == 7 && (
           <ProfilePage selected={2} />
+        )}
+        {user?.role != 0 && user?.approved && selected == 8 && (
+          <MyAppointments />
         )}
       </div>
     </div>

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import "./app.scss";
 import { IAlert } from "../../types/type";
 import { useGetSystemMessages } from "../../hooks/useGetSystemMessages";
+import { format } from "date-fns";
 const SystemMessagesPage = () => {
   const [choice, setChoice] = useState<0 | 1 | 2 | 3>(0);
   const [messages, setMessages] = useState<IAlert[]>([]);
@@ -62,14 +63,19 @@ const OneMessageAlert = ({
           message.type == 1 ? "good" : message.type == 3 ? "bad" : ""
         }`}
       >
-        {message.type == 2 ? (
-          <GrStatusWarning fontSize="large" />
-        ) : message.type == 1 ? (
-          <GrStatusGood />
-        ) : (
-          <BiErrorAlt />
-        )}
-        <strong>{message.message}</strong>
+        <div className="innerMessage">
+          {message.type == 2 ? (
+            <GrStatusWarning fontSize="large" />
+          ) : message.type == 1 ? (
+            <GrStatusGood />
+          ) : (
+            <BiErrorAlt />
+          )}
+          <strong>{message.message}</strong>
+        </div>
+        <p className="timeOfMessage">
+          {format(new Date(message.createdAt), "dd/MM/yyyy")}
+        </p>
       </motion.div>
     </motion.div>
   );

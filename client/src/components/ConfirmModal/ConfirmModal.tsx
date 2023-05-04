@@ -20,10 +20,10 @@ const ConfirmModal = ({
     >
       <div className="AlertText">
         <div className="innerDiv">
-          <h2>
+          <p>
             All of the already schedualed <br />
             meetings are going to exists but from now on it won't
-          </h2>
+          </p>
           <div className="theBtns">
             <button
               onClick={() => {

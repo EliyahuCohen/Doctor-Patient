@@ -7,6 +7,8 @@ import { useSchedual } from "../../hooks/useSchedual";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
 const TimeSelect = () => {
+  const [error, setError] = useState<boolean>(false);
+  const [theIndex, setTheIndex] = useState<number>(0);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<number>(0);
   const [daysList, setDaysList] = useState<ScheduleDay[]>([
@@ -51,8 +53,13 @@ const TimeSelect = () => {
   }
   function setHour1(index: number, start: number) {
     const week = [...daysList];
-    week[selected].schedule.times[index].startTime = start as any;
-    setDaysList(week);
+    if (index != 0 && week[selected].schedule.times[index - 1].endTime > start)
+      return false;
+    else {
+      week[selected].schedule.times[index].startTime = start as any;
+      setDaysList(week);
+    }
+    return true;
   }
   function setHour2(index: number, end: number) {
     const week = [...daysList];
@@ -101,15 +108,21 @@ const TimeSelect = () => {
                   defaultValue={sch.startTime}
                   onChange={(e) => setHour1(index, parseInt(e.target.value))}
                 >
-                  {[9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19].map(
-                    (number, index) => {
+                  {[9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+                    .splice(
+                      [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19].findIndex(
+                        (one) =>
+                          one ==
+                          daysList[selected].schedule.times[index].startTime
+                      )
+                    )
+                    .map((number, index) => {
                       return (
                         <option value={number} key={number + index}>
                           {number}:00
                         </option>
                       );
-                    }
-                  )}
+                    })}
                 </select>
               </div>
               <div>
@@ -118,15 +131,21 @@ const TimeSelect = () => {
                   onChange={(e) => setHour2(index, parseInt(e.target.value))}
                   defaultValue={sch.endTime}
                 >
-                  {[9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19].map(
-                    (number, tindex) => {
+                  {[9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+                    .splice(
+                      [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19].findIndex(
+                        (one) =>
+                          one ==
+                          daysList[selected].schedule.times[index].endTime
+                      )
+                    )
+                    .map((number, tindex) => {
                       return (
                         <option value={number} key={number + tindex}>
                           {number}:00
                         </option>
                       );
-                    }
-                  )}
+                    })}
                 </select>
               </div>
               <FiTrash

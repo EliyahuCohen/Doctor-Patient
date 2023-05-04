@@ -17,31 +17,16 @@ export function useSchedual() {
   async function postSchedual(weeklySchedual: ScheduleDay[]) {
     instance
       .post("http://localhost:3001/users/schdeual", { weeklySchedual })
-      .then(() => {
-        dispatch(
-          newMessage({
-            id: crypto.randomUUID(),
-            message: "Hours list updated",
-            senderId: crypto.randomUUID(),
-            senderName: "System",
-            time: 3000,
-            type: "MESSAGE",
-          })
-        );
-        dispatch(
-          newMessage({
-            id: crypto.randomUUID(),
-            message:
-              "All of the schedualed meetings are going to exists but from now on it won't",
-            senderId: crypto.randomUUID(),
-            senderName: "System",
-            time: 7000,
-            type: "SYSTEM",
-          })
-        );
-      })
+      .then(() => {})
       .catch((err) => {
-        console.log(err);
+        newMessage({
+          id: crypto.randomUUID(),
+          message: "Could not save the changes at this time",
+          senderId: crypto.randomUUID(),
+          senderName: "System",
+          time: 7000,
+          type: "DELETE",
+        });
       });
   }
   async function getSchedual(

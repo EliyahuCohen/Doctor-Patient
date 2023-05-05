@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, lazy } from "react";
 import { BsCalendarDate, BsGrid1X2 } from "react-icons/bs";
 import { TbMessageCircle2 } from "react-icons/tb";
 import { BiBed } from "react-icons/bi";
@@ -8,14 +8,22 @@ import { AiOutlineSchedule } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
 import "./app.scss";
-import SystemMessagesPage from "../../components/SystemMessages/SystemMessagesPage";
-import Prescription from "../../components/Prescriptions/Prescriptions";
-import ProfilePage from "../../components/Profile/ProfilePage";
-import OurDoctorAndPatients from "../../components/OurDoctorAndPatients/OurDoctorAndPatients";
-import HomeTab from "../../components/HomeTab/HomeTab";
 import { CgPill } from "react-icons/cg";
-import MyAppointments from "../../components/MyAppointments/MyAppointments";
 
+const SystemMessagesPage = lazy(
+  () => import("../../components/SystemMessages/SystemMessagesPage")
+);
+const Prescription = lazy(
+  () => import("../../components/Prescriptions/Prescriptions")
+);
+const ProfilePage = lazy(() => import("../../components/Profile/ProfilePage"));
+const OurDoctorAndPatients = lazy(
+  () => import("../../components/OurDoctorAndPatients/OurDoctorAndPatients")
+);
+const HomeTab = lazy(() => import("../../components/HomeTab/HomeTab"));
+const MyAppointments = lazy(
+  () => import("../../components/MyAppointments/MyAppointments")
+);
 const UserDashboardPage = () => {
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice

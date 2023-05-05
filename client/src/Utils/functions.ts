@@ -7,7 +7,7 @@ import {
   updateLiveUsers,
   updateStateLive,
 } from "../features/adminSlice";
-import { updateRole } from "../features/userSlice";
+import { logout, updateRole } from "../features/userSlice";
 
 export function shuffleArray(array: any[]) {
   return array.sort(() => Math.random() - 0.5);
@@ -80,7 +80,7 @@ export function sendMessageTime(dispatch: any) {
           : "Good Night",
       senderId: crypto.randomUUID(),
       senderName: "System",
-      time: 3000,
+      time: 7000,
       type:
         date.getHours() < 12
           ? "MESSAGE"
@@ -90,7 +90,12 @@ export function sendMessageTime(dispatch: any) {
     })
   );
 }
-export function handleSocket(socket: Socket, dispatch: any) {
+export function handleSocket(
+  socket: Socket,
+  dispatch: any,
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  setModalText: React.Dispatch<React.SetStateAction<string>>
+) {
   socket.on("updateAdmin", (res) => {
     dispatch(removeLiveUser(res));
   });
@@ -119,12 +124,12 @@ export function handleSocket(socket: Socket, dispatch: any) {
     if (!window.location.pathname.includes("communication")) {
       dispatch(
         newMessage({
-          id: crypto.randomUUID(),
+          id: sock.createdAt,
           message: sock.message,
+          senderId: sock.senderId,
           senderName: sock.senderName,
-          type: "MESSAGE",
-          time: 2000,
-          senderId: crypto.randomUUID(),
+          time: sock.time,
+          type: sock.type,
         })
       );
       new Audio(messageSent).play();
@@ -142,6 +147,10 @@ export function handleSocket(socket: Socket, dispatch: any) {
       })
     );
     new Audio(messageSent).play();
+  });
+  socket.on("post-rating", (sock) => {
+    setModalOpen(true);
+    setModalText(sock.message);
   });
 }
 export function updateStatus(socket: Socket, dispatch: any, user: User | null) {

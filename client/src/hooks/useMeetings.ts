@@ -71,23 +71,19 @@ export function useMeetings() {
   async function meetingCompleted(
     meetingId: string,
     setUpcomingDoctors: React.Dispatch<React.SetStateAction<IMeet[]>>,
-    setUpcomingPatients: React.Dispatch<React.SetStateAction<IMeet[]>>,
-    index: number
+    setUpcomingPatients: React.Dispatch<React.SetStateAction<IMeet[]>>
   ) {
     instance
       .patch("http://localhost:3001/meeting/meeting-completed", { meetingId })
       .then(() => {
-        if (index == 1) {
-          setUpcomingDoctors((prev) => {
-            const arr = prev.filter((meet) => meet._id !== meetingId);
-            return [...arr];
-          });
-        } else {
-          setUpcomingPatients((prev) => {
-            const arr = prev.filter((meet) => meet._id !== meetingId);
-            return [...arr];
-          });
-        }
+        setUpcomingDoctors((prev) => {
+          const arr = prev.filter((meet) => meet._id !== meetingId);
+          return [...arr];
+        });
+        setUpcomingPatients((prev) => {
+          const arr = prev.filter((meet) => meet._id !== meetingId);
+          return [...arr];
+        });
         dispatch(
           newMessage({
             id: crypto.randomUUID(),
@@ -106,23 +102,19 @@ export function useMeetings() {
   async function cancelMeeting(
     meetingId: string,
     setUpcomingDoctors: React.Dispatch<React.SetStateAction<IMeet[]>>,
-    setUpcomingPatients: React.Dispatch<React.SetStateAction<IMeet[]>>,
-    index: number
+    setUpcomingPatients: React.Dispatch<React.SetStateAction<IMeet[]>>
   ) {
     instance
       .delete(`http://localhost:3001/meeting/cancel-meeting/${meetingId}`)
       .then(() => {
-        if (index == 1) {
-          setUpcomingDoctors((prev) => {
-            const arr = prev.filter((meet) => meet._id !== meetingId);
-            return [...arr];
-          });
-        } else {
-          setUpcomingPatients((prev) => {
-            const arr = prev.filter((meet) => meet._id !== meetingId);
-            return [...arr];
-          });
-        }
+        setUpcomingDoctors((prev) => {
+          const arr = prev.filter((meet) => meet._id !== meetingId);
+          return [...arr];
+        });
+        setUpcomingPatients((prev) => {
+          const arr = prev.filter((meet) => meet._id !== meetingId);
+          return [...arr];
+        });
         dispatch(
           newMessage({
             id: crypto.randomUUID(),

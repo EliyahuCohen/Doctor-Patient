@@ -2,7 +2,8 @@ import { Request, Response } from "express";
 import { isValidObjectId, ObjectId } from "mongoose";
 import Meet, { IMeet } from "../Models/Meeting.model";
 import User, { ITimeSpan } from "../Models/User.model";
-
+import { io } from "../server";
+import { usersID } from "../socket";
 //post
 export async function createMeeting(
   req: Request<
@@ -34,6 +35,7 @@ export async function createMeeting(
         doctorId: doctorId,
         patientId: USER_ID,
         date: { $gt: new Date() },
+        completed: false,
       });
       if (hasMeeting.length > 0)
         return res.status(400).json({
@@ -178,6 +180,16 @@ export async function meetingCompleted(req: Request, res: Response) {
   await patient?.save();
   meeting.completed = true;
   await meeting.save();
+  //finding the user for sending request to fire the rating modal
+  const exists = usersID.filter(
+    (one) => one.userId == (meeting.patientId as any)
+  )[0];
+  if (exists) {
+    io.to(exists.socketId).emit("post-rating", {
+      message: `Please rate the meeting with doctor ${meeting.doctorName}`,
+    });
+  }
+
   return res.status(200).json({ message: "Meeting updated" });
 }
 //delete

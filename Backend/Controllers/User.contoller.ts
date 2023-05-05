@@ -259,3 +259,17 @@ export async function deleteUser(req: Request, res: Response) {
 export async function checkAccess(req: Request, res: Response) {
   return res.status(200).json({ message: "Validation Successful" });
 }
+export async function addRatingToDoctor(req: Request, res: Response) {
+  const { USER_ID, rating, doctorId } = req.body;
+  if (!isValidObjectId(USER_ID))
+    return res.status(403).json({ message: "Invalid user ID" });
+  const doctor = await User.findById(doctorId);
+  if (!doctor)
+    return res
+      .status(404)
+      .json({ message: "Cant find doctor and rate him sorry!" });
+  doctor.userRating.sum += rating;
+  doctor.userRating.votes += doctor.userRating.votes + 1;
+  await doctor.save();
+  return res.status(200).json({ message: "Thank you!" });
+}

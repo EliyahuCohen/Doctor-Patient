@@ -8,6 +8,7 @@ import { MdOutlineNightsStay } from "react-icons/md";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
 import "./app.scss";
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
 import { deleteMessage } from "../../features/messagesSlice";
 const Message = ({ message, senderName, type, time, id }: IMessage) => {
   const dispatch = useDispatch();
@@ -17,7 +18,11 @@ const Message = ({ message, senderName, type, time, id }: IMessage) => {
     }, time);
   }, [message]);
   return (
-    <div className="messageWrraper">
+    <motion.div
+      initial={{ x: -50 }}
+      whileInView={{ x: 0 }}
+      className="messageWrraper"
+    >
       <div className="message">
         {type == "MESSAGE" ? (
           <AiOutlineMail fontSize="1.5rem" className="success" />
@@ -37,7 +42,7 @@ const Message = ({ message, senderName, type, time, id }: IMessage) => {
           <p>{message}</p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

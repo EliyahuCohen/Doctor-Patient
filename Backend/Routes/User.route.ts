@@ -14,6 +14,7 @@ import {
   getSchedual,
   updateDoctorsList,
   checkAccess,
+  addRatingToDoctor,
 } from "../Controllers/User.contoller";
 import { requiredAuthentication } from "../Middlewares/RequireAuth";
 
@@ -32,6 +33,7 @@ router.delete("/delete/:id", deleteUser);
 router.patch("/update/:id", updateUser);
 router.patch("/updateRole/:id", updatePermissions);
 router.patch("/updateDoctors/:id", updateDoctorsList);
+router.patch("/updateRating", addRatingToDoctor);
 router.post("/schdeual", postSchedual);
 router.get("/schdeual", getSchedual);
 

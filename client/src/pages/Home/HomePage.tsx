@@ -4,7 +4,7 @@ import About from "../../components/About/About";
 import { motion } from "framer-motion";
 import OurTeam from "../../components/OurTeam/OurTeam";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
 const HomePage = () => {
   const { user } = useSelector(

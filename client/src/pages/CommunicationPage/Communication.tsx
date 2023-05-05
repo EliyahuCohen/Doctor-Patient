@@ -79,10 +79,11 @@ const Communication = () => {
       </div>
       <form className="sendingMessage">
         <input ref={inputRef} type="text" placeholder={`Write a message...`} />
-        <button onClick={(e) => handleClick(e)}>
+        <button className="sendBtn" onClick={(e) => handleClick(e)}>
           <RiSendPlaneLine
             fontSize="large"
             style={{
+              border: 0,
               color: "#9aa2f3",
               rotate: "-45deg",
               background: "transparent",

@@ -1,15 +1,19 @@
-import {
-  AdminPage,
-  Communication,
-  HomePage,
-  OneProfile,
-  RegisterPage,
-  SigninPage,
-  UserDashboardPage,
-} from "./pages/index";
+import { lazy } from "react";
 import { Navigate } from "react-router-dom";
 import { User } from "./types/type";
 import BookingPage from "./pages/Booking/BookingPage";
+
+const HomePage = lazy(() => import("./pages/Home/HomePage"));
+const AdminPage = lazy(() => import("./pages/Admin/AdminPage"));
+const OneProfile = lazy(() => import("./components/OneProfile/OneProfile"));
+const RegisterPage = lazy(() => import("./pages/Register/RegisterPage"));
+const SigninPage = lazy(() => import("./pages/Signin/SigninPage"));
+const UserDashboardPage = lazy(
+  () => import("./pages/UserDashboard/UserDashboardPage")
+);
+const Communication = lazy(
+  () => import("./pages/CommunicationPage/Communication")
+);
 
 export interface RouteType {
   element: JSX.Element | React.ElementType<any>;

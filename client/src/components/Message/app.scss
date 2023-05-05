@@ -1,8 +1,7 @@
 .messagesWrapper {
-  position: fixed;
-  z-index: 50000;
-  bottom: 1rem;
-  left: 1rem;
+  padding: 2rem;
+  z-index: 50000 !important;
+  color: #111 !important;
   .message {
     width: fit-content;
     display: flex;

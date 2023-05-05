@@ -31,7 +31,13 @@ export interface User {
   location: string;
   isMale: boolean;
   schedule: Schedule[];
+  userRating: IRating;
 }
+export interface IRating {
+  sum: number;
+  votes: number;
+}
+
 const messageSchema: Schema = new mongoose.Schema<ISystemMessage>(
   {
     message: {
@@ -45,6 +51,16 @@ const messageSchema: Schema = new mongoose.Schema<ISystemMessage>(
   },
   { timestamps: true }
 );
+const userRating: Schema = new mongoose.Schema<IRating>({
+  sum: {
+    type: Number,
+    required: false,
+  },
+  votes: {
+    type: Number,
+    default: 0,
+  },
+});
 
 const scheduleSchema: Schema = new mongoose.Schema<Schedule>(
   {
@@ -95,6 +111,10 @@ const userSchema: Schema = new mongoose.Schema<User>(
       type: [scheduleSchema],
       required: false,
       default: [],
+    },
+    userRating: {
+      type: userRating,
+      required: false,
     },
   },
   { timestamps: true }

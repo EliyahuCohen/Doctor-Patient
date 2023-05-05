@@ -39,7 +39,7 @@ export async function newPrescription(req: Request, res: Response) {
     })
       .then((r) => {
         const userId = usersID.filter((one) => one.userId == patinetId)[0];
-        if (userId.socketId.length > 0) {
+        if (userId?.socketId) {
           io.to(userId.socketId).emit("newPrescription", r);
         }
         return res
@@ -47,6 +47,7 @@ export async function newPrescription(req: Request, res: Response) {
           .json({ message: "Prescription has been assigned successfuly" });
       })
       .catch((err) => {
+        console.log(err);
         return res.status(400).json({ message: "Invalid Input Values " });
       });
   } catch (err) {

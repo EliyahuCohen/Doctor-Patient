@@ -81,6 +81,13 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+.sendBtn {
+  border: 0;
+  cursor: pointer;
+  &:hover {
+    background: #fff;
+  }
+}
 
 .sendingMessage {
   position: fixed;

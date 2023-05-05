@@ -1,4 +1,5 @@
 import "./app.scss";
+import { lazy } from "react";
 import { motion } from "framer-motion";
 import Image1 from "../../assets/doctor1.jpg";
 import Image2 from "../../assets/doctor2.jpg";
@@ -6,6 +7,8 @@ import Image3 from "../../assets/doctor3.jpg";
 import Image4 from "../../assets/doctor4.jpg";
 import Image5 from "../../assets/doctor5.jpg";
 import Image6 from "../../assets/doctor6.jpg";
+
+const LazyImage = lazy(() => import("../LazyImage/LasyImage"));
 import React from "react";
 const OurTeam = () => {
   return (

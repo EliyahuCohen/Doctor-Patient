@@ -3,6 +3,7 @@ nav {
   top: 0;
   left: 0;
   right: 0;
+  background: #fff;
   z-index: 5000 !important;
   @media screen and (max-width: 900px) {
     .fire span {
@@ -95,12 +96,15 @@ nav {
   padding: 0 !important;
   margin: 0 !important;
   font-size: 1.5em;
+  border: 0;
+  cursor: pointer;
   background: transparent;
   &:hover {
     background: transparent;
   }
 }
 .openMenu {
+  background: #fff;
   width: 100%;
   position: absolute;
   height: 100vh;
@@ -116,5 +120,9 @@ nav {
     flex-direction: column;
     height: 50%;
     justify-content: space-around;
+  }
+  * {
+    border: 0;
+    cursor: pointer;
   }
 }

@@ -100,4 +100,7 @@ export interface IRating {
   feedback: string;
   rating: number;
   userName: string;
+  createdAt:string;
+  doctorId:string;
+  _id:string;
 }

@@ -7,6 +7,9 @@ import { useGetDoctorsAndPatients } from "../../hooks/useGetDoctorsAndPatients";
 import AdminUserLine from "../AdminUserLine/AdminUserLine";
 import { useUpdateRole } from "../../hooks/useUpdateRole";
 import { useFeedbacks } from "../../hooks/useFeedbacks";
+import { IRating } from "../../types/type"
+import Feedbacks from "../Feedbacks/Feedbacks";
+
 
 const OneProfile = () => {
   const { id } = useParams();
@@ -15,6 +18,7 @@ const OneProfile = () => {
   const [userDoctors, setUserDoctors] = useState<User[]>([]);
   const [userPatients, setPatients] = useState<User[]>([]);
   const [tabNum, setTabNum] = useState<number>(0);
+  const [feedbacks, setFeedbacks] = useState<IRating[]>([])
   const { getUser } = useGetOneUser(id!, setUser);
   const { getFeedbacks } = useFeedbacks();
   const { getInfo } = useGetDoctorsAndPatients(
@@ -173,12 +177,15 @@ const OneProfile = () => {
         <div className="ratingAndComments">
           <div className="rating">
             {!fetched && user.role != 2 ? (
-              <button onClick={() => getFeedbacks(id!, setFetched)}>
+              <button onClick={() => getFeedbacks(id!, setFetched, setFeedbacks)}>
                 Show Rating And Feedback
               </button>
             ) : null}
           </div>
         </div>
+        {fetched ?
+            <Feedbacks feedbacks={feedbacks}/>
+          : null}
       </div>
     </div>
   );

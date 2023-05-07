@@ -1,0 +1,28 @@
+.oneFeedback{
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #777;
+    border-radius: 5px;
+    max-width: 750px;
+    .feedbackName{
+        font-weight: 500;
+    }
+    .feedbackContent{
+        color: #222;
+    }
+    .feedbackFooter{
+        margin-top: 1rem;
+        display: flex;
+        justify-content: space-between;
+        .ratingNumber{
+            display: flex;
+            align-items: center;
+            padding: 1px 15px;
+            border-radius: 100vh;
+            border: 1px solid #777;
+            font-size: smaller;
+        }
+    }
+
+    
+}

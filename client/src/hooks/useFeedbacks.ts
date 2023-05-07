@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { UserType } from "../features/userSlice";
+import { IRating } from "../types/type";
 export function useFeedbacks() {
   const { token } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
@@ -13,7 +14,7 @@ export function useFeedbacks() {
   async function getFeedbacks(
     doctorId: string,
     setFetched: React.Dispatch<React.SetStateAction<boolean>>,
-    setFeedbacks: React.Dispatch<React.SetStateAction<any>>
+    setFeedbacks: React.Dispatch<React.SetStateAction<IRating[]>>
   ) {
     instance
       .get(`http://localhost:3001/feedbacks/feedbacks/${doctorId}`)

@@ -94,7 +94,8 @@ export function handleSocket(
   socket: Socket,
   dispatch: any,
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
-  setModalText: React.Dispatch<React.SetStateAction<string>>
+  setModalText: React.Dispatch<React.SetStateAction<string>>,
+  setDoctorId: React.Dispatch<React.SetStateAction<string>>
 ) {
   socket.on("updateAdmin", (res) => {
     dispatch(removeLiveUser(res));
@@ -151,6 +152,7 @@ export function handleSocket(
   socket.on("post-rating", (sock) => {
     setModalOpen(true);
     setModalText(sock.message);
+    setDoctorId(sock.doctorId);
   });
 }
 export function updateStatus(socket: Socket, dispatch: any, user: User | null) {

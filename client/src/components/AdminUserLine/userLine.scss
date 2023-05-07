@@ -1,0 +1,36 @@
+.user-info {
+  transition: background 0.3s;
+  margin: 1rem 0;
+  cursor: pointer;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  padding: 1rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+  @media screen and (max-width: 900px) {
+    text-align: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    .delete-small {
+      width: 0;
+      display: none;
+    }
+  }
+  p:not(:nth-child(1)) {
+    color: gray;
+    font-weight: 500;
+  }
+  &:hover {
+    transition: background 0.3s;
+    background: #229f970a;
+  }
+}
+.diffUser {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  @media screen and (max-width: 1000px) {
+    .delete-small {
+      display: none;
+    }
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

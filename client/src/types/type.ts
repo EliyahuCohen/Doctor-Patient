@@ -96,3 +96,8 @@ export interface IPrescription {
   medications: IMedication[];
   endDate: Date;
 }
+export interface IRating {
+  feedback: string;
+  rating: number;
+  userName: string;
+}

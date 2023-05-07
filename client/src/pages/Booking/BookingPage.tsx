@@ -12,7 +12,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
 const BookingPage = () => {
   const { id } = useParams();
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(true);
   const [limit, setLimit] = useState<number>(5);
   const [availableMeetings, setAvailableMeetings] = useState<Schedule | null>(
     null

@@ -1,15 +1,16 @@
 import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { User } from "../../types/type";
 import React from "react";
 import { FiChevronDown } from "react-icons/fi";
+import "./userLine.scss";
 
 const AdminUserLine = ({ user, status }: { user: User; status: boolean }) => {
   const navigate = useNavigate();
   return (
     <div
       onClick={() => (status ? navigate(`/profile/${user._id}`) : null)}
-      className="user-info"
+      className={`user-info ${!status && "diffUser"}`}
     >
       <p className="mainLine">
         {status && (
@@ -29,7 +30,11 @@ const AdminUserLine = ({ user, status }: { user: User; status: boolean }) => {
         {format(new Date(user.createdAt), "dd/MM/yyyy")}
       </p>
       <p title="more details" className="arrow delete-small">
-        <FiChevronDown className="goToUser" title="go to user" />
+        {!window.location.pathname.includes("profile") && (
+          <Link to={`/profile/${user._id}`}>
+            <FiChevronDown className="goToUser" title="go to user" />
+          </Link>
+        )}
       </p>
     </div>
   );

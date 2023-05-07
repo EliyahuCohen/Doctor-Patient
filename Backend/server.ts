@@ -6,6 +6,7 @@ import userRouter from "./Routes/User.route";
 import meetRouter from "./Routes/Meet.route";
 import messagesRouter from "./Routes/Conversation.route";
 import prescriptionsRouter from "./Routes/Prescriptions.route";
+import feedbacksRouter from "./Routes/Rating.route";
 import http from "http";
 import { Server } from "socket.io";
 import { socket } from "./socket";
@@ -26,6 +27,7 @@ app.use("/users", userRouter);
 app.use("/meeting", meetRouter);
 app.use("/messages", messagesRouter);
 app.use("/prescriptions", prescriptionsRouter);
+app.use("/feedbacks", feedbacksRouter);
 
 mongoose
   .connect(process.env.MONGO_URI || "")

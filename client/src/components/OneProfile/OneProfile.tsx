@@ -6,21 +6,23 @@ import { User } from "../../types/type";
 import { useGetDoctorsAndPatients } from "../../hooks/useGetDoctorsAndPatients";
 import AdminUserLine from "../AdminUserLine/AdminUserLine";
 import { useUpdateRole } from "../../hooks/useUpdateRole";
+import { useFeedbacks } from "../../hooks/useFeedbacks";
 
 const OneProfile = () => {
   const { id } = useParams();
   const [user, setUser] = useState<User | null>(null);
+  const [fetched, setFetched] = useState<boolean>(false);
   const [userDoctors, setUserDoctors] = useState<User[]>([]);
   const [userPatients, setPatients] = useState<User[]>([]);
   const [tabNum, setTabNum] = useState<number>(0);
   const { getUser } = useGetOneUser(id!, setUser);
+  const { getFeedbacks } = useFeedbacks();
   const { getInfo } = useGetDoctorsAndPatients(
     setUserDoctors,
     setPatients,
     user
   );
   const { updateRole } = useUpdateRole(id!);
-
   useEffect(() => {
     if (id) {
       getUser();
@@ -56,6 +58,7 @@ const OneProfile = () => {
           <div className="smallImage">
             <p>{user.role == 1 ? "👨‍⚕️" : "😷"}</p>
           </div>
+          <h3>{user.fName + " " + user.lName}</h3>
           <div className="info">
             <p>
               <span>Location:</span>
@@ -148,7 +151,7 @@ const OneProfile = () => {
           ) : null}
         </div>
         {tabNum == 0 && (
-          <div>
+          <div className="users">
             {userDoctors.map((doc) => {
               return <AdminUserLine status={false} key={doc._id} user={doc} />;
             })}
@@ -158,7 +161,7 @@ const OneProfile = () => {
           </div>
         )}
         {tabNum == 1 && (
-          <div>
+          <div className="users">
             {userPatients.map((pat) => {
               return <AdminUserLine status={false} key={pat._id} user={pat} />;
             })}
@@ -167,6 +170,15 @@ const OneProfile = () => {
             )}
           </div>
         )}
+        <div className="ratingAndComments">
+          <div className="rating">
+            {!fetched && user.role != 2 ? (
+              <button onClick={() => getFeedbacks(id!, setFetched)}>
+                Show Rating And Feedback
+              </button>
+            ) : null}
+          </div>
+        </div>
       </div>
     </div>
   );

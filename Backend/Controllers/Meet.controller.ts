@@ -186,7 +186,8 @@ export async function meetingCompleted(req: Request, res: Response) {
   )[0];
   if (exists) {
     io.to(exists.socketId).emit("post-rating", {
-      message: `Please rate the meeting with doctor ${meeting.doctorName}`,
+      message: doctor?.fName,
+      doctorId: doctor?._id,
     });
   }
 

@@ -20,6 +20,7 @@ export const socket = io("http://localhost:3001");
 const App = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>("");
+  const [doctorId, setDoctorId] = useState<string>("");
   const { createIfDontHave } = useSaveLocalStorage();
   const { checkTokenValidity } = useLogin();
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const App = () => {
     updateStatus(socket, dispatch, user);
   }, [socket, user, users.length]);
   useEffect(() => {
-    handleSocket(socket, dispatch, setModalOpen, setModalText);
+    handleSocket(socket, dispatch, setModalOpen, setModalText, setDoctorId);
   }, [socket]);
 
   return (
@@ -48,7 +49,12 @@ const App = () => {
         <Suspense fallback={<Loading />}>
           <Navbar />
           {modalOpen ? (
-            <RatingModal modalText={modalText} setModalOpen={setModalOpen} />
+            <RatingModal
+              modalText={modalText}
+              setModalOpen={setModalOpen}
+              setDoctorId={setDoctorId}
+              doctorId={doctorId}
+            />
           ) : null}
           <Messages />
           <Routes>

@@ -31,6 +31,11 @@ export interface User {
   live: boolean;
   createdAt: string;
   messages: IAlert[];
+  userRating: IRating;
+}
+export interface IRating {
+  sum: number;
+  votes: number;
 }
 export interface IMessage {
   senderId: string;
@@ -100,7 +105,7 @@ export interface IRating {
   feedback: string;
   rating: number;
   userName: string;
-  createdAt:string;
-  doctorId:string;
-  _id:string;
+  createdAt: string;
+  doctorId: string;
+  _id: string;
 }

@@ -14,6 +14,7 @@ const UserDashboardPage = lazy(
 const Communication = lazy(
   () => import("./pages/CommunicationPage/Communication")
 );
+const ChartsPage = lazy(() => import("./pages/Charts/Charts"));
 
 export interface RouteType {
   element: JSX.Element | React.ElementType<any>;
@@ -63,6 +64,11 @@ const routes: RouteType[] = [
     path: "booking/:id",
     element: ({ user }: { user: User }) =>
       user != null && user.role != 0 ? <BookingPage /> : <Navigate to="/" />,
+  },
+  {
+    path: "charts",
+    element: ({ user }: { user: User }) =>
+      user != null && user.role == 0 ? <ChartsPage /> : <Navigate to="/" />,
   },
   {
     path: "*",

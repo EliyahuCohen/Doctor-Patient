@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { UserType } from "../../features/userSlice";
-import { AiOutlineMail } from "react-icons/ai";
 import { logout } from "../../features/userSlice";
 import "./nav.scss";
 import { socket } from "../../App";
@@ -52,6 +51,9 @@ const Navbar = () => {
               <div className="flex">
                 {user.role == 0 ? (
                   <>
+                    <NavLink className="link" to="/charts" title="Charts page">
+                      Charts
+                    </NavLink>
                     <NavLink
                       className="link"
                       to="/admin"
@@ -155,10 +157,10 @@ const Navbar = () => {
                     <NavLink
                       onClick={() => setOpen(false)}
                       className="link"
-                      to="/profile"
-                      title="Profile page"
+                      to="/charts"
+                      title="Charts page"
                     >
-                      <p className="specialLink">{user.fName}</p>
+                      Charts
                     </NavLink>
                   </>
                 ) : (
@@ -170,16 +172,6 @@ const Navbar = () => {
                       title="Dashboard page"
                     >
                       Dashboard
-                    </NavLink>
-                    <NavLink
-                      onClick={() => setOpen(false)}
-                      className="link"
-                      to="/profile"
-                      title="Profile page"
-                    >
-                      <p className="specialLink" title="Profile">
-                        {user.fName}
-                      </p>
                     </NavLink>
                   </>
                 )}

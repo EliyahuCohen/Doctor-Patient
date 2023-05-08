@@ -1,0 +1,89 @@
+.recharts-surface {
+  max-width: 100% !important;
+}
+a {
+  text-decoration: none;
+}
+.chartsWrapper {
+  max-width: 1700px;
+  margin: 0 auto;
+  padding: 2rem;
+  margin-top: 5rem;
+  .chartsList {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    @media screen and (max-width: 1100px) {
+      justify-content: center;
+    }
+    * {
+      @media screen and (max-width: 1100px) {
+        margin-bottom: 1rem;
+      }
+      max-width: 650px;
+    }
+  }
+  .secondPart {
+    padding: 2rem;
+    margin-top: 5rem;
+  }
+  .theDoctor {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #e2e2d9;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    @media screen and (max-width: 1000px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    @media screen and (max-width: 1000px) {
+      grid-template-columns: 1fr 1fr;
+    }
+    p {
+      text-align: center;
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-items: center;
+      justify-content: center;
+      align-items: center;
+      width: fit-content;
+      margin: 0 auto;
+      padding: 0.2rem 3rem;
+      &:nth-child(1) {
+        font-weight: bold;
+        color: #666;
+      }
+      &:nth-child(2) {
+        color: rgb(86, 86, 174) !important;
+      }
+      &:nth-child(3) {
+        color: gray !important;
+      }
+      &:nth-child(4) {
+        border: 1px solid #111;
+        border-radius: 100vh;
+        background: #fff;
+        color: #111 !important;
+      }
+    }
+    .starIcon {
+      font-size: larger;
+      color: goldenrod;
+      margin-left: 0.3rem;
+    }
+  }
+  h2 {
+    &:first-child {
+      color: #666;
+      text-align: center;
+      font-size: 1.5em;
+    }
+  }
+  .oneCell {
+    outline: none;
+    border: 0;
+  }
+}

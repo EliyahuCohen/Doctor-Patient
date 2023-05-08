@@ -1,4 +1,4 @@
-import "./app.scss";
+import "./loading.scss";
 const Loading = () => {
   return (
     <div className="LoadingPage">

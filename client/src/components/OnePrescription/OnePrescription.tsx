@@ -1,5 +1,5 @@
 import React from "react";
-import "./app.scss";
+import "./onepre.scss";
 import { CgPill } from "react-icons/cg";
 import { IPrescription } from "../../types/type";
 import { format } from "date-fns";

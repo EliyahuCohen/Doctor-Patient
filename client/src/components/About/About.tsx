@@ -1,4 +1,4 @@
-import "./app.scss";
+import "./about.scss";
 import { motion } from "framer-motion";
 import image from "../../assets/about.jpg";
 import SmallInfo from "../SmallInfo/SmallInfo";

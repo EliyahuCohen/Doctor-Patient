@@ -1,5 +1,5 @@
 import React from "react";
-import "./app.scss";
+import "./home.scss";
 import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
 

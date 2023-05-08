@@ -1,5 +1,5 @@
 import React from "react";
-import "./app.scss";
+import "./confirm.scss";
 import { motion } from "framer-motion";
 import { ScheduleDay } from "../../types/type";
 import { useSchedual } from "../../hooks/useSchedual";

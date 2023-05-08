@@ -1,4 +1,4 @@
-import "./app.scss";
+import "./meet.scss";
 import { IMeet } from "../../types/type";
 import { format } from "date-fns";
 import { motion } from "framer-motion";

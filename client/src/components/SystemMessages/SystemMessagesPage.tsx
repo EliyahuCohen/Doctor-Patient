@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { GrStatusGood, GrStatusWarning } from "react-icons/gr";
 import { BiErrorAlt } from "react-icons/bi";
 import { motion } from "framer-motion";
-import "./app.scss";
+import "./sm.scss";
 import { IAlert } from "../../types/type";
 import { useGetSystemMessages } from "../../hooks/useGetSystemMessages";
 import { format } from "date-fns";

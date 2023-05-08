@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./app.scss";
+import "./presc.scss";
 import { usePrescriptions } from "../../hooks/usePrescriptions";
 import { IPrescription } from "../../types/type";
 import OnePrescription from "../OnePrescription/OnePrescription";

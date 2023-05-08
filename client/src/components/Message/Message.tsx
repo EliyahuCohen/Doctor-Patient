@@ -6,7 +6,7 @@ import { FiSun } from "react-icons/fi";
 import { MdOutlineWarningAmber } from "react-icons/md";
 import { MdOutlineNightsStay } from "react-icons/md";
 import { MdOutlineReportGmailerrorred } from "react-icons/md";
-import "./app.scss";
+import "./message.scss";
 import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import { deleteMessage } from "../../features/messagesSlice";

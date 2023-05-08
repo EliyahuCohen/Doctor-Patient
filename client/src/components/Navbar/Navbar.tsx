@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { UserType } from "../../features/userSlice";
 import { AiOutlineMail } from "react-icons/ai";
 import { logout } from "../../features/userSlice";
-import "./app.scss";
+import "./nav.scss";
 import { socket } from "../../App";
 import { useEffect, useState } from "react";
 import { newMessage } from "../../features/messagesSlice";

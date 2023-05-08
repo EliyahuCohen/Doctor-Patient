@@ -1,6 +1,6 @@
 import { useEffect, useState, lazy } from "react";
 import { motion } from "framer-motion";
-import "./app.scss";
+import "./myapo.scss";
 import { IMeet } from "../../types/type";
 import { useMeetings } from "../../hooks/useMeetings";
 import { useSelector } from "react-redux";

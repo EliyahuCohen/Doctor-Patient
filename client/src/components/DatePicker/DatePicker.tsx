@@ -1,4 +1,4 @@
-import "./app.scss";
+import "./date.scss";
 import React, { useState, useEffect } from "react";
 import { MdNavigateNext } from "react-icons/md";
 import { useDispatch } from "react-redux";

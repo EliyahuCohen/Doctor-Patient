@@ -6,7 +6,7 @@ import { useGetOneUser } from "../../hooks/useGetOneUser";
 import { User } from "../../types/type";
 import { FiEdit3 } from "react-icons/fi";
 import { CgRename } from "react-icons/cg";
-import "./app.scss";
+import "./pro.scss";
 import { useUpdateRole } from "../../hooks/useUpdateRole";
 import { TbGenderFemme } from "react-icons/tb";
 import { FaFemale, FaMale } from "react-icons/fa";

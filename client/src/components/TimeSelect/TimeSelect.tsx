@@ -1,4 +1,4 @@
-import "./app.scss";
+import "./ts.scss";
 import React, { useState, useEffect } from "react";
 import { ScheduleDay } from "../../types/type";
 import { FiTrash } from "react-icons/fi";

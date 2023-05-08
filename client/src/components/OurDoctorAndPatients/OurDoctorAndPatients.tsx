@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./app.scss";
+import "./onedp.scss";
 import { User } from "../../types/type";
 import { useGetUserDoctorPatients } from "../../hooks/useGetUserDoctorPatients";
 import { useSelector } from "react-redux";

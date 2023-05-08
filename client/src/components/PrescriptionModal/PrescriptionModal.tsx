@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./app.scss";
+import "./premodal.scss";
 import { IMedication, IPrescription, User } from "../../types/type";
 import { FaRegWindowClose } from "react-icons/fa";
 import { CiCircleRemove, CiPill } from "react-icons/ci";

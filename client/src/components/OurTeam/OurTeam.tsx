@@ -1,4 +1,4 @@
-import "./app.scss";
+import "./ourt.scss";
 import { lazy } from "react";
 import { motion } from "framer-motion";
 import Image1 from "../../assets/doctor1.jpg";

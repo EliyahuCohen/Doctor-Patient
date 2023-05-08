@@ -114,6 +114,7 @@ const userSchema: Schema = new mongoose.Schema<User>(
     },
     userRating: {
       type: userRating,
+      default: { sum: 0, votes: 0 },
       required: false,
     },
   },

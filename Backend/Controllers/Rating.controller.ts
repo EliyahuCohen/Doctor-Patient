@@ -20,7 +20,13 @@ export async function PostFeedback(req: Request, res: Response) {
         feedback: feedback,
         userName: user?.fName + " " + user?.lName,
         doctorId: doctorId,
-      }).then((re) => {
+      }).then(async (re) => {
+        const doctor = await User.findById(doctorId);
+        if (doctor) {
+          doctor.userRating.sum += rating;
+          doctor.userRating.votes++;
+          await doctor.save();
+        }
         return res.status(201).json({ message: "Feedback posted successfuly" });
       });
     } catch (err) {

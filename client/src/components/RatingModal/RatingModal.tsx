@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./app.scss";
+import "./rat.scss";
 import { IoMdClose } from "react-icons/io";
 import { AiOutlineStar } from "react-icons/ai";
 import { useFeedbacks } from "../../hooks/useFeedbacks";

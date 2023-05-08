@@ -1,7 +1,7 @@
 import { User } from "../../types/type";
 import { FaTooth, FaGlasses, FaStethoscope } from "react-icons/fa";
 import { SlUserFemale } from "react-icons/sl";
-import "./app.scss";
+import "./pord.scss";
 import { MdOutlineExpandMore, MdOutlinePersonPin } from "react-icons/md";
 import { motion, useAnimate, usePresence } from "framer-motion";
 import React, { useState, useEffect } from "react";

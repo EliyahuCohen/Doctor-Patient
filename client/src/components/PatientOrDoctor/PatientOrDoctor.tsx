@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { UserType } from "../../features/userSlice";
 import { useSelector } from "react-redux";
 import { useUpdateRole } from "../../hooks/useUpdateRole";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { usePrescriptions } from "../../hooks/usePrescriptions";
 
 const PatientOrDoctor = ({
@@ -86,10 +87,31 @@ const PatientOrDoctor = ({
           <p className="names">{user.fName + " " + user.lName}</p>
         </div>
         {!isOpen ? (
-          <MdOutlineExpandMore
-            className="expandIcon"
-            onClick={() => setIsOpen(true)}
-          />
+          <div className="theRatingStars">
+            <div className="ratingLine">
+              <p> {user.userRating.votes} ratings</p>
+              <div>
+                {[
+                  ...new Array(
+                    5 - Math.floor(user.userRating.sum / user.userRating.votes)
+                  ),
+                ].map((_, index) => {
+                  return <AiFillStar color="#ffa41c" fontSize={18} />;
+                })}
+                {[
+                  ...new Array(
+                    Math.floor(user.userRating.sum / user.userRating.votes)
+                  ),
+                ].map((_, index) => {
+                  return <AiOutlineStar fontSize={18} />;
+                })}
+              </div>
+            </div>
+            <MdOutlineExpandMore
+              className="expandIcon"
+              onClick={() => setIsOpen(true)}
+            />
+          </div>
         ) : (
           <MdOutlineExpandMore
             className="expandIcon flipped"

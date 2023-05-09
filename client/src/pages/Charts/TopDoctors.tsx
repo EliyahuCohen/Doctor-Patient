@@ -19,7 +19,7 @@ const TopDoctors = ({ d }: { d: User[] }) => {
     .map((one) => {
       return {
         name: one.fName + " " + one.lName,
-        rating: one.userRating.sum,
+        rating: Math.floor(one.userRating.sum / one.userRating.votes),
       };
     });
   return (

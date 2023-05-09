@@ -2,6 +2,28 @@
   &:not(:first-child) {
     margin-top: 1rem;
   }
+  .ratingLine {
+    margin-right: 2rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    p {
+      font-size: 0.8rem;
+      margin-right: 1rem;
+      margin-left: 1rem;
+      padding: 0.1rem 1rem;
+      color: #10a37f;
+      border-radius: 100vh;
+    }
+    @media screen and (max-width: 1000px) {
+      display: none;
+      width: 0;
+    }
+  }
+  .theRatingStars {
+    display: flex;
+    align-items: center;
+  }
   padding: 1rem;
   cursor: pointer;
   background: #10a37e1b;

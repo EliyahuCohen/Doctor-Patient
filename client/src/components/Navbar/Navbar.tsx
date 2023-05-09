@@ -61,6 +61,7 @@ const Navbar = () => {
                     >
                       Dashboard
                     </NavLink>
+                    <p>{user.fName}</p>
                   </>
                 ) : (
                   <>
@@ -71,6 +72,7 @@ const Navbar = () => {
                     >
                       Dashboard
                     </NavLink>
+                    <p>{user.fName}</p>
                   </>
                 )}
               </div>
@@ -154,6 +156,8 @@ const Navbar = () => {
                     >
                       Dashboard
                     </NavLink>
+                    <p>{user.fName}</p>
+
                     <NavLink
                       onClick={() => setOpen(false)}
                       className="link"
@@ -173,6 +177,7 @@ const Navbar = () => {
                     >
                       Dashboard
                     </NavLink>
+                    <p>{user.fName}</p>
                   </>
                 )}
               </div>

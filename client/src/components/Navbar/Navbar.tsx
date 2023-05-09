@@ -8,6 +8,7 @@ import { socket } from "../../App";
 import { useEffect, useState } from "react";
 import { newMessage } from "../../features/messagesSlice";
 import { MdOutlineLogout } from "react-icons/md";
+import { RxHamburgerMenu } from "react-icons/rx";
 const Navbar = () => {
   const [width, setWidth] = useState<number>(window.innerWidth);
   const [open, setOpen] = useState<boolean>(false);
@@ -32,7 +33,7 @@ const Navbar = () => {
         <div className="leftNav">
           <NavLink to="/">
             <h1 className="fire">
-              🔥 <span>HealthEase</span>
+              🔥 <span style={{ color: "#111" }}>HealthEase</span>
             </h1>
           </NavLink>
         </div>
@@ -61,7 +62,7 @@ const Navbar = () => {
                     >
                       Dashboard
                     </NavLink>
-                    <p>{user.fName}</p>
+                    <p>Hello, {user.fName}</p>
                   </>
                 ) : (
                   <>
@@ -72,7 +73,7 @@ const Navbar = () => {
                     >
                       Dashboard
                     </NavLink>
-                    <p>{user.fName}</p>
+                    <p>Hello, {user.fName}</p>
                   </>
                 )}
               </div>
@@ -97,7 +98,10 @@ const Navbar = () => {
                   socket.emit("userLoggedOut");
                 }}
               >
-                <MdOutlineLogout style={{ fontSize: "larger" }} />
+                <MdOutlineLogout
+                  style={{ fontSize: "larger" }}
+                  color="#10a37f"
+                />
               </p>
             ) : null}
           </div>
@@ -108,7 +112,7 @@ const Navbar = () => {
               onClick={() => setOpen((prev) => !prev)}
               className="hamBtn"
             >
-              🍔
+              <RxHamburgerMenu color="#10a37f" />
             </button>
           </div>
         )}
@@ -123,7 +127,7 @@ const Navbar = () => {
               onClick={() => setOpen((prev) => !prev)}
               className="hamBtn"
             >
-              🍔
+              <RxHamburgerMenu color="#10a37f" />
             </button>
             {!user ? (
               <>
@@ -177,7 +181,7 @@ const Navbar = () => {
                     >
                       Dashboard
                     </NavLink>
-                    <p>{user.fName}</p>
+                    <p>Hello, {user.fName}</p>
                   </>
                 )}
               </div>
@@ -193,7 +197,7 @@ const Navbar = () => {
                   setOpen(false);
                 }}
               >
-                <MdOutlineLogout />
+                <MdOutlineLogout color="#10a37f" />
               </p>
             ) : null}
           </motion.div>

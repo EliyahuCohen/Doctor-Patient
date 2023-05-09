@@ -6,7 +6,7 @@ export let usersID: user[] = [];
 export function socket(io: Server) {
   io.on("connection", (socket) => {
     socket.on("userConnected", (data: any) => {
-      if (data._id && socket) {
+      if (data && data._id && socket) {
         if (data.role !== 0) {
           usersID.push({ userId: data._id, socketId: socket.id });
         } else {

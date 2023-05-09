@@ -1,12 +1,12 @@
 import "./ourt.scss";
 import { lazy } from "react";
 import { motion } from "framer-motion";
-import Image1 from "../../assets/doctor1.jpg";
-import Image2 from "../../assets/doctor2.jpg";
-import Image3 from "../../assets/doctor3.jpg";
-import Image4 from "../../assets/doctor4.jpg";
-import Image5 from "../../assets/doctor5.jpg";
-import Image6 from "../../assets/doctor6.jpg";
+import Image1 from "../../assets/doctor1.webp";
+import Image2 from "../../assets/doctor2.webp";
+import Image3 from "../../assets/doctor3.webp";
+import Image4 from "../../assets/doctor4.webp";
+import Image5 from "../../assets/doctor5.webp";
+import Image6 from "../../assets/doctor6.webp";
 
 const LazyImage = lazy(() => import("../LazyImage/LasyImage"));
 import React from "react";
@@ -28,7 +28,7 @@ const OurTeam = () => {
           transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
-          <img src={Image1} alt="" />
+          <img src={Image1} alt="" height={400} width={400} />
           <div className="doctorInfo">
             <p>Dr.Eliyahu Cohen</p>
             <strong>Optometrist</strong>
@@ -40,7 +40,7 @@ const OurTeam = () => {
           transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
-          <img src={Image2} alt="" />
+          <img src={Image2} alt="" height={400} width={400} />
           <div className="doctorInfo">
             <p>Dr.Rachel Jones</p>
             <strong>Family Doctor</strong>
@@ -52,7 +52,7 @@ const OurTeam = () => {
           transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
-          <img src={Image3} alt="" />
+          <img src={Image3} alt="" height={400} width={400} />
           <div className="doctorInfo">
             <p>Dr.John Watson</p>
             <strong>Dentist</strong>
@@ -64,7 +64,7 @@ const OurTeam = () => {
           transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
-          <img src={Image5} alt="" />
+          <img src={Image5} alt="" height={400} width={400} />
           <div className="doctorInfo">
             <p>Shira Cole</p>
             <strong>Nurse</strong>
@@ -76,7 +76,7 @@ const OurTeam = () => {
           transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
-          <img src={Image6} alt="" />
+          <img src={Image6} alt="" height={400} width={400} />
           <div className="doctorInfo">
             <p>Dr.Lydia Leen</p>
             <strong>Chiropractor</strong>
@@ -88,7 +88,7 @@ const OurTeam = () => {
           transition={{ duration: 0.5 }}
           className="oneDoctor"
         >
-          <img src={Image4} alt="" />
+          <img src={Image4} alt="" height={400} width={400} />
           <div className="doctorInfo">
             <p>Dr.Lydia Leen</p>
             <strong>Pediatrician</strong>

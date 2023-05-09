@@ -1,5 +1,5 @@
 import "./app.scss";
-import image from "../../assets/doctor.jpg";
+import image from "../../assets/doctor.webp";
 import About from "../../components/About/About";
 import { motion } from "framer-motion";
 import OurTeam from "../../components/OurTeam/OurTeam";
@@ -47,7 +47,12 @@ const HomePage = () => {
           transition={{ duration: 1 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <motion.img src={image} alt="image of doctors" />
+          <motion.img
+            src={image}
+            height={600}
+            width={600}
+            alt="image of doctors"
+          />
         </motion.div>
       </motion.div>
       <OurTeam />

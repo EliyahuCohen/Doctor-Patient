@@ -1,6 +1,6 @@
 import "./about.scss";
 import { motion } from "framer-motion";
-import image from "../../assets/about.jpg";
+import image from "../../assets/about.webp";
 import SmallInfo from "../SmallInfo/SmallInfo";
 const About = () => {
   return (

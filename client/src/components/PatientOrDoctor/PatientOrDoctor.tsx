@@ -94,8 +94,7 @@ const PatientOrDoctor = ({
                 <div>
                   {[
                     ...new Array(
-                      5 -
-                        Math.floor(user.userRating.sum / user.userRating.votes)
+                      Math.floor(user.userRating.sum / user.userRating.votes)
                     ),
                   ].map((_, index) => {
                     return (
@@ -104,7 +103,8 @@ const PatientOrDoctor = ({
                   })}
                   {[
                     ...new Array(
-                      Math.floor(user.userRating.sum / user.userRating.votes)
+                      5 -
+                        Math.floor(user.userRating.sum / user.userRating.votes)
                     ),
                   ].map((_, index) => {
                     return (

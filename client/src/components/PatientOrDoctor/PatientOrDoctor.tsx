@@ -88,25 +88,32 @@ const PatientOrDoctor = ({
         </div>
         {!isOpen ? (
           <div className="theRatingStars">
-            <div className="ratingLine">
-              <p> {user.userRating.votes} ratings</p>
-              <div>
-                {[
-                  ...new Array(
-                    5 - Math.floor(user.userRating.sum / user.userRating.votes)
-                  ),
-                ].map((_, index) => {
-                  return <AiFillStar color="#ffa41c" fontSize={18} />;
-                })}
-                {[
-                  ...new Array(
-                    Math.floor(user.userRating.sum / user.userRating.votes)
-                  ),
-                ].map((_, index) => {
-                  return <AiOutlineStar fontSize={18} />;
-                })}
+            {user.role == 1 ? (
+              <div className="ratingLine">
+                <p> {user.userRating.votes} ratings</p>
+                <div>
+                  {[
+                    ...new Array(
+                      5 -
+                        Math.floor(user.userRating.sum / user.userRating.votes)
+                    ),
+                  ].map((_, index) => {
+                    return (
+                      <AiFillStar key={index} color="#ffa41c" fontSize={18} />
+                    );
+                  })}
+                  {[
+                    ...new Array(
+                      Math.floor(user.userRating.sum / user.userRating.votes)
+                    ),
+                  ].map((_, index) => {
+                    return (
+                      <AiOutlineStar key={index + user._id} fontSize={18} />
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            ) : null}
             <MdOutlineExpandMore
               className="expandIcon"
               onClick={() => setIsOpen(true)}

@@ -1,4 +1,3 @@
-import React from "react";
 import { PieChart, Pie, Legend, Cell } from "recharts";
 const PieCharts = ({
   data,

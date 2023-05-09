@@ -5,6 +5,7 @@ import { useGetAllUsers } from "../../hooks/useGetAllUsers";
 import PieCharts from "./PieChart";
 import TopDoctors from "./TopDoctors";
 import BlockedDoctors from "./BlockedDoctors";
+import MostMeeting from "./MostMeeting";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -36,6 +37,7 @@ const Charts = () => {
       <div className="chartsList">
         <PieCharts data={data} COLORS={COLORS} />
         <TopDoctors d={users} />
+        <MostMeeting users={users} />
       </div>
       <div className="secondPart">
         <h2>List of Blocked Doctors</h2>

@@ -15,7 +15,7 @@ export interface dataType {
 }
 const TopDoctors = ({ d }: { d: User[] }) => {
   const data: dataType[] = d
-    .filter((one) => one.role == 1)
+    .filter((one) => one.role == 1 && one.approved)
     .map((one) => {
       return {
         name: one.fName + " " + one.lName,

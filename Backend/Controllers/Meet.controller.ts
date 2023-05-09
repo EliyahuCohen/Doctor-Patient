@@ -175,6 +175,7 @@ export async function meetingCompleted(req: Request, res: Response) {
       patient.meetingsDoctors.findIndex((one) => one == meeting._id),
       1
     );
+    doctor.meetingAmount++;
   }
   await doctor?.save();
   await patient?.save();

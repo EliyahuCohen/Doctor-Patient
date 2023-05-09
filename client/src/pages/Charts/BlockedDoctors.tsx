@@ -1,4 +1,3 @@
-import React from "react";
 import { User } from "../../types/type";
 import { motion } from "framer-motion";
 import { AiOutlineStar } from "react-icons/ai";

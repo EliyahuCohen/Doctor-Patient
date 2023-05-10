@@ -38,6 +38,7 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
             doctors.map((doctor, index) => {
               return (
                 <PatientOrDoctor
+                  selected={selected}
                   isMore={false}
                   status={false}
                   user={doctor}
@@ -50,11 +51,14 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
               );
             })
           )
+        ) : doctors.length == 0 ? (
+          <p className="moreDoctorP"> You don't have Patients yet</p>
         ) : (
           patients.map((patient, index) => {
             return (
               <PatientOrDoctor
                 status={false}
+                selected={selected}
                 setMoreDoctors={setMoreDoctors}
                 user={patient}
                 key={patient._id}
@@ -75,6 +79,7 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
         {moreDoctors?.map((moreDoctor, index) => {
           return (
             <PatientOrDoctor
+              selected={selected}
               status={true}
               user={moreDoctor}
               index={index}

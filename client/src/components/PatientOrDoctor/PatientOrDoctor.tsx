@@ -21,6 +21,7 @@ const PatientOrDoctor = ({
   index,
   setModalUser,
   isMore,
+  selected,
 }: {
   status: boolean;
   user: User;
@@ -30,6 +31,7 @@ const PatientOrDoctor = ({
   index: number;
   setModalUser?: React.Dispatch<React.SetStateAction<User | null>>;
   isMore: boolean;
+  selected: number;
 }) => {
   //state to contain the open and close state of the modal
 
@@ -41,7 +43,6 @@ const PatientOrDoctor = ({
     (state: { userSlice: UserType }) => state.userSlice
   );
   const { updateUserDoctorsList } = useUpdateRole(TheUser!._id);
-  const { submitPrescription } = usePrescriptions();
   function removeAddDoctors() {
     if (status) {
       setDoctors((prev) => [...prev, user]);
@@ -88,30 +89,45 @@ const PatientOrDoctor = ({
         </div>
         {!isOpen ? (
           <div className="theRatingStars">
-            {user.role == 1 ? (
+            {user.role == 1 && selected == 1 ? (
               <div className="ratingLine">
                 <p> {user.userRating.votes} ratings</p>
-                <div>
-                  {[
-                    ...new Array(
-                      Math.floor(user.userRating.sum / user.userRating.votes)
-                    ),
-                  ].map((_, index) => {
-                    return (
-                      <AiFillStar key={index} color="#ffa41c" fontSize={18} />
-                    );
-                  })}
-                  {[
-                    ...new Array(
-                      5 -
+                {user.role == 1 &&
+                user.userRating &&
+                user.userRating.sum &&
+                user.userRating.votes ? (
+                  <div>
+                    {[
+                      ...new Array(
                         Math.floor(user.userRating.sum / user.userRating.votes)
-                    ),
-                  ].map((_, index) => {
-                    return (
-                      <AiOutlineStar key={index + user._id} fontSize={18} />
-                    );
-                  })}
-                </div>
+                      ),
+                    ].map((_, index) => {
+                      return (
+                        <AiFillStar key={index} color="#ffa41c" fontSize={18} />
+                      );
+                    })}
+                    {[
+                      ...new Array(
+                        5 -
+                          Math.floor(
+                            user.userRating.sum / user.userRating.votes
+                          )
+                      ),
+                    ].map((_, index) => {
+                      return (
+                        <AiOutlineStar key={index + user._id} fontSize={18} />
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div>
+                    {[...new Array(5)].map((_, index) => {
+                      return (
+                        <AiOutlineStar key={index + user._id} fontSize={18} />
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             ) : null}
             <MdOutlineExpandMore

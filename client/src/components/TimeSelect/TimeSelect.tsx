@@ -7,8 +7,6 @@ import { useSchedual } from "../../hooks/useSchedual";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 
 const TimeSelect = () => {
-  const [error, setError] = useState<boolean>(false);
-  const [theIndex, setTheIndex] = useState<number>(0);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<number>(0);
   const [daysList, setDaysList] = useState<ScheduleDay[]>([

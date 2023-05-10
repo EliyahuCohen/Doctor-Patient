@@ -20,17 +20,20 @@ export function useLogin() {
   ) {
     try {
       const res = await axios.post("http://localhost:3001/users/login", prop);
-      setMyError(() => "");
-      dispatch(setUser(res.data));
-      localStorage.setItem("user", JSON.stringify(res.data));
-      if (res?.data?.user?.role === 0) {
-        dispatch(setLiveUsers(res.data.usersId));
+      if (res.status == 200) {
+        setMyError(() => "");
+        dispatch(setUser(res.data));
+        localStorage.setItem("user", JSON.stringify(res.data));
+        if (res?.data?.user?.role === 0) {
+          dispatch(setLiveUsers(res.data.usersId));
+        }
+        saveLocalStorage(res.data);
+        socket.emit("userConnected", res.data.user);
+        return res.data;
+      } else {
+        setMyError(() => "The Server Is Not On");
       }
-      saveLocalStorage(res.data);
-      socket.emit("userConnected", res.data.user);
-      return res.data
     } catch (err: any) {
-      console.log("error", err);
       setMyError(() => err?.response?.data?.message);
     }
   }

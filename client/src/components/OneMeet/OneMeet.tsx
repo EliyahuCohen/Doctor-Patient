@@ -6,6 +6,7 @@ import { AiOutlineCheckCircle } from "react-icons/ai";
 import { MdOutlineRemoveCircleOutline } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
+import { formatTime } from "../../Utils/functions";
 
 const OneMeet = ({
   meeting,
@@ -77,9 +78,7 @@ const OneMeet = ({
             ? meeting.patientName
             : meeting.doctorName}
         </strong>
-        <p>
-          {meeting.startTime}:00-{meeting.endTime}:00
-        </p>
+        <p>{formatTime(meeting)}</p>
       </div>
     </motion.div>
   );

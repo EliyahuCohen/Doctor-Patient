@@ -1,4 +1,4 @@
-import { Register, User } from "../types/type";
+import { ITimeSpan, Register, User } from "../types/type";
 import { newMessage } from "../features/messagesSlice";
 import { Socket } from "socket.io-client";
 import messageSent from "../assets/messageSent.mp3";
@@ -163,3 +163,32 @@ export function updateStatus(socket: Socket, dispatch: any, user: User | null) {
     dispatch(updateLiveUsers());
   }
 }
+export const getMinutesBetweenTimes = (
+  startTime: number,
+  endTime: number
+): number => {
+  const startHour = Math.floor(startTime);
+  const startMinute = Math.round((startTime - startHour) * 100);
+  const endHour = Math.floor(endTime);
+  const endMinute = Math.round((endTime - endHour) * 100);
+
+  const startTotalMinutes = startHour * 60 + startMinute;
+  const endTotalMinutes = endHour * 60 + endMinute;
+
+  return endTotalMinutes - startTotalMinutes;
+};
+export const formatTime = (timeObj: ITimeSpan): string => {
+  const startTimeHour = Math.floor(timeObj.startTime);
+  const startTimeMinute = Math.round((timeObj.startTime - startTimeHour) * 100);
+  const endTimeHour = Math.floor(timeObj.endTime);
+  const endTimeMinute = Math.round((timeObj.endTime - endTimeHour) * 100);
+
+  const startTimeFormatted = `${startTimeHour
+    .toString()
+    .padStart(2, "0")}:${startTimeMinute.toString().padStart(2, "0")}`;
+  const endTimeFormatted = `${endTimeHour
+    .toString()
+    .padStart(2, "0")}:${endTimeMinute.toString().padStart(2, "0")}`;
+
+  return `${startTimeFormatted} - ${endTimeFormatted}`;
+};

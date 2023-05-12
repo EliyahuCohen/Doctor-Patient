@@ -1,12 +1,16 @@
 import "./ts.scss";
-import React, { useState, useEffect } from "react";
-import { ScheduleDay } from "../../types/type";
-import { FiTrash } from "react-icons/fi";
-import { BsPlus } from "react-icons/bs";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSchedual } from "../../hooks/useSchedual";
+import { ITimeSpan, ScheduleDay } from "../../types/type";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
+import { BsPlus } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { newMessage } from "../../features/messagesSlice";
+import { formatTime } from "../../Utils/functions";
+import { AiOutlineDelete } from "react-icons/ai";
 
 const TimeSelect = () => {
+  const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<number>(0);
   const [daysList, setDaysList] = useState<ScheduleDay[]>([
@@ -21,47 +25,88 @@ const TimeSelect = () => {
   useEffect(() => {
     getSchedual(setDaysList, daysList);
   }, []);
+  const [startTime, setStartTime] = useState("09:00");
+  const [endTime, setEndTime] = useState("09:10");
+
+  const handleStartTimeChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setStartTime(event.target.value);
+  };
+
+  const handleEndTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEndTime(event.target.value);
+  };
+
+  const handleSave = useCallback(
+    (event: any) => {
+      event.preventDefault();
+      const startTimeFirstNumber = Number(startTime.split(":")[0]);
+      const startTimeRemaining = Number(startTime.split(":")[1]);
+      const endTimeFirstNumber = Number(endTime.split(":")[0]);
+      const endTimeRemaining = Number(endTime.split(":")[1]);
+      const finalNumber1 = startTimeFirstNumber + startTimeRemaining / 100;
+      const finalNumber2 = endTimeFirstNumber + endTimeRemaining / 100;
+      // check if start time is smaller than end time
+      if (finalNumber1 >= finalNumber2) {
+        dispatch(
+          newMessage({
+            id: crypto.randomUUID(),
+            message: "Start time must be smaller than end time",
+            senderId: crypto.randomUUID(),
+            senderName: "System",
+            time: 3000,
+            type: "DELETE",
+          })
+        );
+        return;
+      }
+      // check for overlapping times
+      const selectedDay = daysList[selected];
+      for (let i = 0; i < selectedDay.schedule.times.length; i++) {
+        const timeSpan = selectedDay.schedule.times[i];
+        const startTimeSpan = timeSpan.startTime;
+        const endTimeSpan = timeSpan.endTime;
+        if (
+          (finalNumber1 >= startTimeSpan && finalNumber1 <= endTimeSpan) ||
+          (finalNumber2 >= startTimeSpan && finalNumber2 <= endTimeSpan)
+        ) {
+          dispatch(
+            newMessage({
+              id: crypto.randomUUID(),
+              message: "Overlapping times are not allowed",
+              senderId: crypto.randomUUID(),
+              senderName: "System",
+              time: 3000,
+              type: "DELETE",
+            })
+          );
+          return;
+        }
+      }
+      // add new time span to selected day's schedule
+      const newTimeSpan: ITimeSpan = {
+        startTime: finalNumber1,
+        endTime: finalNumber2,
+      };
+      const newSchedule = {
+        ...selectedDay.schedule,
+        times: [...selectedDay.schedule.times, newTimeSpan],
+      };
+      setDaysList([
+        ...daysList.slice(0, selected),
+        { ...selectedDay, schedule: newSchedule },
+        ...daysList.slice(selected + 1),
+      ]);
+      // reset form inputs
+      setStartTime("09:00");
+      setEndTime("09:10");
+    },
+    [daysList, selected, startTime, endTime]
+  );
   function removeHour(index: number) {
     const week = [...daysList];
     week[selected].schedule.times.splice(index, 1);
-    setDaysList(week);
-  }
-  function addHours() {
-    const week = [...daysList];
-    if (week[selected].schedule.times.length > 0) {
-      week[selected].schedule.times = [
-        ...week[selected].schedule.times,
-        {
-          startTime:
-            week[selected].schedule.times[
-              week[selected].schedule.times.length - 1
-            ].endTime,
-          endTime: (week[selected].schedule.times[
-            week[selected].schedule.times.length - 1
-          ].endTime + 1) as any,
-        },
-      ];
-    } else {
-      week[selected].schedule.times = [
-        ...week[selected].schedule.times,
-        { startTime: 9, endTime: 10 },
-      ];
-    }
-    setDaysList(week);
-  }
-  function setHour1(index: number, start: number) {
-    const week = [...daysList];
-    if (index != 0 && week[selected].schedule.times[index - 1].endTime > start)
-      return false;
-    else {
-      week[selected].schedule.times[index].startTime = start as any;
-      setDaysList(week);
-    }
-    return true;
-  }
-  function setHour2(index: number, end: number) {
-    const week = [...daysList];
-    week[selected].schedule.times[index].endTime = end as any;
     setDaysList(week);
   }
 
@@ -89,75 +134,51 @@ const TimeSelect = () => {
             fontSize="medium"
             title="add doctor"
             className="i"
-            onClick={addHours}
+            onClick={handleSave}
           />
         </div>
       </div>
-      {daysList[selected].schedule.times.length == 0 ? (
-        <h3 className="noS">No Schedual</h3>
-      ) : null}
-      <div className="hours">
-        {daysList[selected].schedule.times.map((sch, index) => {
-          return (
-            <div className="line" key={crypto.randomUUID()}>
-              <div>
-                <p>Start</p>
-                <select
-                  defaultValue={sch.startTime}
-                  onChange={(e) => setHour1(index, parseInt(e.target.value))}
-                >
-                  {[9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
-                    .splice(
-                      [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19].findIndex(
-                        (one) =>
-                          one ==
-                          daysList[selected].schedule.times[index].startTime
-                      )
-                    )
-                    .map((number, index) => {
-                      return (
-                        <option value={number} key={number + index}>
-                          {number}:00
-                        </option>
-                      );
-                    })}
-                </select>
-              </div>
-              <div>
-                <p>End</p>
-                <select
-                  onChange={(e) => setHour2(index, parseInt(e.target.value))}
-                  defaultValue={sch.endTime}
-                >
-                  {[9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
-                    .splice(
-                      [9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19].findIndex(
-                        (one) =>
-                          one ==
-                          daysList[selected].schedule.times[index].endTime
-                      )
-                    )
-                    .map((number, tindex) => {
-                      return (
-                        <option value={number} key={number + tindex}>
-                          {number}:00
-                        </option>
-                      );
-                    })}
-                </select>
-              </div>
-              <FiTrash
-                onClick={() => {
-                  removeHour(index);
-                }}
-                title="delete meeting time"
-                fontSize="medium"
-                className="trash"
+      <form className="timeForm">
+        <div>
+          <input
+            type="time"
+            id="start-time"
+            name="start-time"
+            min="09:00"
+            max="17:00"
+            step="600"
+            value={startTime}
+            onChange={handleStartTimeChange}
+          />
+        </div>
+        <div>
+          <input
+            type="time"
+            id="end-time"
+            name="end-time"
+            min="09:00"
+            max="19:00"
+            step="600"
+            value={endTime}
+            onChange={handleEndTimeChange}
+          />
+        </div>
+      </form>
+      {daysList[selected].schedule.times.map((time, index) => {
+        return (
+          <div className="timeLine" key={time.endTime + time.startTime + index}>
+            <div>{formatTime(time)}</div>
+            <div>
+              <AiOutlineDelete
+                onClick={() => removeHour(index)}
+                color="red"
+                cursor={"pointer"}
+                fontSize={"1.2em"}
               />
             </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
       {daysList.filter((one) => one.schedule.times.length == 0).length != 6 ? (
         <div className="savebtn">
           <button onClick={() => setModalOpen(true)}>Save Schedual</button>

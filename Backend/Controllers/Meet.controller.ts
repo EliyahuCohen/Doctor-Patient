@@ -107,9 +107,9 @@ export async function getMeetings(
       schedual.times = timesTemp as any;
     }
     if (schedual?.times && date.getDate() == new Date().getDate() + 1) {
-      let result = schedual.times.filter(
-        (one) => one.startTime >= new Date().getHours()
-      );
+      let result = schedual.times.filter((one) => {
+        return one.startTime >= new Date().getHours();
+      });
       schedual.times = result as any;
     }
     return res.status(200).json(schedual);

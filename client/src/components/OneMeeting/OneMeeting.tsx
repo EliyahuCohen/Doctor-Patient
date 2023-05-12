@@ -1,6 +1,8 @@
 import { useMeetings } from "../../hooks/useMeetings";
 import { ITimeSpan, Schedule } from "../../types/type";
 import React from "react";
+import { getMinutesBetweenTimes, formatTime } from "../../Utils/functions";
+
 interface IMeet {
   availableMeetings: Schedule | null;
   meeting: ITimeSpan | null;
@@ -27,7 +29,6 @@ const OneMeeting = ({
   const d = new Date(`${selectedDate?.month}-${selectedDate?.day}-2023`);
   const options: Intl.DateTimeFormatOptions = { weekday: "long" };
   const dayName = d.toLocaleDateString("en-US", options);
-
   function bookUI() {
     const tempMeetings: ITimeSpan[] = [];
     availableMeetings!.times.forEach((e) => {
@@ -48,12 +49,16 @@ const OneMeeting = ({
         </div>
         <div className="dateTime2">
           <p>
-            {meeting!.startTime}:00 - {meeting!.endTime}:00
+            {formatTime({
+              endTime: meeting!.endTime,
+              startTime: meeting!.startTime,
+            })}
           </p>
           <p>
             {dayName} <span className="space" /> • <span className="space" />
             {meeting!.startTime} AM • <span className="space" />
-            {(meeting!.endTime - meeting!.startTime) * 60} minutes{" "}
+            {getMinutesBetweenTimes(meeting!.startTime, meeting!.endTime)}{" "}
+            minutes{" "}
           </p>
         </div>
       </div>

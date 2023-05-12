@@ -1,8 +1,12 @@
 import "./loading.scss";
+import Loder from "../../assets/loading.gif";
 const Loading = () => {
   return (
     <div className="LoadingPage">
-      <h1>Loading...</h1>
+      <div>
+        <img src={Loder} alt="loading gif" />
+        <h1>Loading Content For You</h1>
+      </div>
     </div>
   );
 };

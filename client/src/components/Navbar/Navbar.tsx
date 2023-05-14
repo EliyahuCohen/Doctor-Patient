@@ -33,7 +33,7 @@ const Navbar = () => {
         <div className="leftNav">
           <NavLink to="/">
             <h1 className="fire">
-              🔥 <span style={{ color: "#111" }}>HealthEase</span>
+              🔥 <span style={{ color: "#111" }}>CareConnect</span>
             </h1>
           </NavLink>
         </div>

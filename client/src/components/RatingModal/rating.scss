@@ -27,21 +27,21 @@
     }
     .iconPostion {
       cursor: pointer;
-      position: absolute;
       border: 2px solid #111;
+      position: absolute;
       top: 25px;
+      right: 25px;
       width: 25px;
       height: 25px;
-      right: 25px;
       &:hover {
         border: none;
         color: #fff;
-        background: #10a37f;
+        background: #ca2825;
       }
     }
   }
   .publishbtn,
-  .cancleBtn {
+  .cancelBtn {
     width: 100%;
     margin-top: 1rem;
     padding: 1rem;
@@ -59,7 +59,7 @@
       background: #fff;
     }
   }
-  .cancleBtn {
+  .cancelBtn {
     background: 0;
     color: #10a37f;
     border: 2px solid #a1e6b8;

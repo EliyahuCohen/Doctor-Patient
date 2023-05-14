@@ -11,7 +11,7 @@ export const RatingSchema = new mongoose.Schema<IRating>(
   {
     feedback: {
       type: String,
-      required: true,
+      required: false,
     },
     rating: {
       type: Number,

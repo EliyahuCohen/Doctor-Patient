@@ -8,7 +8,7 @@ export async function PostFeedback(req: Request, res: Response) {
     return res
       .status(429)
       .json({ message: "Not allowed to post feedback without login in" });
-  if (!feedback || !rating || !doctorId) {
+  if ( !rating || !doctorId) {
     return res.status(400).json({
       message: "Please add feedback and doctorId and rating and first name",
     });

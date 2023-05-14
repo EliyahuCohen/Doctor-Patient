@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./rat.scss";
+import "./rating.scss";
 import { IoMdClose } from "react-icons/io";
 import { AiOutlineStar } from "react-icons/ai";
 import { useFeedbacks } from "../../hooks/useFeedbacks";
@@ -18,7 +18,6 @@ const RatingModal = ({
 }) => {
   const [rating, setRating] = useState<1 | 2 | 3 | 4 | 5>(1);
   const [feedback, setFeedback] = useState<string>("");
-  const [error, setError] = useState("");
   const { postFeedback } = useFeedbacks();
   const dispatch = useDispatch();
   return (
@@ -29,7 +28,7 @@ const RatingModal = ({
           className="iconPostion"
         />
         <h2 className="title">Give feedback</h2>
-        <p>How was the meeting with Doctor {modalText}</p>
+        <p>How was the meeting with Doctor {modalText}?</p>
         <div className="ratingStars">
           {[...Array(5)].map((_, index) => {
             return (
@@ -45,43 +44,39 @@ const RatingModal = ({
         </div>
         <p className="theRating">{rating}</p>
         <div className="bottomCommentSection">
-          <p>*Care to share more about it?</p>
+          <p>Care to share more about your experience?</p>
           <textarea
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
-            placeholder={`The meeting with doctor${modalText}`}
+            placeholder={`The meeting with doctor ${modalText}`}
           ></textarea>
-          <span style={{ fontSize: "0.8em" }}>*minimum 10 words</span>
           <div className="btnModal">
-            <button onClick={() => setModalOpen(false)} className="cancleBtn">
+            <button onClick={() => setModalOpen(false)} className="cancelBtn">
               Cancel
             </button>
             <button
               onClick={() => {
-                if (feedback.length >= 10) {
-                  postFeedback(feedback, doctorId, rating).then(() => {
-                    setModalOpen(false);
-                    setDoctorId("");
-                    dispatch(
-                      newMessage({
-                        id: crypto.randomUUID(),
-                        message: "Feedback posted successfuly",
-                        senderId: crypto.randomUUID(),
-                        senderName: "System",
-                        time: 3000,
-                        type: "MESSAGE",
-                      })
-                    );
-                  });
-                } else {
-                  setError("Feedback must have more than 10 charcters");
-                }
+
+                postFeedback(feedback, doctorId, rating).then(() => {
+                  setModalOpen(false);
+                  setDoctorId("");
+                  dispatch(
+                    newMessage({
+                      id: crypto.randomUUID(),
+                      message: "Feedback posted successfully",
+                      senderId: crypto.randomUUID(),
+                      senderName: "System",
+                      time: 3000,
+                      type: "MESSAGE",
+                    })
+                  );
+                });
+
               }}
-              className="publishbtn"
+              className={`publishbtn`}
             >
-              Publish Feedback
+              Submit Feedback
             </button>
-            <p> {error.length > 0 ? error : null}</p>
           </div>
         </div>
       </div>

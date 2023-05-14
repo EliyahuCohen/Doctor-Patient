@@ -7,13 +7,15 @@ import { io } from "../server";
 import { usersID } from "../socket";
 import { ScheduleDay } from "../types/types";
 import nodemailer, { Transporter } from "nodemailer";
+import dotenv from "dotenv";
 
+dotenv.config();
 
 const transporter: Transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "careconnecthealthapp@gmail.com",
-    pass: "0585669183"
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD
   }
 })
 
@@ -77,9 +79,9 @@ export async function resetPassword(req: Request, res: Response) {
 
   const mailOptions: nodemailer.SendMailOptions = {
     from: "careconnecthealthapp@gmail.com",
-    to: email,
-    subject: "One Time Verification Code",
-    text: `Your verification code is ${generateVarificationCode()}`
+    to: "eliyahutrab@gmail.com",
+    subject: "Care Connect One Time Verification Code",
+    text: `Your verification code is ${generateVarificationCode()}`,
   };
 
   try {

@@ -1,11 +1,22 @@
 import User, { Schedule } from "../Models/User.model";
-import { createAccessToken, ValidateEmailAndPassword } from "../Utils/helpers";
+import { createAccessToken, generateVarificationCode, validateEmail, ValidateEmailAndPassword } from "../Utils/helpers";
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import { isValidObjectId } from "mongoose";
 import { io } from "../server";
 import { usersID } from "../socket";
 import { ScheduleDay } from "../types/types";
+import nodemailer, { Transporter } from "nodemailer";
+
+
+const transporter: Transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "careconnecthealthapp@gmail.com",
+    pass: "0585669183"
+  }
+})
+
 //post
 export async function signup(req: Request, res: Response) {
   const { fName, lName, password, email, location } = req.body;
@@ -25,7 +36,7 @@ export async function signup(req: Request, res: Response) {
         messages: [
           {
             message:
-              "Thank you for choosing Eden as your health care provider ",
+              "Thank you for choosing Eden as your Care Connect provider ",
             type: 1,
           },
         ],
@@ -48,11 +59,42 @@ export async function login(req: Request, res: Response) {
   const match = await bcrypt.compare(password, exists.password);
   if (match) {
     const token = createAccessToken(exists._id.toString());
-    io.emit("userLoggedIn", exists);
-    if (exists.role != 0) return res.status(200).json({ user: exists, token });
+    if (exists.role != 0) {
+      io.emit("userLoggedIn", exists);
+      return res.status(200).json({ user: exists, token });
+    }
     return res.status(200).json({ user: exists, token, usersId: usersID });
   }
   return res.status(400).json({ message: "Incorrect password" });
+}
+export async function resetPassword(req: Request, res: Response) {
+  const { email } = req.body;
+  const exists = await User.findOne({ email });
+
+  if (!exists) {
+    return res.status(400).json({ message: "Invalid email address" });
+  }
+
+  const mailOptions: nodemailer.SendMailOptions = {
+    from: "careconnecthealthapp@gmail.com",
+    to: email,
+    subject: "One Time Verification Code",
+    text: `Your verification code is ${generateVarificationCode()}`
+  };
+
+  try {
+    await transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.error(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+    });
+    return res.status(200).json({ message: "Verification code sent" });
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ message: "Failed to send email. Please try again" });
+  }
 }
 //get
 export async function getAllUsers(req: Request, res: Response) {
@@ -244,6 +286,7 @@ export async function updateDoctorsList(req: Request, res: Response) {
   }
   return res.status(400).json({ message: "No Such User Id" });
 }
+
 //delete
 export async function deleteUser(req: Request, res: Response) {
   const { id } = req.params;

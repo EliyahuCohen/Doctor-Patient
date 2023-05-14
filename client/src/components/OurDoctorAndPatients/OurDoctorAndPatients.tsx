@@ -51,7 +51,7 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
               );
             })
           )
-        ) : doctors.length == 0 ? (
+        ) : patients.length == 0 ? (
           <p className="moreDoctorP"> You don't have Patients yet</p>
         ) : (
           patients.map((patient, index) => {

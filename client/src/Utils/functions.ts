@@ -77,7 +77,7 @@ export function sendMessageTime(dispatch: any) {
           ? "Good Morning"
           : date.getHours() >= 12 && date.getHours() <= 17
           ? "Good Afternoon"
-          : "Good Night",
+          : "Good Evening",
       senderId: crypto.randomUUID(),
       senderName: "System",
       time: 7000,

@@ -9,9 +9,11 @@ import { newMessage } from "../../features/messagesSlice";
 import { formatTime } from "../../Utils/functions";
 import { AiOutlineDelete } from "react-icons/ai";
 
+export type ITime = 0.3 | 0.1 | 0.2 | 0.6;
 const TimeSelect = () => {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [skipIn, setskipIn] = useState<ITime>(0.1);
   const [selected, setSelected] = useState<number>(0);
   const [daysList, setDaysList] = useState<ScheduleDay[]>([
     { day: "Sunday", schedule: { day: 1, times: [] } },
@@ -21,23 +23,26 @@ const TimeSelect = () => {
     { day: "Thursday", schedule: { day: 5, times: [] } },
     { day: "Friday", schedule: { day: 6, times: [] } },
   ]);
+  const [startTime, setStartTime] = useState("09:00");
+  const [endTime, setEndTime] = useState("10:00");
   const { getSchedual } = useSchedual();
   useEffect(() => {
     getSchedual(setDaysList, daysList);
   }, []);
-  const [startTime, setStartTime] = useState("09:00");
-  const [endTime, setEndTime] = useState("09:10");
 
-  const handleStartTimeChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setStartTime(event.target.value);
-  };
-
-  const handleEndTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEndTime(event.target.value);
-  };
-
+  function createMeetings(start: number, end: number) {
+    const arr = [];
+    while (start < end && end - start >= skipIn) {
+      const startTemp = start;
+      start = roundUpAtSix(start, Number(skipIn.toFixed(1)));
+      const newTimeSpan: ITimeSpan = {
+        startTime: startTemp,
+        endTime: start,
+      };
+      arr.push(newTimeSpan);
+    }
+    return arr;
+  }
   const handleSave = useCallback(
     (event: any) => {
       event.preventDefault();
@@ -47,6 +52,19 @@ const TimeSelect = () => {
       const endTimeRemaining = Number(endTime.split(":")[1]);
       const finalNumber1 = startTimeFirstNumber + startTimeRemaining / 100;
       const finalNumber2 = endTimeFirstNumber + endTimeRemaining / 100;
+
+      if (!(finalNumber1 >= 9 && finalNumber2 <= 19)) {
+        dispatch(
+          newMessage({
+            id: crypto.randomUUID(),
+            message: "Working hours are between 9:00AM - 19:00PM ",
+            senderId: crypto.randomUUID(),
+            senderName: "System",
+            time: 3000,
+            type: "DELETE",
+          })
+        );
+      }
       // check if start time is smaller than end time
       if (finalNumber1 >= finalNumber2) {
         dispatch(
@@ -89,27 +107,42 @@ const TimeSelect = () => {
         startTime: finalNumber1,
         endTime: finalNumber2,
       };
-      const newSchedule = {
+      const newMeetings = createMeetings(finalNumber1, finalNumber2);
+      const updatedSchedule = {
         ...selectedDay.schedule,
-        times: [...selectedDay.schedule.times, newTimeSpan],
+        times: selectedDay.schedule.times.concat(newMeetings),
       };
-      setDaysList([
+      const updatedDay = { ...selectedDay, schedule: updatedSchedule };
+      const updatedDaysList = [
         ...daysList.slice(0, selected),
-        { ...selectedDay, schedule: newSchedule },
+        updatedDay,
         ...daysList.slice(selected + 1),
-      ]);
+      ];
+      setDaysList(updatedDaysList);
       // reset form inputs
       setStartTime("09:00");
       setEndTime("09:10");
     },
     [daysList, selected, startTime, endTime]
   );
+
   function removeHour(index: number) {
     const week = [...daysList];
     week[selected].schedule.times.splice(index, 1);
     setDaysList(week);
   }
-
+  function roundUpAtSix(num: number, increment: number): number {
+    while (increment > 0) {
+      increment = Number((increment - 0.1).toFixed(1));
+      if (Number(Number(num % 1).toFixed(1)) < 0.5) {
+        num = Number((num + 0.1).toFixed(1));
+      } else {
+        num++;
+        num -= num % 1;
+      }
+    }
+    return num;
+  }
   return (
     <div className="workTime">
       <h1>Manage your shifts</h1>
@@ -128,16 +161,16 @@ const TimeSelect = () => {
           );
         })}
       </div>
-      <div className="times">
-        <div className="icon">
-          <BsPlus
-            fontSize="medium"
-            title="add doctor"
-            className="i"
-            onClick={handleSave}
-          />
-        </div>
-      </div>
+      <h2
+        style={{
+          color: "#229f97",
+          textAlign: "center",
+          fontSize: "1.02em",
+          marginBottom: "1rem",
+        }}
+      >
+        Enter your shift
+      </h2>
       <form className="timeForm">
         <div>
           <input
@@ -148,7 +181,7 @@ const TimeSelect = () => {
             max="17:00"
             step="600"
             value={startTime}
-            onChange={handleStartTimeChange}
+            onChange={(e) => setStartTime(e.target.value)}
           />
         </div>
         <div>
@@ -160,10 +193,34 @@ const TimeSelect = () => {
             max="19:00"
             step="600"
             value={endTime}
-            onChange={handleEndTimeChange}
+            onChange={(e) => setEndTime(e.target.value)}
           />
         </div>
+        <select>
+          <option value="0.1" onClick={() => setskipIn(Number(0.1) as ITime)}>
+            10 Minutes
+          </option>
+          <option value="0.2" onClick={() => setskipIn(Number(0.2) as ITime)}>
+            20 Minutes
+          </option>
+          <option value="0.3" onClick={() => setskipIn(Number(0.3) as ITime)}>
+            30 Minutes
+          </option>
+          <option value="0.6" onClick={() => setskipIn(Number(0.6) as ITime)}>
+            1 hour
+          </option>
+        </select>
       </form>
+      <div className="times">
+        <div className="icon">
+          <BsPlus
+            fontSize="medium"
+            title="add doctor"
+            className="i"
+            onClick={handleSave}
+          />
+        </div>
+      </div>
       {daysList[selected].schedule.times.map((time, index) => {
         return (
           <div className="timeLine" key={time.endTime + time.startTime + index}>

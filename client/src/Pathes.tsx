@@ -19,7 +19,7 @@ const ChartsPage = lazy(() => import("./pages/Charts/Charts"));
 
 export interface RouteType {
   element: JSX.Element | React.ElementType<any>;
-  path: string;
+  path: string;  
 }
 
 const routes: RouteType[] = [

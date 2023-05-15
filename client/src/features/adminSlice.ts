@@ -53,6 +53,13 @@ const adminSlice = createSlice({
         }
       }
     },
+    setLiveUsersObject: (state: adminUsers, action) => {
+      const arr: any[] = [];
+      action.payload.forEach((el: any) => {
+        arr.push(el.userId);
+      });
+      state.liveUsers = arr;
+    },
   },
 });
 export const {
@@ -62,5 +69,6 @@ export const {
   addStateLive,
   removeLiveUser,
   addNewUser,
+  setLiveUsersObject
 } = adminSlice.actions;
 export default adminSlice.reducer;

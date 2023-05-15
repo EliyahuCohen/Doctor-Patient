@@ -5,7 +5,7 @@ import messageSent from "../assets/messageSent.mp3";
 import {
   removeLiveUser,
   updateLiveUsers,
-  updateStateLive,
+  addStateLive,
 } from "../features/adminSlice";
 import { logout, updateRole } from "../features/userSlice";
 
@@ -42,7 +42,7 @@ export function check(number: number): boolean {
     document.querySelectorAll(`.input${number}`)
   );
   let ok = true;
-  inputs.forEach((one: HTMLInputElement, index) => {
+  inputs.forEach((one: HTMLInputElement) => {
     const span = one.nextSibling;
     if (!one.checkValidity()) {
       one.classList.add("errorField");
@@ -157,7 +157,7 @@ export function handleSocket(
 }
 export function updateStatus(socket: Socket, dispatch: any, user: User | null) {
   socket.on("userLoggedIn", (sock: User) => {
-    dispatch(updateStateLive(sock));
+    dispatch(addStateLive(sock));
   });
   if (user?.role == 0) {
     dispatch(updateLiveUsers());

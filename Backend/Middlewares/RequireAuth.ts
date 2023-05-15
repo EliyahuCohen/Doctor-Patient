@@ -12,6 +12,6 @@ export function requiredAuthentication(
     req.body.USER_ID = userId;
     next();
   } catch (err) {
-    res.status(429).json({ message: "Please log in / signup" });
+    res.status(429).json({ message: "Please sign in / signup" });
   }
 }

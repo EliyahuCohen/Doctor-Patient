@@ -18,7 +18,11 @@ const adminSlice = createSlice({
     setAdminUsers: (state: adminUsers, action) => {
       state.users = action.payload;
     },
-    updateStateLive: (state: adminUsers, action) => {
+    
+    setLiveUsers: (state: adminUsers, action) => {
+      state.liveUsers = action.payload;
+    },
+    addStateLive: (state: adminUsers, action:{payload:{_id:string}}) => {
       const { _id } = action.payload;
       for (let i = 0; i < state.users.length; i++) {
         if (state.users[i]._id == _id) {
@@ -26,17 +30,6 @@ const adminSlice = createSlice({
           break;
         }
       }
-    },
-
-    setLiveUsers: (state: adminUsers, action) => {
-      state.liveUsers = action.payload;
-    },
-    setLiveUsersObject: (state: adminUsers, action) => {
-      const arr: any[] = [];
-      action.payload.forEach((el: any) => {
-        arr.push(el.userId);
-      });
-      state.liveUsers = arr;
     },
     updateLiveUsers: (state: adminUsers) => {
       state.users.forEach((user) => {
@@ -66,8 +59,7 @@ export const {
   setAdminUsers,
   setLiveUsers,
   updateLiveUsers,
-  updateStateLive,
-  setLiveUsersObject,
+  addStateLive,
   removeLiveUser,
   addNewUser,
 } = adminSlice.actions;

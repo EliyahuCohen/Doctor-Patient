@@ -23,7 +23,6 @@ export function useLogin() {
       if (res.status == 200) {
         setMyError(() => "");
         dispatch(setUser(res.data));
-        localStorage.setItem("user", JSON.stringify(res.data));
         if (res?.data?.user?.role === 0) {
           dispatch(setLiveUsers(res.data.usersId));
         }

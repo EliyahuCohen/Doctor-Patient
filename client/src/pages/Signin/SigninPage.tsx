@@ -38,7 +38,7 @@ const SigninPage = () => {
         >
           <img
             src="https://www.vectorlogo.zone/logos/google/google-icon.svg"
-            alt=""
+            alt="google sign in image"
           />
           Sign in with Google
         </div>
@@ -59,7 +59,7 @@ const SigninPage = () => {
             autoComplete="email"
             id="email"
           />
-          <label htmlFor="pass">Password</label>
+          <label htmlFor="password">Password</label>
           <input
             value={User.password}
             autoComplete="current-password"
@@ -68,7 +68,7 @@ const SigninPage = () => {
             className="input5"
             type="password"
             placeholder="password"
-            id="pass"
+            id="password"
             required
             pattern="[A-Za-z\d@./!@#$%^&*({})]{8,}$"
           />
@@ -92,7 +92,7 @@ const SigninPage = () => {
         </div>
         <div className="links">
           <Link to="/register">Don't have an account?</Link>
-          <Link to="/">Forgot Password?</Link>
+          <Link to="/reset-password">Forgot Password?</Link>
         </div>
       </div>
     </div>

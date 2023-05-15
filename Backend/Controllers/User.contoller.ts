@@ -72,26 +72,27 @@ export async function login(req: Request, res: Response) {
 export async function resetPassword(req: Request, res: Response) {
   const { email } = req.body;
   const exists = await User.findOne({ email });
-
   if (!exists) {
     return res.status(400).json({ message: "Invalid email address" });
   }
 
   const mailOptions: nodemailer.SendMailOptions = {
     from: "careconnecthealthapp@gmail.com",
-    to: "eliyahutrab@gmail.com",
+    to: email,
     subject: "Care Connect One Time Verification Code",
     text: `Your verification code is ${generateVarificationCode()}`,
+    html: `<div style="padding:2rem;border:2px solid #777;font-family:Arial, Helvetica, sans-serif, Calibri, 'Trebuchet MS', sans-serif;"">
+    <h1 style="text-align:center;font-family:Arial, Helvetica, sans-serif, Calibri, 'Trebuchet MS', sans-serif;display: flex;flex-direction: column;align-items: center;">Welcome to Care Connect</h1>
+    <p style="text-align: center;color: #777;">In order to reset your password you were sent a one time code in order to athenticate your email address and your account.</p>
+   <div style="display: flex;flex-direction: column;align-items: center;">
+    <a style="text-align: center; color: red;border: 1px solid red;;padding:0.3rem 2rem;text-decoration: 0;" href="http://localhost:3001/users/">V${generateVarificationCode()}</a>
+   </div>
+</div>`
+
   };
 
   try {
-    await transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.error(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-    });
+    await transporter.sendMail(mailOptions)
     return res.status(200).json({ message: "Verification code sent" });
   } catch (error) {
     console.log(error)

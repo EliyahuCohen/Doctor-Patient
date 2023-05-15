@@ -6,8 +6,9 @@ const BookingPage = lazy(() => import("./pages/Booking/BookingPage"));
 const HomePage = lazy(() => import("./pages/Home/HomePage"));
 const AdminPage = lazy(() => import("./pages/Admin/AdminPage"));
 const OneProfile = lazy(() => import("./components/OneProfile/OneProfile"));
-const RegisterPage = lazy(() => import("./pages/Register/RegisterPage"));
+const RegisterPage = lazy(() => import("./pages/Signup/SignupPage"));
 const SigninPage = lazy(() => import("./pages/Signin/SigninPage"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword/ResetPassword"));
 const UserDashboardPage = lazy(
   () => import("./pages/UserDashboard/UserDashboardPage")
 );
@@ -45,6 +46,10 @@ const routes: RouteType[] = [
     path: "/signin",
     element: ({ user }: { user: User }) =>
       user != null ? <Navigate to="/" /> : <SigninPage />,
+  },
+  {
+    path: "/reset-password",
+    element: ({ user }: { user: User }) => user != null ? <Navigate to="/" /> : <ResetPassword />
   },
   {
     path: "/dashboard",

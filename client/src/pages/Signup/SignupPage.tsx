@@ -4,7 +4,7 @@ import { useState } from "react";
 import { moveFoword, check } from "../../Utils/functions";
 import { Register } from "../../types/type";
 import { useRegister } from "../../hooks/useRegister";
-const RegisterPage = () => {
+const SignupPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [totalSteps, setTotalSteps] = useState<number>(4);
   const [error, setError] = useState<string>("");
@@ -23,7 +23,7 @@ const RegisterPage = () => {
   return (
     <div className="register">
       <Link to="/" className="headlink">
-        🔥HealthEase
+        🔥Care Connect
       </Link>
       <div className="points">
         {[...new Array(totalSteps)].map((step, index) => {
@@ -145,7 +145,7 @@ const RegisterPage = () => {
       ) : currentStep == 3 ? (
         <div className="inputs">
           <div>
-            <h1>How are you planing to use Eden?</h1>
+            <h1>How are you planning to make the most of Care Connect?</h1>
             <p>We'll streamline your setup experience accordingly.</p>
           </div>
           <div className="roles">
@@ -265,4 +265,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default SignupPage;

@@ -14,7 +14,7 @@ const messageSlice = createSlice({
   initialState,
   reducers: {
     newMessage: (state: messagesType, action: { payload: IMessage }) => {
-      if (state.messages.length > 2) {
+      if (state.messages.length == 3) {
         state.messages.splice(0, 1);
       }
       state.messages.push(action.payload);

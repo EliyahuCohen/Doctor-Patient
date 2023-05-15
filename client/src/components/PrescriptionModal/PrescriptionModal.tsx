@@ -46,7 +46,7 @@ const PrescriptionModal = ({
       dosage: "",
       frequency: "",
       name: "",
-      instructions: "",
+      instructions: "No additional instructions",
     };
     setPrescription({
       ...prescription,
@@ -167,7 +167,6 @@ const PrescriptionModal = ({
                           <textarea
                             className="instructionsText"
                             placeholder="Any additional instructions or notes"
-                            value={med.instructions}
                             onChange={(e) => {
                               const newObj = {
                                 ...med,
@@ -191,9 +190,7 @@ const PrescriptionModal = ({
                 prescription.medications.filter(
                   (one) => one.frequency.length <= 0
                 ).length == 0 &&
-                prescription.medications.filter(
-                  (one) => one.instructions.length <= 0
-                ).length == 0 && (
+                (
                   <div className="subBtn">
                     <button
                       onClick={() => {

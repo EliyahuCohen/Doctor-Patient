@@ -17,16 +17,17 @@ const OnePrescription = ({ pre }: { pre: IPrescription }) => {
             return (
               <div className="oneMed" key={med.dosage + med.name + index}>
                 <strong>- {med.name}</strong>
-                <p className="grayColor">{med.instructions}</p>
                 <p className="usage">
                   <span>{med.frequency}</span> every time use only{" "}
                   <span>{med.dosage}</span>
                 </p>
+                <p className="grayColor"><b>Instructions:</b> {med.instructions}</p>
               </div>
             );
           })}
         </div>
         <div className="endLine">
+
           <p className="treatingDoctor">
             Prescribed by <span>{pre.doctorName}</span>{" "}
           </p>

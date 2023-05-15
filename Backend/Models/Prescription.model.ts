@@ -30,7 +30,8 @@ export const medicationSchema = new Schema<IMedication>({
     type: String,
   },
   instructions: {
-    required: true,
+    required: false,
+    default:"No additional instructions",
     type: String,
   },
 });

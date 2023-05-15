@@ -29,7 +29,7 @@ const HomePage = () => {
             in the field
           </p>
           {user ? (
-            <Link to="/dashboard">
+            <Link to="/dashboard/2">
               <button>Make an Appoitment</button>
             </Link>
           ) : (

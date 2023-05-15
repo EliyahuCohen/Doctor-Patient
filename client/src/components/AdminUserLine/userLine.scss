@@ -8,12 +8,21 @@
   padding: 1rem;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 
+  
+  .status{
+    width: 60%;
+    text-align: center;
+  }
   @media screen and (max-width: 900px) {
     text-align: center;
     grid-template-columns: 1fr 1fr 1fr;
     .delete-small {
       width: 0;
       display: none;
+    }
+    .status{
+      width: auto;
+      text-align: center;
     }
   }
   p:not(:nth-child(1)) {

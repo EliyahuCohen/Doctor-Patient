@@ -1,7 +1,6 @@
 import { lazy } from "react";
 import { Navigate } from "react-router-dom";
 import { User } from "./types/type";
-
 const BookingPage = lazy(() => import("./pages/Booking/BookingPage"));
 const HomePage = lazy(() => import("./pages/Home/HomePage"));
 const AdminPage = lazy(() => import("./pages/Admin/AdminPage"));

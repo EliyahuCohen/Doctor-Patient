@@ -41,8 +41,8 @@ const Navbar = () => {
           <div className="navLinks">
             {!user ? (
               <>
-                <NavLink className="link" to="/signin" title="Login page">
-                  Login
+                <NavLink className="link" to="/signin" title="Singin page">
+                  Sign In
                 </NavLink>
                 <NavLink className="link" to="/register" title="Signup page">
                   Signup
@@ -137,7 +137,7 @@ const Navbar = () => {
                   to="/signin"
                   title="Sign in page"
                 >
-                  Login
+                  Sign In
                 </NavLink>
                 <NavLink
                   onClick={() => setOpen(false)}

@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
+import "./resetPassword.scss"
 
 const ResetPassword = () => {
+  const [email,setEmail]=useState("")
+  const [verificationCode,setVerificationCode]=useState("")
+  const [password,setPassword]=useState("")
   return (
-    <div>ResetPassword</div>
+    <div className='resetWrapper'></div>
   )
 }
 

@@ -15,7 +15,8 @@ import {
   updateDoctorsList,
   checkAccess,
   addRatingToDoctor,
-  resetPassword
+  resetPasswordVerificationCodeEmailSender,
+  checkIfVerificationCodeIsValidAndCorrect
 } from "../Controllers/User.contoller";
 import { requiredAuthentication } from "../Middlewares/RequireAuth";
 
@@ -23,7 +24,8 @@ const router = express.Router();
 
 router.post("/signup", signup);
 router.post("/login", login);
-router.post("/reset-password", resetPassword);
+router.post("/reset-password", resetPasswordVerificationCodeEmailSender);
+router.post("/verification", checkIfVerificationCodeIsValidAndCorrect);
 router.use(requiredAuthentication);
 router.use("/checkAccess", checkAccess);
 router.get("/all", getAllUsers);

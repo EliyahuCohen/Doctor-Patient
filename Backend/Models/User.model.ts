@@ -32,6 +32,7 @@ export interface User {
   isMale: boolean;
   schedule: Schedule[];
   userRating: IRating;
+  varificationCode:string;
 }
 export interface IRating {
   sum: number;
@@ -117,6 +118,11 @@ const userSchema: Schema = new mongoose.Schema<User>(
       default: { sum: 0, votes: 0 },
       required: false,
     },
+    varificationCode:{
+      type:String,
+      default:"",
+      required:false,
+    }
   },
   { timestamps: true }
 );

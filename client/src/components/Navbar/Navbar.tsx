@@ -68,7 +68,7 @@ const Navbar = () => {
                   <>
                     <NavLink
                       className="link"
-                      to="/dashboard"
+                      to="/dashboard/0"
                       title="Dashboard page"
                     >
                       Dashboard
@@ -135,7 +135,7 @@ const Navbar = () => {
                   onClick={() => setOpen(false)}
                   className="link"
                   to="/signin"
-                  title="Login page"
+                  title="Sign in page"
                 >
                   Login
                 </NavLink>
@@ -176,7 +176,7 @@ const Navbar = () => {
                     <NavLink
                       onClick={() => setOpen(false)}
                       className="link"
-                      to="/dashboard"
+                      to="/dashboard/0"
                       title="Dashboard page"
                     >
                       Dashboard

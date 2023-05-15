@@ -52,7 +52,7 @@ const routes: RouteType[] = [
     element: ({ user }: { user: User }) => user != null ? <Navigate to="/" /> : <ResetPassword />
   },
   {
-    path: "/dashboard",
+    path: "/dashboard/:id",
     element: ({ user }: { user: User }) =>
       user != null && user.approved ? (
         <UserDashboardPage />

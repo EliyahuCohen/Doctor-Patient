@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Login } from "../../types/type";
 import { check } from "../../Utils/functions";
 import { useLogin } from "../../hooks/useLogin";
-import "./app.scss";
+import "./signin.scss";
 import { useDispatch } from "react-redux";
 import { newMessage } from "../../features/messagesSlice";
 const SigninPage = () => {
@@ -78,8 +78,10 @@ const SigninPage = () => {
             className="click"
             onClick={() => {
               if (check(5)) {
-                loginFunc( User, setMyError).then((res)=>{
-                   res.user.role==0?navigate("/admin"):navigate("/dashboard/0")
+                loginFunc(User, setMyError).then((res) => {
+                  res.user.role == 0
+                    ? navigate("/admin")
+                    : navigate("/dashboard/0");
                 });
               } else {
                 setMyError("");

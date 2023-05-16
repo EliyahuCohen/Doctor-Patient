@@ -17,10 +17,12 @@ export function ValidateEmailAndPassword(email: string, password: string) {
   if (!validateEmail(email)) throw Error("Invalid Email");
   else if (!validatePassword(password)) throw Error("Weak password");
 }
-export function generateVarificationCode():string{
-  return (Math.floor(100_000+Math.random()*900_000)).toString();
+export function generateVarificationCode(): string {
+  return Math.floor(100_000 + Math.random() * 900_000).toString();
 }
-export function generateTokenForVarificationCode(code:string):string{
-  const codeToken=jwt.sign({code},`${process.env.SECRET}`,{expiresIn:'10m'})  
+export function generateTokenForVarificationCode(code: string): string {
+  const codeToken = jwt.sign({ code }, `${process.env.SECRET}`, {
+    expiresIn: "10m",
+  });
   return codeToken;
 }

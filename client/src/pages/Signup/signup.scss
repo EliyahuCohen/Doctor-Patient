@@ -65,6 +65,7 @@
     margin-bottom: 2rem;
   }
   .inputs {
+    max-width: 750px;
     padding: 1em;
     transition: 0.3s;
     label {
@@ -88,6 +89,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      margin: 0 auto;
       max-width: 650px;
 
       label.role div {

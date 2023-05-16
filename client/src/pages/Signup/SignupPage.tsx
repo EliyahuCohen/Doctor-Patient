@@ -1,4 +1,4 @@
-import "./app.scss";
+import "./signup.scss";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { moveFoword, check } from "../../Utils/functions";

@@ -32,30 +32,24 @@ const UserDashboardPage = () => {
 
   const [selected, setSelected] = useState<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>(0);
   function changeTab(tabNumber: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7) {
-    navigate(`/dashboard/${tabNumber}`)
-    setSelected(tabNumber)
+    navigate(`/dashboard/${tabNumber}`);
+    setSelected(tabNumber);
   }
-  const { id } = useParams()
-  const navigate = useNavigate()
+  const { id } = useParams();
+  const navigate = useNavigate();
   useEffect(() => {
     if (id && Number(id) < 8 && Number(id) >= 0) {
-      if(user?.role==2&&Number(id)>5){
-        changeTab(0)
+      if (user?.role == 2 && Number(id) > 5) {
+        changeTab(0);
         return;
       }
       if (user?.role == 2 && Number(id) < 7 && Number(id) >= 0) {
-        setSelected(Number(id) as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7)
-        console.log(Number(id))
+        setSelected(Number(id) as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7);
+      } else if (user?.role == 1) {
+        setSelected(Number(id) as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7);
       }
-      else if (user?.role == 1) {
-        setSelected(Number(id) as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7)
-        console.log(Number(id))
-      }
-    }
-    else
-      setSelected(1)
-    console.log(Number(1))
-  }, [])
+    } else setSelected(1);
+  }, []);
   return (
     <div className="dashboardWrapper">
       <div className="sidebar">
@@ -81,7 +75,6 @@ const UserDashboardPage = () => {
           <p>My Doctors</p>
         </div>
 
-
         <div
           className={`${selected == 3 ? "selected" : ""}`}
           onClick={() => changeTab(3)}
@@ -92,7 +85,6 @@ const UserDashboardPage = () => {
         <div
           className={`${selected == 4 ? "selected" : ""}`}
           onClick={() => changeTab(4)}
-
         >
           <BsCalendarDate />
           <p>My Appointments</p>
@@ -122,7 +114,6 @@ const UserDashboardPage = () => {
             <p>My Shifts</p>
           </div>
         )}
-
       </div>
       <div className="result">
         {selected == 0 && <HomeTab />}

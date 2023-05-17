@@ -27,14 +27,21 @@ const ResetPassword = () => {
 
   const handleChange = (e: any, index: number) => {
     const { value } = e.target;
+    const newCode = value.replace(/\D/g, ""); // Remove non-digit characters
     setVerificationCode((prevCode) => {
-      const newCode = prevCode.split("");
-      newCode[index] = value;
-      return newCode.join("");
+      const newCodeArray = prevCode.split("");
+      newCodeArray[index] = newCode;
+      return newCodeArray.join("");
     });
-    if (value && index < inputRefs.current.length - 1) {
+    if (/^\d$/.test(value) && index < inputRefs.current.length - 1) {
       inputRefs.current[index + 1].focus();
-    } else if (!value && index > 0) {
+    } else if (value === "" && index > 0) {
+      inputRefs.current[index - 1].focus();
+    }
+  };
+
+  const handleKeyDown = (e: any, index: number) => {
+    if (e.key === "Backspace" && index > 0 && !verificationCode[index]) {
       inputRefs.current[index - 1].focus();
     }
   };
@@ -140,10 +147,13 @@ const ResetPassword = () => {
               <input
                 key={index}
                 type="text"
+                pattern="[0-9]"
                 maxLength={1}
                 value={verificationCode[index] || ""}
                 onChange={(e) => handleChange(e, index)}
                 onFocus={handleFocus(index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                inputMode="numeric"
                 ref={(el) => (inputRefs.current[index] = el)}
               />
             ))}

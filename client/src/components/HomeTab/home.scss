@@ -1,3 +1,77 @@
 .secondLineName {
   font-size: 1.8em;
 }
+.firstP {
+  margin-top: 0.5em;
+  font-weight: bold;
+  color: #444;
+}
+.conditionBoxs {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  @media screen and (max-width: 1000px) {
+    flex-wrap: wrap;
+    .oneBox {
+      margin: 0 auto !important;
+    }
+  }
+  align-items: center;
+  margin-top: 2rem;
+
+  .oneBox {
+    margin-top: 1rem !important;
+    max-width: 400px;
+    min-width: 20px;
+    &:not(:first-child) {
+      margin-left: 1rem;
+    }
+    @media screen and (max-width: 1000px) {
+      width: 45%;
+    }
+    @media screen and (max-width: 800px) {
+      width: 100%;
+    }
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    border-radius: 18px;
+    border: 1px solid #888;
+    transition: 500ms;
+    &:hover {
+      transition: 500ms;
+      scale: 1.02;
+    }
+    b {
+      margin-bottom: 1rem;
+    }
+    .circle {
+      font-size: larger;
+      display: grid;
+      place-items: center;
+      border-radius: 100vh;
+      font-weight: bold;
+      height: 110px;
+      width: 110px;
+      background: #c5f1b2;
+      border: 0.8em solid #e2fbd7;
+    }
+    &:nth-child(2) {
+      .circle {
+        background: #fce899;
+        border: 0.8em solid #fff5cc;
+      }
+    }
+    &:nth-child(3) {
+      .circle {
+        background: #ffb9b9;
+        border: 0.8em solid #ffd9d9;
+      }
+    }
+  }
+}

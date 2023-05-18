@@ -7,7 +7,8 @@ import {
   updateLiveUsers,
   addStateLive,
 } from "../features/adminSlice";
-import { logout, updateRole } from "../features/userSlice";
+import { logout, updateMeetingAmount, updateRole } from "../features/userSlice";
+import { updateUserInfo } from "../features/userSlice";
 
 export function shuffleArray(array: any[]) {
   return array.sort(() => Math.random() - 0.5);
@@ -153,6 +154,7 @@ export function handleSocket(
     setModalOpen(true);
     setModalText(sock.message);
     setDoctorId(sock.doctorId);
+    dispatch(updateMeetingAmount(sock));
   });
 }
 export function updateStatus(socket: Socket, dispatch: any, user: User | null) {

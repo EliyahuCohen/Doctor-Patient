@@ -21,6 +21,7 @@
   padding-top: 0.1rem;
   .thePrescriptions {
     max-height: 90vh;
+    overflow: hidden;
     overflow-y: scroll;
   }
   h1 {

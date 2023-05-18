@@ -32,7 +32,7 @@ const BookingPage = () => {
   return (
     <div>
       <div className="spaceForBtn">
-        <GoBackButton backgroundColor="#ffebea" whereTo="dashboard" />
+        <GoBackButton backgroundColor="#ffebea" whereTo="dashboard/2" />
       </div>
       <div className="wrapperDate">
         <div className="bookingWrapper">

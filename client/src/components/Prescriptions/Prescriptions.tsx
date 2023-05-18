@@ -23,8 +23,8 @@ const Prescription = () => {
 
   return (
     <div className="myPrescriptions">
-      <h1>
-        My Prescription{" "}
+      <h1 style={{ marginBottom: "2rem" }}>
+        My Prescriptions {"  "}
         {prescriptions != null &&
           prescriptions.length != 0 &&
           `(${prescriptions.length})`}
@@ -46,6 +46,7 @@ const Prescription = () => {
         {prescriptions?.map((pre, index) => {
           return (
             <OnePrescription
+              index={index}
               key={pre.doctorId + pre.endDate + pre.patinetId + index}
               pre={pre}
             />

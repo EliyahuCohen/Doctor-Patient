@@ -10,7 +10,7 @@ import feedbacksRouter from "./Routes/Rating.route";
 import quotsRouter from "./Routes/Quoutes.route";
 import http from "http";
 import { Server } from "socket.io";
-import { socket } from "./socket";
+import { socket, usersID } from "./socket";
 export interface user {
   userId: mongoose.Types.ObjectId;
   socketId: string;

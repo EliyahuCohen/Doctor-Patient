@@ -127,7 +127,7 @@ const TimeSelect = () => {
       setStartTime(endTime);
       setEndTime(`${numberHours}:${numberMinutes}`);
     },
-    [daysList, selected, startTime, endTime]
+    [daysList, selected, startTime, endTime, skipIn]
   );
 
   function removeHour(index: number) {
@@ -203,7 +203,7 @@ const TimeSelect = () => {
         <select
           onChange={(e) => {
             console.log(e.target.value);
-            setskipIn(Number(e.target.value) as ITime);
+            setskipIn((prev) => Number(e.target.value) as ITime);
           }}
         >
           <option value="0.1">10 Minutes</option>

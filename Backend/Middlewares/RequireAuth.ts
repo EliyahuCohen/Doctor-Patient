@@ -10,6 +10,7 @@ export function requiredAuthentication(
   try {
     const { userId }: any = jwt.verify(token!, `${process.env.SECRET}`);
     req.body.USER_ID = userId;
+
     next();
   } catch (err) {
     res.status(429).json({ message: "Please sign in / signup" });

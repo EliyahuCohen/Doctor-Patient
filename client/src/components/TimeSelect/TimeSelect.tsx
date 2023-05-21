@@ -120,17 +120,14 @@ const TimeSelect = () => {
       ];
       setDaysList(updatedDaysList);
       // reset form inputs
-      setStartTime(endTime)
-      const numberHours = Number(endTime.split(":")[0])+1
-      const numberMinutes = endTime.split(":")[1]
-      
-      console.log(numberHours)
-      
-      
-      setStartTime(endTime)
-      setEndTime(`${numberHours}:${numberMinutes}`)
+      setStartTime(endTime);
+      const numberHours = Number(endTime.split(":")[0]) + 1;
+      const numberMinutes = endTime.split(":")[1];
+
+      setStartTime(endTime);
+      setEndTime(`${numberHours}:${numberMinutes}`);
     },
-    [daysList, selected, startTime, endTime]
+    [daysList, selected, startTime, endTime, skipIn]
   );
 
   function removeHour(index: number) {
@@ -203,22 +200,16 @@ const TimeSelect = () => {
             onChange={(e) => setEndTime(e.target.value)}
           />
         </div>
-        <select onChange={(e) => {
-          console.log(e.target.value)
-          setskipIn(Number(e.target.value) as ITime)
-        }}>
-          <option value="0.1">
-            10 Minutes
-          </option>
-          <option value="0.2" >
-            20 Minutes
-          </option>
-          <option value="0.3" >
-            30 Minutes
-          </option>
-          <option value="0.6" >
-            1 hour
-          </option>
+        <select
+          onChange={(e) => {
+            console.log(e.target.value);
+            setskipIn((prev) => Number(e.target.value) as ITime);
+          }}
+        >
+          <option value="0.1">10 Minutes</option>
+          <option value="0.2">20 Minutes</option>
+          <option value="0.3">30 Minutes</option>
+          <option value="0.6">1 hour</option>
         </select>
       </form>
       <div className="times">

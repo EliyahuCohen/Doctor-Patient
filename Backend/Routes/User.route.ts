@@ -16,7 +16,8 @@ import {
   checkAccess,
   addRatingToDoctor,
   resetPasswordVerificationCodeEmailSender,
-  checkIfVerificationCodeIsValidAndCorrect
+  checkIfVerificationCodeIsValidAndCorrect,
+  changePassword,
 } from "../Controllers/User.contoller";
 import { requiredAuthentication } from "../Middlewares/RequireAuth";
 
@@ -26,6 +27,7 @@ router.post("/signup", signup);
 router.post("/login", login);
 router.post("/reset-password", resetPasswordVerificationCodeEmailSender);
 router.post("/verification", checkIfVerificationCodeIsValidAndCorrect);
+router.post("/change-password", changePassword);
 router.use(requiredAuthentication);
 router.use("/checkAccess", checkAccess);
 router.get("/all", getAllUsers);

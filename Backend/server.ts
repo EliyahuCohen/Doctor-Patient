@@ -7,9 +7,10 @@ import meetRouter from "./Routes/Meet.route";
 import messagesRouter from "./Routes/Conversation.route";
 import prescriptionsRouter from "./Routes/Prescriptions.route";
 import feedbacksRouter from "./Routes/Rating.route";
+import quotsRouter from "./Routes/Quoutes.route";
 import http from "http";
 import { Server } from "socket.io";
-import { socket } from "./socket";
+import { socket, usersID } from "./socket";
 export interface user {
   userId: mongoose.Types.ObjectId;
   socketId: string;
@@ -28,6 +29,7 @@ app.use("/meeting", meetRouter);
 app.use("/messages", messagesRouter);
 app.use("/prescriptions", prescriptionsRouter);
 app.use("/feedbacks", feedbacksRouter);
+app.use("/quotes", quotsRouter);
 
 mongoose
   .connect(process.env.MONGO_URI || "")

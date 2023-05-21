@@ -3,9 +3,21 @@ import "./onepre.scss";
 import { CgPill } from "react-icons/cg";
 import { IPrescription } from "../../types/type";
 import { format } from "date-fns";
-const OnePrescription = ({ pre }: { pre: IPrescription }) => {
+import { motion } from "framer-motion";
+const OnePrescription = ({
+  pre,
+  index,
+}: {
+  index: number;
+  pre: IPrescription;
+}) => {
   return (
-    <div className="onePrescription">
+    <motion.div
+      initial={{ x: -300, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ delay: index * 0.02 }}
+      className="onePrescription"
+    >
       <div className="firstLine">
         <CgPill />
         <strong className="medTitle">{pre.title}</strong>
@@ -21,13 +33,14 @@ const OnePrescription = ({ pre }: { pre: IPrescription }) => {
                   <span>{med.frequency}</span> every time use only{" "}
                   <span>{med.dosage}</span>
                 </p>
-                <p className="grayColor"><b>Instructions:</b> {med.instructions}</p>
+                <p className="grayColor">
+                  <b>Instructions:</b> {med.instructions}
+                </p>
               </div>
             );
           })}
         </div>
         <div className="endLine">
-
           <p className="treatingDoctor">
             Prescribed by <span>{pre.doctorName}</span>{" "}
           </p>
@@ -36,7 +49,7 @@ const OnePrescription = ({ pre }: { pre: IPrescription }) => {
           </p>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

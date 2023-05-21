@@ -3,6 +3,7 @@
   max-width: 1700px;
   padding: 1rem;
   display: flex;
+  position: relative;
   @media screen and (max-width: 1200px) {
     padding: 0;
   }

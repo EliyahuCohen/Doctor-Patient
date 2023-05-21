@@ -59,7 +59,7 @@ const Communication = () => {
   }
   return (
     <div className="communication">
-      <GoBackButton backgroundColor="#D3D3D3" whereTo="dashboard" />
+      <GoBackButton backgroundColor="#D3D3D3" whereTo="dashboard/2" />
       <h1>Get In Touch 💬</h1>
       <div className="messageList" ref={divRef}>
         <div>

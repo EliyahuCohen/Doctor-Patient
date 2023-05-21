@@ -24,3 +24,7 @@ export interface ScheduleDay {
   schedule: Schedule;
   day: string;
 }
+export interface IQuote {
+  id: number;
+  quote: string;
+}

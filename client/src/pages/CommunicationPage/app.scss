@@ -4,6 +4,9 @@
   padding: 1rem;
   h1 {
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 .left {
@@ -120,4 +123,16 @@
     background: transparent;
     rotate: 45deg;
   }
+}
+.online,
+.offline {
+  margin-left: 2rem;
+  background: red;
+  padding: 0.3rem;
+  border-radius: 100vh;
+  display: inline-block;
+  object-fit: contain;
+}
+.online {
+  background: green;
 }

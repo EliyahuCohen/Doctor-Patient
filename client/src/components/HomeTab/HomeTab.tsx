@@ -52,8 +52,10 @@ const HomeTab = () => {
           >
             <b>Rating</b>
             <p className="circle">
-              {user.userRating.sum && user.userRating.votes
-                ? `${user.userRating.sum / user.userRating.votes}`
+              {user?.userRating?.sum && user?.userRating?.votes
+                ? `${(user?.userRating?.sum / user?.userRating?.votes).toFixed(
+                    1
+                  )}`
                 : null}
             </p>
           </motion.div>

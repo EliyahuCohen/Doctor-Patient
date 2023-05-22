@@ -6,6 +6,8 @@ import { RiSendPlaneLine } from "react-icons/ri";
 import "./app.scss";
 import { socket } from "../../App";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
+import { useSelector } from "react-redux";
+import { UserType } from "../../features/userSlice";
 
 export interface IMessage {
   message: string;
@@ -15,10 +17,14 @@ export interface IMessage {
 }
 
 const Communication = () => {
+  const { user } = useSelector(
+    (state: { userSlice: UserType }) => state.userSlice
+  );
   const { userid } = useParams();
   const inputRef = useRef<HTMLInputElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const [live, setLive] = useState<boolean>(false);
   const { getConversation, sendNewMessage } = useMessages(setMessages);
 
   useLayoutEffect(() => {
@@ -31,6 +37,7 @@ const Communication = () => {
   useEffect(() => {
     if (userid) {
       getConversation(userid);
+      socket.emit("is-user-live", { userid, askingId: user?._id });
     }
   }, []);
   useEffect(() => {
@@ -47,6 +54,17 @@ const Communication = () => {
         ]);
       }
     });
+    socket.on("user-status", (sock) => setLive(sock));
+    socket.on("user-in", (sock) => {
+      if (sock == userid) {
+        setLive(true);
+      }
+    });
+    socket.on("user-out", (sock) => {
+      if (sock == userid) {
+        setLive(false);
+      }
+    });
   }, [socket]);
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
@@ -60,7 +78,14 @@ const Communication = () => {
   return (
     <div className="communication">
       <GoBackButton backgroundColor="#D3D3D3" whereTo="dashboard/2" />
-      <h1>Get In Touch 💬</h1>
+      <h1>
+        Get In Touch 💬{" "}
+        {live ? (
+          <span className="online"></span>
+        ) : (
+          <span className="offline"></span>
+        )}
+      </h1>
       <div className="messageList" ref={divRef}>
         <div>
           {messages.map((message: IMessage, index) => {

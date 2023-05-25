@@ -61,6 +61,12 @@
         border: 0.8em solid #ffd9d9;
       }
     }
+    &:nth-child(4) {
+      .circle {
+        background: rgba(0, 135, 254, 0.606);
+        border: 0.8em solid rgba(0, 100, 100, 0.11);
+      }
+    }
   }
 }
 

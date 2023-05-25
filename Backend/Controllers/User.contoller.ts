@@ -1,5 +1,11 @@
 import User, { Schedule } from "../Models/User.model";
-import { createAccessToken, generateTokenForVarificationCode, generateVarificationCode, validateEmail, ValidateEmailAndPassword } from "../Utils/helpers";
+import {
+  createAccessToken,
+  generateTokenForVarificationCode,
+  generateVarificationCode,
+  validateEmail,
+  ValidateEmailAndPassword,
+} from "../Utils/helpers";
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import { isValidObjectId } from "mongoose";
@@ -8,16 +14,17 @@ import { usersID } from "../socket";
 import { ScheduleDay } from "../types/types";
 import nodemailer, { Transporter } from "nodemailer";
 import dotenv from "dotenv";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
+import { resetPasswordEmail } from "../Utils/emails";
 dotenv.config();
 
 const transporter: Transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.EMAIL,
-    pass: process.env.PASSWORD
-  }
-})
+    pass: process.env.PASSWORD,
+  },
+});
 
 //post
 export async function signup(req: Request, res: Response) {
@@ -69,28 +76,25 @@ export async function login(req: Request, res: Response) {
   }
   return res.status(400).json({ message: "Incorrect password" });
 }
-export async function resetPasswordVerificationCodeEmailSender(req: Request, res: Response) {
+export async function resetPasswordVerificationCodeEmailSender(
+  req: Request,
+  res: Response
+) {
   const { email } = req.body;
   const exists = await User.findOne({ email });
   if (!exists) {
     return res.status(400).json({ message: "Invalid email address" });
   }
   const varificationCode = generateVarificationCode();
-  const varificationCodeToken = generateTokenForVarificationCode(varificationCode);
+  const varificationCodeToken =
+    generateTokenForVarificationCode(varificationCode);
 
   const mailOptions: nodemailer.SendMailOptions = {
     from: "careconnecthealthapp@gmail.com",
     to: email,
     subject: "Care Connect One Time Verification Code",
     text: `Your verification code is ${varificationCode}`,
-    html: `<div style="padding:2rem;border:2px solid #777;font-family:Arial, Helvetica, sans-serif, Calibri, 'Trebuchet MS', sans-serif;"">
-    <h1 style="text-align:center;font-family:Arial, Helvetica, sans-serif, Calibri, 'Trebuchet MS', sans-serif;display: flex;flex-direction: column;align-items: center;">Welcome to Care Connect</h1>
-    <p style="text-align: center;color: #777;">In order to reset your password you were sent a one time code in order to athenticate your email address and your account.</p>
-   <div style="display: flex;flex-direction: column;align-items: center;">
-    <a style="text-align: center; color: red;border: 1px solid red;;padding:0.3rem 2rem;text-decoration: 0;" href="http://localhost:3001/users/">V${varificationCode}</a>
-   </div>
-</div>`
-
+    html: resetPasswordEmail(email, varificationCode),
   };
 
   try {
@@ -99,31 +103,39 @@ export async function resetPasswordVerificationCodeEmailSender(req: Request, res
     await exists.save();
     return res.status(200).json({ message: "Verification code sent" });
   } catch (error) {
-    console.log(error)
-    return res.status(500).json({ message: "Failed to send email. Please try again" });
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Failed to send email. Please try again" });
   }
 }
-export async function checkIfVerificationCodeIsValidAndCorrect(req: Request, res: Response) {
+export async function checkIfVerificationCodeIsValidAndCorrect(
+  req: Request,
+  res: Response
+) {
   const { code, email } = req.body;
   try {
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email });
     if (user) {
-      const decodedToken: any = jwt.verify(user?.varificationCode, `${process.env.SECRET}`)
+      const decodedToken: any = jwt.verify(
+        user?.varificationCode,
+        `${process.env.SECRET}`
+      );
       if (decodedToken && decodedToken.code === code) {
-        return res.status(200).json({ message: "You are verified" })
-      }
-      else {
-        return res.status(400).json({ message: "Invalid code" })
+        return res.status(200).json({ message: "You are verified" });
+      } else {
+        return res.status(400).json({ message: "Invalid code" });
       }
     }
+  } catch (err) {
+    return res.status(400).json({ message: "Code expired" });
   }
-  catch (err) { return res.status(400).json({ message: "Code expired" }) }
 }
 export async function changePassword(req: Request, res: Response) {
-  const { email, password } = req.body
+  const { email, password } = req.body;
 
-  const user = await User.findOne({ email })
-  if (!user) return res.status(404).json({ message: "User was not found!" })
+  const user = await User.findOne({ email });
+  if (!user) return res.status(404).json({ message: "User was not found!" });
 
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
@@ -131,7 +143,7 @@ export async function changePassword(req: Request, res: Response) {
   user.password = hash;
   await user.save();
 
-  return res.status(201).json({ message: "Password successfully updated!" })
+  return res.status(201).json({ message: "Password successfully updated!" });
 }
 //get
 export async function getAllUsers(req: Request, res: Response) {

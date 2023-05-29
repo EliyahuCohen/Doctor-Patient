@@ -8,6 +8,7 @@ const OneProfile = lazy(() => import("./components/OneProfile/OneProfile"));
 const RegisterPage = lazy(() => import("./pages/Signup/SignupPage"));
 const SigninPage = lazy(() => import("./pages/Signin/SigninPage"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword/ResetPassword"));
+const VideoMeeting = lazy(() => import("./pages/VideoMeeting/VideoMeeting"));
 const UserDashboardPage = lazy(
   () => import("./pages/UserDashboard/UserDashboardPage")
 );
@@ -18,7 +19,7 @@ const ChartsPage = lazy(() => import("./pages/Charts/Charts"));
 
 export interface RouteType {
   element: JSX.Element | React.ElementType<any>;
-  path: string;  
+  path: string;
 }
 
 const routes: RouteType[] = [
@@ -48,7 +49,8 @@ const routes: RouteType[] = [
   },
   {
     path: "/reset-password",
-    element: ({ user }: { user: User }) => user != null ? <Navigate to="/" /> : <ResetPassword />
+    element: ({ user }: { user: User }) =>
+      user != null ? <Navigate to="/" /> : <ResetPassword />,
   },
   {
     path: "/dashboard/:id",
@@ -68,6 +70,11 @@ const routes: RouteType[] = [
     path: "booking/:id",
     element: ({ user }: { user: User }) =>
       user != null && user.role != 0 ? <BookingPage /> : <Navigate to="/" />,
+  },
+  {
+    path: "video-meeting",
+    element: ({ user }: { user: User }) =>
+      user != null && user.role != 0 ? <VideoMeeting /> : <Navigate to="/" />,
   },
   {
     path: "charts",

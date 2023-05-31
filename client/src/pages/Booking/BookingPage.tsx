@@ -26,7 +26,16 @@ const BookingPage = () => {
   const { getMeetings } = useSchedual();
   useEffect(() => {
     setLoading(true);
-    const d = new Date(`${selectedDate?.month}-${selectedDate?.day}-2023`);
+    const d = new Date(
+      `${selectedDate?.month}-${selectedDate?.day}-${new Date().getFullYear()}`
+    );
+    setDate(
+      new Date(
+        `${selectedDate?.month}-${
+          selectedDate?.day
+        }-${new Date().getFullYear()}`
+      )
+    );
     getMeetings(d, id!, d.getDay(), setAvailableMeetings, setError, setLoading);
   }, [selectedDate]);
   return (

@@ -70,7 +70,7 @@ const OneMeet = ({
       </div>
       <div className="oneMeet">
         <span className="theDate">
-          {format(new Date(`${month}-${day}-${year}`), "dd/MM/yyyy")}
+          {format(new Date(`${month}-${day + 1}-${year}`), "dd/MM/yyyy")}
         </span>
         <strong>
           Meeting with{" "}

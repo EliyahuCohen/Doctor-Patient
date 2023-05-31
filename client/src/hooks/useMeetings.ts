@@ -45,7 +45,7 @@ export function useMeetings() {
         dispatch(
           newMessage({
             id: crypto.randomUUID(),
-            message: "Can't make more than one appointment",
+            message: err.response.data.message,
             senderName: "System",
             type: "DELETE",
             time: 3000,

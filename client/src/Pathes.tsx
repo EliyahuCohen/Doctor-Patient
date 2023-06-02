@@ -72,7 +72,7 @@ const routes: RouteType[] = [
       user != null && user.role != 0 ? <BookingPage /> : <Navigate to="/" />,
   },
   {
-    path: "video-meeting",
+    path: "video-meeting/:id",
     element: ({ user }: { user: User }) =>
       user != null && user.role != 0 ? <VideoMeeting /> : <Navigate to="/" />,
   },

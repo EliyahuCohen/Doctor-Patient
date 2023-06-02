@@ -1,15 +1,37 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./video.scss";
 import { socket } from "../../App";
+import { BsMic, BsMicMute } from "react-icons/bs";
+import { FiCamera, FiCameraOff } from "react-icons/fi";
+import { ImPhoneHangUp } from "react-icons/im";
+import { motion } from "framer-motion";
+import { useNavigate, useParams } from "react-router-dom";
 
 const VideoMeeting = () => {
+  const { id } = useParams();
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
-
+  const [videoEnabled, setVideoEnabled] = useState<boolean>(true);
+  const [audioEnabled, setAudioEnabled] = useState<boolean>(false);
+  const [remoteConnected, setRemoteConnected] = useState<boolean>(false);
   const [roomCreated, setRoomCreated] = useState<boolean>(false);
-  const [roomNum, setRoomNum] = useState<string>("");
+  const [roomNum, setRoomNum] = useState<string>(id!);
+  const navigate = useNavigate();
   let peerConnection: RTCPeerConnection | null = null;
 
+  function closeCall() {
+    if (remoteVideoRef.current) {
+      remoteVideoRef.current.srcObject = null;
+    }
+    if (peerConnection) {
+      peerConnection.close();
+      peerConnection = null;
+    }
+    socket.emit("leave-call", roomNum);
+    setRemoteConnected(false);
+    setRoomCreated(false);
+    navigate("/dashboard/0");
+  }
   async function init() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -75,6 +97,11 @@ const VideoMeeting = () => {
         });
     });
 
+    //Event listener for user closing call
+    socket.on("user-left", () => {
+      closeCall();
+    });
+
     // Event listener for receiving answers
     socket.on("answer", (answer: RTCSessionDescriptionInit) => {
       if (peerConnection) {
@@ -98,6 +125,7 @@ const VideoMeeting = () => {
     const remoteStream = event.streams[0];
     if (remoteVideoRef.current) {
       remoteVideoRef.current.srcObject = remoteStream;
+      setRemoteConnected(true);
     }
   }
 
@@ -108,40 +136,98 @@ const VideoMeeting = () => {
     }
   }
 
+  const toggleVideo = () => {
+    setVideoEnabled((prevEnabled) => !prevEnabled);
+    if (localVideoRef.current) {
+      const stream = localVideoRef.current.srcObject as MediaStream;
+      const tracks = stream.getVideoTracks();
+      tracks.forEach((track) => {
+        track.enabled = !videoEnabled;
+      });
+    }
+  };
+
+  const toggleAudio = () => {
+    setAudioEnabled((prevEnabled) => !prevEnabled);
+    if (localVideoRef.current) {
+      const stream = localVideoRef.current.srcObject as MediaStream;
+      const tracks = stream.getAudioTracks();
+      tracks.forEach((track) => {
+        track.enabled = !audioEnabled;
+      });
+    }
+  };
+
   useEffect(() => {
-    init();
+    init().then(() => {
+      createRoom();
+    });
   }, []);
 
   return (
-    <div className="videosWrapper">
-      <h1>Ideas</h1>
-      <ul>
-        <li>
-          Can block the user from getting to that page if he dont have a meeting
-          in that time
-        </li>
-        <li>
-          Can generate room automaticaly without typing the room id and such
-          like a random uuid library maybe
-        </li>
-      </ul>
-      <div className="videos">
-        <video autoPlay muted playsInline ref={localVideoRef}></video>
-        <video autoPlay muted playsInline ref={remoteVideoRef}></video>
-      </div>
-      <div className="roomControllers">
-        <input
-          type="text"
-          value={roomNum}
-          onChange={(e) => setRoomNum(e.target.value)}
-        />
-        {!roomCreated ? (
-          <button className="joinBtn" onClick={createRoom}>
-            Create Room
-          </button>
-        ) : null}
-      </div>
-    </div>
+    <motion.div layout>
+      <motion.div layout className="videosWrapper">
+        <motion.h1
+          initial={{ y: 50 }}
+          transition={{ duration: 0.6 }}
+          whileInView={{ y: 0 }}
+        >
+          Video Meeting <span className="doteGlowing"></span>
+        </motion.h1>
+        {localVideoRef && (
+          <div>
+            <div className={remoteConnected ? "videos" : "videos justOne"}>
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                transition={{ duration: 0.6 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+              >
+                <label>You</label>
+                <video
+                  autoPlay
+                  muted={!audioEnabled}
+                  playsInline
+                  ref={localVideoRef}
+                ></video>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                transition={{ duration: 0.6 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                className="otherVideo"
+              >
+                {remoteConnected && <label>Other</label>}
+                <video
+                  autoPlay
+                  muted={!audioEnabled}
+                  playsInline
+                  ref={remoteVideoRef}
+                ></video>
+              </motion.div>
+            </div>
+            <div className="sessionControllers">
+              <button onClick={toggleVideo}>
+                {videoEnabled ? (
+                  <FiCamera fontWeight={800} />
+                ) : (
+                  <FiCameraOff fontWeight={"bold"} />
+                )}
+              </button>
+              <button onClick={toggleAudio}>
+                {audioEnabled ? (
+                  <BsMic fontWeight={"bold"} />
+                ) : (
+                  <BsMicMute fontWeight={"bold"} />
+                )}
+              </button>
+              <button onClick={closeCall}>
+                <ImPhoneHangUp />
+              </button>
+            </div>
+          </div>
+        )}
+      </motion.div>
+    </motion.div>
   );
 };
 

@@ -5,7 +5,6 @@ import { UserType } from "../../features/userSlice";
 import { BsChatQuote } from "react-icons/bs";
 import { useQuote } from "../../hooks/useQuote";
 import { motion } from "framer-motion";
-import Back from "../../assets/back.webp";
 const HomeTab = () => {
   const [quote, setQuote] = useState<{ id: number; quote: string } | null>(
     null
@@ -56,7 +55,7 @@ const HomeTab = () => {
                 ? `${(user?.userRating?.sum / user?.userRating?.votes).toFixed(
                     1
                   )}`
-                : null}
+                : "0"}
             </p>
           </motion.div>
         ) : null}

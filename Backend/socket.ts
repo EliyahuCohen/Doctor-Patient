@@ -71,8 +71,8 @@ export function socket(io: Server) {
     socket.on("ice candidate", (candidate, roomId) => {
       socket.to(roomId).emit("ice candidate", candidate, socket.id);
     });
-    socket.on("disconnect", () => {
-      // console.log(socket);
+    socket.on("leave-call", (roomNum: string) => {
+      socket.broadcast.to(roomNum).emit("user-left");
     });
   });
 }

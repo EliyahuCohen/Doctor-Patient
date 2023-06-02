@@ -1,45 +1,158 @@
 .videosWrapper {
-  margin-top: 7rem;
+  min-height: 80vh;
+  margin: 7rem auto;
+  padding: 2rem;
+  max-width: 1700px;
+  display: grid;
+  place-content: center;
+  h1 {
+    text-align: center;
+    font-size: 2.3em;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  span.doteGlowing {
+    padding: 0.4rem;
+    background: red;
+    display: inline-block;
+    margin-left: 1rem;
+    border-radius: 100vh;
+    animation: glow 2s infinite;
+  }
+  .sessionControllers {
+    display: flex;
+    margin-top: 4rem;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    button {
+      background: transparent;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid;
+      cursor: pointer;
+      border-radius: 0.5rem;
+      font-size: larger;
+      color: #fff;
+      transition: 1s;
+      &:nth-child(1) {
+        background: #946eb7;
+      }
+      &:nth-child(2) {
+        background: #20b2aa;
+      }
+      &:nth-child(3) {
+        background: #ed1b34;
+      }
+      &:hover {
+        scale: 1.11;
+      }
+    }
+  }
+  @keyframes glow {
+    0% {
+      scale: 1;
+    }
+    50% {
+      scale: 0.5;
+    }
+  }
+  .justOne {
+    display: grid;
+    grid-template-columns: 1fr !important;
+    place-items: center;
+    .otherVideo {
+      display: none;
+      width: 0 !important;
+      height: 0 !important;
+      border: 1px solid red;
+    }
+    video {
+      height: 100% !important;
+      width: 100% !important;
+      object-fit: cover;
+      border-radius: 1.3rem;
+      transform: rotateY(180deg);
+    }
+  }
+  .videos {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(2, minmax(350px, 1fr));
+    grid-gap: 1rem;
+    @media screen and (max-width: 1000px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (max-width: 850px) {
+      grid-template-columns: repeat(1, 100%);
+    }
+    label {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+      font-size: larger;
+      font-weight: bold;
+      color: #555;
+    }
+  }
+  video {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 1.3rem;
+    transform: rotateY(180deg);
+  }
+  .roomControllers {
+    p {
+      color: #555;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    padding: 1rem;
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    button {
+      padding: 0.3rem 1rem;
+    }
+    input {
+      outline: transparent;
+      padding: 0.3rem;
+    }
+  }
+}
+.joinBtn {
+  border-radius: 0.3rem;
+  border: 2px solid #10a37f;
+  background: #10a37f;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+  padding: 0.7rem 2rem !important;
+  &:hover {
+    transition: 0.3s;
+    color: #10a37f;
+    border-radius: 100vh;
+    background: #fff;
+    border: 2px solid #10a37f;
+  }
+}
+.joinSection {
+  margin-top: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  flex-direction: column;
-  .videos {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1rem;
-    display: grid;
-    align-content: center;
-    justify-content: center;
-    grid-template-columns: 1fr 1fr;
-
-    @media screen and (max-width: 900px) {
-      grid-template-columns: 500px;
-    }
-
-    gap: 2rem;
-    width: 100%;
-
-    video {
-      width: 100%;
-      height: 100%;
-      transform: rotateY(180deg);
-      object-fit: cover;
-      border-radius: 1rem;
-    }
+  button,
+  input {
+    border: 0;
   }
-  .roomControllers {
-    input {
-      width: 100%;
-    }
-    .joinBtn {
-      border-radius: 0.5rem;
-      border: 0;
-      color: #fff;
-      background: #10a37f;
-      font-weight: bolder;
-      padding: 1rem 3rem;
-    }
+  input {
+    border-bottom: 1px solid red;
+    margin-right: 1rem;
+    padding: 0.7em !important;
   }
 }

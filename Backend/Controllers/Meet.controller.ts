@@ -235,3 +235,4 @@ export async function cancelMeeting(req: Request, res: Response) {
   await Meet.findByIdAndDelete(meeting._id);
   return res.status(200).json({ message: "Meeting Was Canceled" });
 }
+export async function startMeeting(req: Request, res: Response) {}

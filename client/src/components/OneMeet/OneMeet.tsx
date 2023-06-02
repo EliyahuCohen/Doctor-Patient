@@ -3,10 +3,15 @@ import { IMeet } from "../../types/type";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-import { MdOutlineRemoveCircleOutline } from "react-icons/md";
+import {
+  MdOutlineCallToAction,
+  MdOutlineRemoveCircleOutline,
+} from "react-icons/md";
 import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
 import { formatTime } from "../../Utils/functions";
+import { useNavigate } from "react-router-dom";
+import { useMeetings } from "../../hooks/useMeetings";
 
 const OneMeet = ({
   meeting,
@@ -36,10 +41,23 @@ const OneMeet = ({
   const day = new Date(meeting.date).getDate() - 1;
   const month = new Date(meeting.date).getMonth() + 1;
   const year = new Date(meeting.date).getFullYear();
+  const navigate = useNavigate();
+  const { startMeet } = useMeetings();
 
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
+  function startMeeting() {
+    if (user?.role === 1) {
+      startMeet(
+        meeting.doctorId,
+        meeting.patientId,
+        `http://localhost:5173/video-meeting/${meeting._id}`
+      ).then(() => {
+        navigate("/video-meeting/" + meeting._id);
+      });
+    }
+  }
 
   return (
     <motion.div
@@ -50,7 +68,16 @@ const OneMeet = ({
     >
       <div className="iconsHandle">
         {isDoctorTab ? (
+          <MdOutlineCallToAction
+            onClick={startMeeting}
+            title="Start meeting"
+            color="#777"
+            style={{ marginRight: "5px" }}
+          />
+        ) : null}
+        {isDoctorTab ? (
           <AiOutlineCheckCircle
+            title="Meeting finished"
             onClick={() =>
               meetingCompleted(
                 meeting._id,
@@ -62,6 +89,7 @@ const OneMeet = ({
           />
         ) : null}
         <MdOutlineRemoveCircleOutline
+          title="Cancel meeting"
           onClick={() =>
             cancelMeeting(meeting._id, setUpcomingDoctors, setUpcomingPatients)
           }

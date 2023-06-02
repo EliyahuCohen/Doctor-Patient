@@ -32,6 +32,18 @@ const VideoMeeting = () => {
     setRoomCreated(false);
     navigate("/dashboard/0");
   }
+  function otherPersonLeft() {
+    if (remoteVideoRef.current) {
+      remoteVideoRef.current.srcObject = null;
+    }
+    if (peerConnection) {
+      peerConnection.close();
+      peerConnection = null;
+    }
+    setRemoteConnected(false);
+    setRoomCreated(false);
+    navigate("/dashboard/0");
+  }
   async function init() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -99,7 +111,7 @@ const VideoMeeting = () => {
 
     //Event listener for user closing call
     socket.on("user-left", () => {
-      closeCall();
+      otherPersonLeft();
     });
 
     // Event listener for receiving answers

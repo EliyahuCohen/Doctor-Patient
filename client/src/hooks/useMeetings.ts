@@ -130,6 +130,28 @@ export function useMeetings() {
         console.log(err);
       });
   }
+  async function startMeet(
+    doctorId: string,
+    patientId: string,
+    meetingUrl: string
+  ) {
+    instance
+      .post("http://localhost:3001/meeting/start-meeting", {
+        doctorId,
+        patientId,
+        meetingUrl,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }
 
-  return { postMeeting, getUpcomingMeetings, meetingCompleted, cancelMeeting };
+  return {
+    postMeeting,
+    getUpcomingMeetings,
+    startMeet,
+    meetingCompleted,
+    cancelMeeting,
+  };
 }

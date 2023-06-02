@@ -63,7 +63,6 @@ export function useSchedual() {
       .then((res) => {
         setLoading(false);
         setError(false);
-        console.log(res.data);
         setAvailableMeetings(res.data);
       })
       .catch((err) => {

@@ -55,5 +55,24 @@ export function socket(io: Server) {
         findUser ? true : false
       );
     });
+    socket.on("join room", (roomId) => {
+      socket.join(roomId);
+      socket.to(roomId).emit("user connected");
+    });
+
+    socket.on("offer", (offer, roomId) => {
+      socket.to(roomId).emit("offer", offer, socket.id);
+    });
+
+    socket.on("answer", (answer, roomId) => {
+      socket.to(roomId).emit("answer", answer, socket.id);
+    });
+
+    socket.on("ice candidate", (candidate, roomId) => {
+      socket.to(roomId).emit("ice candidate", candidate, socket.id);
+    });
+    socket.on("leave-call", (roomNum: string) => {
+      socket.broadcast.to(roomNum).emit("user-left");
+    });
   });
 }

@@ -64,17 +64,7 @@ const OneMeeting = ({
       </div>
       <span
         onClick={(e) => {
-          postMeeting(
-            new Date(
-              `${selectedDate?.month}-${
-                selectedDate!.day + 1
-              }-${date.getFullYear()}`
-            ),
-            id,
-            meeting!.endTime,
-            meeting!.startTime,
-            bookUI
-          );
+          postMeeting(date, id, meeting!.endTime, meeting!.startTime, bookUI);
         }}
         title="Book Meeting"
         className="book"

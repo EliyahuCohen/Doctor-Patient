@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { newMessage } from "../../features/messagesSlice";
 import { MdOutlineLogout } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
+import Logo from "../../assets/logo.png";
 const Navbar = () => {
   const [width, setWidth] = useState<number>(window.innerWidth);
   const [open, setOpen] = useState<boolean>(false);
@@ -32,9 +33,7 @@ const Navbar = () => {
       <div className="navbar">
         <div className="leftNav">
           <NavLink to="/">
-            <h1 className="fire">
-              🔥 <span style={{ color: "#111" }}>CareConnect</span>
-            </h1>
+            <img src={Logo} alt="" />
           </NavLink>
         </div>
         {width > 650 ? (

@@ -100,6 +100,7 @@ export async function getMeetings(
             }
           }
         }
+
         for (let j = 0; j < schedual.times.length; j++) {
           if (
             schedual.times[j].startTime != 0 &&
@@ -110,7 +111,7 @@ export async function getMeetings(
         }
         schedual.times = timesTemp as any;
       }
-      if (schedual?.times && date.getDate() == new Date().getDate() + 1) {
+      if (schedual?.times && day == new Date().getDay()) {
         let result = schedual.times.filter((one) => {
           return one.startTime >= new Date().getHours();
         });
@@ -150,15 +151,13 @@ export async function getUserUpcomingMeetings(req: Request, res: Response) {
         }
       }
       const date = new Date();
+
       for (let i = 0; i < user.meetingsPatients.length; i++) {
         const meeting = await Meet.findOne({
           _id: user.meetingsPatients[i]._id,
-          date: {
-            $gte: new Date(
-              `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`
-            ),
-          },
-
+          date: new Date(
+            `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`
+          ),
           completed: false,
         });
         if (meeting) {

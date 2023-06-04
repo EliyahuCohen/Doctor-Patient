@@ -4,6 +4,7 @@ import { useState } from "react";
 import { moveFoword, check } from "../../Utils/functions";
 import { Register } from "../../types/type";
 import { useRegister } from "../../hooks/useRegister";
+import Logo from "../../assets/smallLogo.png";
 const SignupPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [totalSteps, setTotalSteps] = useState<number>(4);
@@ -23,7 +24,7 @@ const SignupPage = () => {
   return (
     <div className="register">
       <Link to="/" className="headlink">
-        🔥Care Connect
+        <img src={Logo} alt="" />
       </Link>
       <div className="points">
         {[...new Array(totalSteps)].map((step, index) => {

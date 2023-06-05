@@ -71,6 +71,7 @@
     video {
       height: 100% !important;
       width: 100% !important;
+      max-width: 500px !important;
       object-fit: cover;
       border-radius: 1.3rem;
       transform: rotateY(180deg);

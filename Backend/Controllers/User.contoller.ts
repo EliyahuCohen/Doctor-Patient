@@ -18,7 +18,7 @@ import jwt from "jsonwebtoken";
 import { resetPasswordEmail } from "../Utils/emails";
 dotenv.config();
 
-const transporter: Transporter = nodemailer.createTransport({
+export const transporter: Transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: process.env.EMAIL,

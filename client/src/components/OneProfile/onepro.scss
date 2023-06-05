@@ -20,7 +20,8 @@
 .profileWrapper {
   display: flex;
   justify-content: space-between;
-  margin: 0 auto;
+  margin: 5rem auto;
+  max-width: 1700px;
   @media screen and (max-width: 1200px) {
     flex-direction: column;
     justify-content: center;
@@ -38,7 +39,7 @@
     font-size: 3rem;
     width: 5em;
     border-radius: 100vh;
-    border-bottom: 1px solid #229f97;
+    border-bottom: 3px solid #229f97;
 
     @media screen and (max-width: 1000px) {
       margin-bottom: 2rem;

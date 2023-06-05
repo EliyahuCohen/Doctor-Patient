@@ -15,10 +15,11 @@ nav {
   justify-content: center;
   align-items: center;
   .leftNav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+    img {
+      max-width: 350px;
+      max-height: 5vh;
+      object-fit: contain;
+    }
     a:not(:first-child) {
       margin-left: 2rem;
       font-size: 15px;

@@ -63,6 +63,9 @@
     color: black;
     font-weight: 500;
     margin-bottom: 2rem;
+    img {
+      max-width: 50px;
+    }
   }
   .inputs {
     max-width: 750px;

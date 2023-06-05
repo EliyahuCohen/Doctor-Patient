@@ -4,6 +4,7 @@ import Meet, { IMeet } from "../Models/Meeting.model";
 import User, { ITimeSpan } from "../Models/User.model";
 import { io } from "../server";
 import { usersID } from "../socket";
+import nodemailer from "nodemailer";
 //post
 export async function createMeeting(
   req: Request<
@@ -99,6 +100,7 @@ export async function getMeetings(
             }
           }
         }
+
         for (let j = 0; j < schedual.times.length; j++) {
           if (
             schedual.times[j].startTime != 0 &&
@@ -109,7 +111,7 @@ export async function getMeetings(
         }
         schedual.times = timesTemp as any;
       }
-      if (schedual?.times && date.getDate() == new Date().getDate() + 1) {
+      if (schedual?.times && day == new Date().getDay()) {
         let result = schedual.times.filter((one) => {
           return one.startTime >= new Date().getHours();
         });
@@ -149,15 +151,13 @@ export async function getUserUpcomingMeetings(req: Request, res: Response) {
         }
       }
       const date = new Date();
+
       for (let i = 0; i < user.meetingsPatients.length; i++) {
         const meeting = await Meet.findOne({
           _id: user.meetingsPatients[i]._id,
-          date: {
-            $gte: new Date(
-              `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`
-            ),
-          },
-
+          date: new Date(
+            `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`
+          ),
           completed: false,
         });
         if (meeting) {
@@ -209,6 +209,7 @@ export async function meetingCompleted(req: Request, res: Response) {
 
   return res.status(200).json({ message: "Meeting updated" });
 }
+import { transporter } from "./User.contoller";
 //delete
 export async function cancelMeeting(req: Request, res: Response) {
   const { USER_ID } = req.body;
@@ -235,4 +236,45 @@ export async function cancelMeeting(req: Request, res: Response) {
   await Meet.findByIdAndDelete(meeting._id);
   return res.status(200).json({ message: "Meeting Was Canceled" });
 }
-export async function startMeeting(req: Request, res: Response) {}
+export async function startMeeting(
+  req: Request<
+    {},
+    {},
+    { USER_ID: any; doctorId: string; patientId: string; meetingUrl: string }
+  >,
+  res: Response
+) {
+  const { USER_ID, doctorId, patientId, meetingUrl } = req.body;
+  if (!USER_ID || !doctorId || !patientId || !meetingUrl)
+    return res.status(400).json({ message: "missing info " });
+  if (isValidObjectId(USER_ID)) {
+    const patient = await User.findById(patientId);
+    const doctor = await User.findById(doctorId);
+    if (patient) {
+      const mailOptions: nodemailer.SendMailOptions = {
+        from: "careconnecthealthapp@gmail.com",
+        to: patient.email,
+        subject: `Meeting With Doctor  ${doctor?.fName + " " + doctor?.lName}`,
+        html: `
+        <h1>meet link</h1>
+        <a href="${meetingUrl}">${meetingUrl}</a>
+        `,
+      };
+      try {
+        await transporter.sendMail(mailOptions);
+        return res
+          .status(200)
+          .json({ message: `Meeting url was send to ${patient.email}` });
+      } catch (error) {
+        console.log(error);
+        return res
+          .status(500)
+          .json({ message: "Failed to send email. Please try again" });
+      }
+    } else {
+      return res.status(404).json({ message: "User was not found" });
+    }
+  } else {
+    return res.status(404).json({ message: "User was not found" });
+  }
+}

@@ -6,8 +6,10 @@ import { RiSendPlaneLine } from "react-icons/ri";
 import "./app.scss";
 import { socket } from "../../App";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
+import { FiCopy } from "react-icons/fi";
+import { newMessage } from "../../features/messagesSlice";
 
 export interface IMessage {
   message: string;
@@ -20,6 +22,7 @@ const Communication = () => {
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
+  const dispatch=useDispatch()
   const { userid } = useParams();
   const inputRef = useRef<HTMLInputElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
@@ -92,6 +95,17 @@ const Communication = () => {
             return (
               <div key={message.sender + message.message + index}>
                 <p className={message.sender == userid! ? "right" : "left"}>
+                <FiCopy className="copyIcon" onClick={()=>{
+                   navigator.clipboard.writeText(message.message)
+                   dispatch(newMessage({
+                    id:message.createdAt.toString(),
+                    message:"Copied successfully!",
+                    senderId:crypto.randomUUID(),
+                    senderName:"System",
+                    time:3000,
+                    type:"MESSAGE"
+                   }))
+                }}/>
                   {message.message}
                   <span>
                     {formatDistance(new Date(message.createdAt), new Date())}

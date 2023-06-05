@@ -19,6 +19,14 @@
   border-radius: 10px;
   color: black;
   word-wrap: break-word;
+  position: relative;
+  &:hover{
+    .copyIcon{
+      cursor: pointer;
+        scale: 1;
+        opacity: 1;
+    }
+  }
 }
 .right {
   width: fit-content;
@@ -30,6 +38,29 @@
   margin-bottom: 1rem;
   word-wrap: break-word;
   border-radius: 10px;
+  position: relative;
+  .copyIcon{
+    left: -15px;
+    transform: rotateY(180deg);
+  top: -15px;
+  }
+  &:hover{
+    .copyIcon{
+      cursor: pointer;
+        scale: 1;
+        opacity: 1;
+    }
+  }
+}
+.copyIcon{
+  opacity: 0;
+  scale: 0;
+  transition: 0.3s;
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  color: gray !important;
+
 }
 .messageList {
   margin: 0 auto;

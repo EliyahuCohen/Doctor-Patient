@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
+import Conversation from "../Models/Conversation.model";
 import { isValidObjectId, ObjectId } from "mongoose";
 import Meet, { IMeet } from "../Models/Meeting.model";
 import User, { ITimeSpan } from "../Models/User.model";
 import { io } from "../server";
 import { usersID } from "../socket";
 import nodemailer from "nodemailer";
+import Message from "../Models/Conversation.model"
 //post
 export async function createMeeting(
   req: Request<
@@ -211,6 +213,7 @@ export async function meetingCompleted(req: Request, res: Response) {
 }
 import { transporter } from "./User.contoller";
 import { NewMeeting } from "../Utils/emails";
+import { IConversation } from "../Models/Conversation.model";
 //delete
 export async function cancelMeeting(req: Request, res: Response) {
   const { USER_ID } = req.body;
@@ -258,6 +261,24 @@ export async function startMeeting(
         subject: `Meeting With Doctor  ${doctor?.fName + " " + doctor?.lName}`,
         html: NewMeeting(meetingUrl),
       };
+      const conversation= await Conversation.findOne({
+        participants: { $all: [patientId, doctorId] }
+      })
+      if (conversation) {
+        conversation.messages.push({
+          sender: USER_ID as any,
+          message: "I'm sending you a link to the appointment,\n please join.",
+          createdAt: new Date(),
+          read: false,
+        });
+        conversation.messages.push({
+          sender: USER_ID as any,
+          message: meetingUrl,
+          createdAt: new Date(),
+          read: false,
+        });
+        await conversation.save()
+      }
       try {
         await transporter.sendMail(mailOptions);
         return res

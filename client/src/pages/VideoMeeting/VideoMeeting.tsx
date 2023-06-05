@@ -5,13 +5,13 @@ import { BsMic, BsMicMute } from "react-icons/bs";
 import { FiCamera, FiCameraOff } from "react-icons/fi";
 import { ImPhoneHangUp } from "react-icons/im";
 import { motion } from "framer-motion";
-import {IMeet} from "../../types/type"
+import { IMeet } from "../../types/type"
 import { useNavigate, useParams } from "react-router-dom";
 import { useMeetings } from "../../hooks/useMeetings";
 
 const VideoMeeting = () => {
   const { id } = useParams();
-  const [meeting,setMeeting]=useState<IMeet|null>(null)
+  const [meeting, setMeeting] = useState<IMeet | null>(null)
   const localVideoRef = useRef<HTMLVideoElement>(null);
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
   const [videoEnabled, setVideoEnabled] = useState<boolean>(true);
@@ -19,29 +19,31 @@ const VideoMeeting = () => {
   const [remoteConnected, setRemoteConnected] = useState<boolean>(false);
   const [roomCreated, setRoomCreated] = useState<boolean>(false);
   const [roomNum, setRoomNum] = useState<string>(id!);
-  const {getOneMeeting}=useMeetings()
-  
+  const { getOneMeeting } = useMeetings()
+
   const navigate = useNavigate();
   let peerConnection: RTCPeerConnection | null = null;
-  
+
   function closeCall() {
     if (peerConnection) {
       peerConnection.close();
       peerConnection = null;
     }
-     // Disable video and audio tracks
-     if (localVideoRef.current) {
+    // Disable video and audio tracks
+    if (localVideoRef.current) {
       const stream = localVideoRef.current!.srcObject as MediaStream;
       stream.getTracks().forEach((track) => {
         track.stop();
       });
-      const stream2 = remoteVideoRef.current!.srcObject as MediaStream;
-      stream2.getTracks().forEach((track) => {
-        track.stop();
-      });
+      if (remoteConnected) {
+        const stream2 = remoteVideoRef.current!.srcObject as MediaStream;
+        stream2.getTracks().forEach((track) => {
+          track.stop();
+        });
+      }
     }
-    
-    socket.emit("leave-call", roomNum,meeting?.doctorId,meeting?._id);
+
+    socket.emit("leave-call", roomNum, meeting?.doctorId, meeting?._id);
     setRemoteConnected(false);
     setRoomCreated(false);
     navigate("/dashboard/0");
@@ -63,7 +65,7 @@ const VideoMeeting = () => {
     navigate("/dashboard/0");
   }
   async function init() {
-  getOneMeeting(id!,setMeeting)
+    getOneMeeting(id!, setMeeting)
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
@@ -75,7 +77,7 @@ const VideoMeeting = () => {
     } catch (error) {
       console.log("Error accessing media devices:", error);
     }
-    
+
   }
 
   async function createRoom() {

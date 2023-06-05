@@ -69,7 +69,11 @@ const PatientOrDoctor = ({
     checkAnimation();
   }, []);
   return (
-    <motion.div ref={scope} className="oneUserWrapper">
+    <motion.div
+      ref={scope}
+      onClick={() => setIsOpen((prev) => !prev)}
+      className="oneUserWrapper"
+    >
       <div className="topPart">
         <div className="userProfile">
           <div className="side1">
@@ -130,16 +134,10 @@ const PatientOrDoctor = ({
                 )}
               </div>
             ) : null}
-            <MdOutlineExpandMore
-              className="expandIcon"
-              onClick={() => setIsOpen(true)}
-            />
+            <MdOutlineExpandMore className="expandIcon" />
           </div>
         ) : (
-          <MdOutlineExpandMore
-            className="expandIcon flipped"
-            onClick={() => setIsOpen(false)}
-          />
+          <MdOutlineExpandMore className="expandIcon flipped" />
         )}
       </div>
       {isOpen ? (

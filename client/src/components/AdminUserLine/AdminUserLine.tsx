@@ -24,7 +24,7 @@ const AdminUserLine = ({ user, status }: { user: User; status: boolean }) => {
 
       <p>{user.role == 1 ? "Doctors" : "Patient"}</p>
       <p className={`status ${user.approved ? "approved" : "pending"}`}>
-        {user.approved ? "Approved" : "Pending"}
+        {user.approved ? "Approved" : "Blocked"}
       </p>
       <p className="delete-small time">
         {format(new Date(user.createdAt), "dd/MM/yyyy")}

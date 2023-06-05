@@ -14,6 +14,9 @@ export function useMeetings() {
       Authorization: `Bearer ${token}`,
     },
   });
+  async function getOneMeeting(id: string,setMeeting:React.Dispatch<React.SetStateAction<IMeet|null>>) {
+    instance.get(`http://localhost:3001/meeting/get-one-meeting/${id}`).then(res => setMeeting(res.data)).catch(err => console.log(err))
+  }
   async function postMeeting(
     date: Date,
     doctorId: any,
@@ -70,20 +73,10 @@ export function useMeetings() {
   }
   async function meetingCompleted(
     meetingId: string,
-    setUpcomingDoctors: React.Dispatch<React.SetStateAction<IMeet[]>>,
-    setUpcomingPatients: React.Dispatch<React.SetStateAction<IMeet[]>>
   ) {
     instance
       .patch("http://localhost:3001/meeting/meeting-completed", { meetingId })
       .then(() => {
-        setUpcomingDoctors((prev) => {
-          const arr = prev.filter((meet) => meet._id !== meetingId);
-          return [...arr];
-        });
-        setUpcomingPatients((prev) => {
-          const arr = prev.filter((meet) => meet._id !== meetingId);
-          return [...arr];
-        });
         dispatch(
           newMessage({
             id: crypto.randomUUID(),
@@ -153,5 +146,6 @@ export function useMeetings() {
     startMeet,
     meetingCompleted,
     cancelMeeting,
+    getOneMeeting
   };
 }

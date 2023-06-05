@@ -75,19 +75,7 @@ const OneMeet = ({
             style={{ marginRight: "5px" }}
           />
         ) : null}
-        {isDoctorTab ? (
-          <AiOutlineCheckCircle
-            title="Meeting finished"
-            onClick={() =>
-              meetingCompleted(
-                meeting._id,
-                setUpcomingDoctors,
-                setUpcomingPatients
-              )
-            }
-            color="#10a37f"
-          />
-        ) : null}
+        
         <MdOutlineRemoveCircleOutline
           title="Cancel meeting"
           onClick={() =>

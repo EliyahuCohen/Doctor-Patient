@@ -65,6 +65,24 @@ export function resetPasswordEmail(
           ${varificationCode}
         </div>
       </div>
+      <img src="./email_footer.jpg" width="300px"/>
     </div>
+  </body>`;
+}
+export function NewMeeting(url: string): string {
+  return `<!DOCTYPE html>
+    <body
+    style="
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      box-sizing: border-box;
+      text-align:center;
+    "
+  >
+    <div>
+    <h1>Meeting Link</h1>
+    <a href="${url}">${url}</a>
+    </div>   
   </body>`;
 }

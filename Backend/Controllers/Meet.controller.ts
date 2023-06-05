@@ -210,6 +210,7 @@ export async function meetingCompleted(req: Request, res: Response) {
   return res.status(200).json({ message: "Meeting updated" });
 }
 import { transporter } from "./User.contoller";
+import { NewMeeting } from "../Utils/emails";
 //delete
 export async function cancelMeeting(req: Request, res: Response) {
   const { USER_ID } = req.body;
@@ -255,10 +256,7 @@ export async function startMeeting(
         from: "careconnecthealthapp@gmail.com",
         to: patient.email,
         subject: `Meeting With Doctor  ${doctor?.fName + " " + doctor?.lName}`,
-        html: `
-        <h1>meet link</h1>
-        <a href="${meetingUrl}">${meetingUrl}</a>
-        `,
+        html: NewMeeting(meetingUrl),
       };
       try {
         await transporter.sendMail(mailOptions);
@@ -277,4 +275,10 @@ export async function startMeeting(
   } else {
     return res.status(404).json({ message: "User was not found" });
   }
+}
+export async function getOneMeeting(req: Request, res: Response) {
+  const { id } = req.params
+  const meeting = await Meet.findById(id)
+  if (meeting) return res.status(200).json(meeting)
+  return res.status(400).json({ message: "invalid meeting id" })
 }

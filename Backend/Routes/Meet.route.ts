@@ -3,6 +3,7 @@ import {
   cancelMeeting,
   createMeeting,
   getMeetings,
+  getOneMeeting,
   getUserUpcomingMeetings,
   meetingCompleted,
   startMeeting,
@@ -12,6 +13,7 @@ const router = express.Router();
 
 router.use(requiredAuthentication);
 router.post("/meet", createMeeting);
+router.get("/get-one-meeting/:id", getOneMeeting);
 router.post("/get-meetings/:doctorId", getMeetings);
 router.get("/upcoming-meetings", getUserUpcomingMeetings);
 router.patch("/meeting-completed", meetingCompleted);

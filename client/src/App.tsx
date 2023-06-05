@@ -14,11 +14,14 @@ import { handleSocket, sendMessageTime, updateStatus } from "./Utils/functions";
 import { useLogin } from "./hooks/useLogin";
 import Loading from "./components/Loading/Loading";
 import RatingModal from "./components/RatingModal/RatingModal";
+import CompletedMeetingModal from "./components/CompletedMeetingModal/CompletedMeetingModal";
 
 export const socket = io("http://localhost:3001");
 
 const App = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [meetingId,setMeetingId]=useState<string>("")
+  const [completedMeetingModal, setCompletedMeetingModal] = useState<boolean>(false);
   const [modalText, setModalText] = useState<string>("");
   const [doctorId, setDoctorId] = useState<string>("");
   const { createIfDontHave } = useSaveLocalStorage();
@@ -40,7 +43,7 @@ const App = () => {
     updateStatus(socket, dispatch, user);
   }, [socket, user, users.length]);
   useEffect(() => {
-    handleSocket(socket, dispatch, setModalOpen, setModalText, setDoctorId);
+    handleSocket(socket, dispatch,setMeetingId, setModalOpen, setModalText, setDoctorId,setCompletedMeetingModal,user!);
   }, [socket]);
 
   return (
@@ -54,6 +57,12 @@ const App = () => {
               setModalOpen={setModalOpen}
               setDoctorId={setDoctorId}
               doctorId={doctorId}
+            />
+          ) : null}
+          {completedMeetingModal ? (
+            <CompletedMeetingModal
+              setModal={setCompletedMeetingModal}
+              meetingID={meetingId}
             />
           ) : null}
           <Messages />

@@ -7,8 +7,9 @@ import {
   updateLiveUsers,
   addStateLive,
 } from "../features/adminSlice";
-import { logout, updateMeetingAmount, updateRole } from "../features/userSlice";
+import { UserType, logout, updateMeetingAmount, updateRole } from "../features/userSlice";
 import { updateUserInfo } from "../features/userSlice";
+import { useSelector } from "react-redux";
 
 export function shuffleArray(array: any[]) {
   return array.sort(() => Math.random() - 0.5);
@@ -77,8 +78,8 @@ export function sendMessageTime(dispatch: any) {
         date.getHours() < 12
           ? "Good Morning"
           : date.getHours() >= 12 && date.getHours() <= 17
-          ? "Good Afternoon"
-          : "Good Evening",
+            ? "Good Afternoon"
+            : "Good Evening",
       senderId: crypto.randomUUID(),
       senderName: "System",
       time: 7000,
@@ -86,17 +87,20 @@ export function sendMessageTime(dispatch: any) {
         date.getHours() < 12
           ? "MESSAGE"
           : date.getHours() >= 12 && date.getHours() <= 17
-          ? "AFTERNOON"
-          : "DARK",
+            ? "AFTERNOON"
+            : "DARK",
     })
   );
 }
 export function handleSocket(
   socket: Socket,
   dispatch: any,
+  setMeetingId:React.Dispatch<React.SetStateAction<string>>,
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
   setModalText: React.Dispatch<React.SetStateAction<string>>,
-  setDoctorId: React.Dispatch<React.SetStateAction<string>>
+  setDoctorId: React.Dispatch<React.SetStateAction<string>>,
+  setCompletedMeetingModal: React.Dispatch<React.SetStateAction<boolean>>,
+  user:User
 ) {
   socket.on("updateAdmin", (res) => {
     dispatch(removeLiveUser(res));
@@ -122,6 +126,12 @@ export function handleSocket(
       new Audio(messageSent).play();
     }
   );
+  socket.on("user-left", (doctorId,meetingId) => {
+    if (user?._id == doctorId) {
+      setCompletedMeetingModal(true)
+      setMeetingId(meetingId)
+    }
+  })
   socket.on("messageSent", (sock: any) => {
     if (!window.location.pathname.includes("communication")) {
       dispatch(

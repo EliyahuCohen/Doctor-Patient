@@ -57,21 +57,21 @@ const UserDashboardPage = () => {
           className={`${selected == 0 ? "selected" : ""}`}
           onClick={() => changeTab(0)}
         >
-          <BsGrid1X2 />
+          <BsGrid1X2 title="Home" />
           <p>Home</p>
         </div>
         <div
           className={`${selected == 1 ? "selected" : ""}`}
           onClick={() => changeTab(1)}
         >
-          <FiUser />
+          <FiUser title="Profile"/>
           <p>Profile</p>
         </div>
         <div
           className={`${selected == 2 ? "selected" : ""}`}
           onClick={() => changeTab(2)}
         >
-          <GiDoctorFace />
+          <GiDoctorFace title="My Doctors"/>
           <p>My Doctors</p>
         </div>
 
@@ -79,21 +79,21 @@ const UserDashboardPage = () => {
           className={`${selected == 3 ? "selected" : ""}`}
           onClick={() => changeTab(3)}
         >
-          <TbMessageCircle2 />
+          <TbMessageCircle2 title="Messages"/>
           <p>Messages</p>
         </div>
         <div
           className={`${selected == 4 ? "selected" : ""}`}
           onClick={() => changeTab(4)}
         >
-          <BsCalendarDate />
+          <BsCalendarDate title="My Appointments"/>
           <p>My Appointments</p>
         </div>
         <div
           className={`${selected == 5 ? "selected" : ""}`}
           onClick={() => changeTab(5)}
         >
-          <CgPill />
+          <CgPill title="My Prescriptions"/>
           <p>My Prescriptions</p>
         </div>
         {user?.role == 1 && user.approved && (
@@ -101,7 +101,7 @@ const UserDashboardPage = () => {
             className={`${selected == 6 ? "selected" : ""}`}
             onClick={() => changeTab(6)}
           >
-            <BiBed />
+            <BiBed title="My Patients"/>
             <p>My Patients</p>
           </div>
         )}
@@ -110,7 +110,7 @@ const UserDashboardPage = () => {
             className={`${selected == 7 ? "selected" : ""}`}
             onClick={() => changeTab(7)}
           >
-            <AiOutlineSchedule />
+            <AiOutlineSchedule title="My Shifts"/>
             <p>My Shifts</p>
           </div>
         )}

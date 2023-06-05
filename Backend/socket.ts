@@ -71,8 +71,8 @@ export function socket(io: Server) {
     socket.on("ice candidate", (candidate, roomId) => {
       socket.to(roomId).emit("ice candidate", candidate, socket.id);
     });
-    socket.on("leave-call", (roomNum: string) => {
-      socket.to(roomNum).emit("user-left");
+    socket.on("leave-call", (roomNum: string,doctorId:string,meetingId:string) => {
+      io.to(roomNum).emit("user-left",doctorId,meetingId);
     });
   });
 }

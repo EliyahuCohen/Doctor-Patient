@@ -204,10 +204,7 @@ const ResetPassword = () => {
             </div>
             <div className="welcomeWords">
               <h2>Set new password</h2>
-              <p>
-                Your new password must be diffrent to <br /> previously used
-                passwords
-              </p>
+              
             </div>
             <div className="finalInputs">
               <label htmlFor="fpassword">Password</label>

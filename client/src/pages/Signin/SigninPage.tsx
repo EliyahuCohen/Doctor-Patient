@@ -21,7 +21,7 @@ const SigninPage = () => {
       <div>
         <h1>Welcome back </h1>
 
-        <div
+        {/* <div
           className="btn"
           onClick={() =>
             dispatch(
@@ -41,9 +41,9 @@ const SigninPage = () => {
             alt="google sign in image"
           />
           Sign in with Google
-        </div>
+        </div> */}
         <div className="or">
-          <p>or</p>
+          <p> </p>
           <span></span>
         </div>
         <form>

@@ -28,3 +28,9 @@ export interface IQuote {
   id: number;
   quote: string;
 }
+export interface IUserStats {
+  meetingAmount: number;
+  rating: number;
+  doctorsAmount: number;
+  patientsAmount: number;
+}

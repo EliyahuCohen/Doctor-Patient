@@ -6,7 +6,7 @@ import User, { ITimeSpan } from "../Models/User.model";
 import { io } from "../server";
 import { usersID } from "../socket";
 import nodemailer from "nodemailer";
-import Message from "../Models/Conversation.model"
+import Message from "../Models/Conversation.model";
 //post
 export async function createMeeting(
   req: Request<
@@ -214,6 +214,7 @@ export async function meetingCompleted(req: Request, res: Response) {
 import { transporter } from "./User.contoller";
 import { NewMeeting } from "../Utils/emails";
 import { IConversation } from "../Models/Conversation.model";
+import { IUserStats } from "../types/types";
 //delete
 export async function cancelMeeting(req: Request, res: Response) {
   const { USER_ID } = req.body;
@@ -261,9 +262,9 @@ export async function startMeeting(
         subject: `Meeting With Doctor  ${doctor?.fName + " " + doctor?.lName}`,
         html: NewMeeting(meetingUrl),
       };
-      const conversation= await Conversation.findOne({
-        participants: { $all: [patientId, doctorId] }
-      })
+      const conversation = await Conversation.findOne({
+        participants: { $all: [patientId, doctorId] },
+      });
       if (conversation) {
         conversation.messages.push({
           sender: USER_ID as any,
@@ -277,7 +278,7 @@ export async function startMeeting(
           createdAt: new Date(),
           read: false,
         });
-        await conversation.save()
+        await conversation.save();
       }
       try {
         await transporter.sendMail(mailOptions);
@@ -298,8 +299,37 @@ export async function startMeeting(
   }
 }
 export async function getOneMeeting(req: Request, res: Response) {
-  const { id } = req.params
-  const meeting = await Meet.findById(id)
-  if (meeting) return res.status(200).json(meeting)
-  return res.status(400).json({ message: "invalid meeting id" })
+  const { id } = req.params;
+  const meeting = await Meet.findById(id);
+  if (meeting) return res.status(200).json(meeting);
+  return res.status(400).json({ message: "invalid meeting id" });
+}
+export async function getUserStats(req: Request, res: Response) {
+  const { id } = req.params;
+  if (isValidObjectId(id)) {
+    const user = await User.findById(id);
+    if (!user) return res.status(404).json({ message: "User was not found" });
+    //finding the user completed meeting
+    const amount = await Meet.find({
+      patientId: id,
+      completed: true,
+    });
+    const amount2 = await Meet.find({
+      doctorId: id,
+      completed: true,
+    });
+
+    const stats: IUserStats = {
+      doctorsAmount: user.listOfDoctors.length,
+      meetingAmount: amount.length + amount2.length,
+      patientsAmount: user.listOfPatients.length,
+      rating:
+        user?.userRating?.sum > 0 && user?.userRating?.votes > 0
+          ? user?.userRating.sum / user?.userRating.votes
+          : 0,
+    };
+    //user rating we have in the user object as well doctors and patinets
+    return res.status(200).json(stats);
+  }
+  return res.status(401).json({ message: "Invalid user ID" });
 }

@@ -5,16 +5,21 @@ import { UserType } from "../../features/userSlice";
 import { BsChatQuote } from "react-icons/bs";
 import { useQuote } from "../../hooks/useQuote";
 import { motion } from "framer-motion";
+import { useMeetings } from "../../hooks/useMeetings";
+import { IUserStats } from "../../types/type";
 const HomeTab = () => {
+  const [stats, setStats] = useState<IUserStats | null>(null);
   const [quote, setQuote] = useState<{ id: number; quote: string } | null>(
     null
   );
   const { getQuote } = useQuote();
+  const { getStats } = useMeetings();
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
   useEffect(() => {
     getQuote(setQuote);
+    getStats(user?._id!, setStats);
   }, []);
   const date = new Date();
   return (
@@ -40,8 +45,8 @@ const HomeTab = () => {
           animate={{ opacity: 1, x: 0 }}
           className="oneBox"
         >
-          <b>Meeting Finished</b>
-          <p className="circle">{user?.meetingAmount}</p>
+          <b>Meetings Finished</b>
+          <p className="circle">{stats?.meetingAmount}</p>
         </motion.div>
         {user?.role == 1 ? (
           <motion.div
@@ -50,13 +55,7 @@ const HomeTab = () => {
             className="oneBox"
           >
             <b>Rating</b>
-            <p className="circle">
-              {user?.userRating?.sum && user?.userRating?.votes
-                ? `${(user?.userRating?.sum / user?.userRating?.votes).toFixed(
-                    1
-                  )}`
-                : "0"}
-            </p>
+            <p className="circle">{stats?.rating}</p>
           </motion.div>
         ) : null}
         <motion.div
@@ -65,7 +64,7 @@ const HomeTab = () => {
           className="oneBox"
         >
           <b>Doctors</b>
-          <p className="circle">{user?.listOfDoctors.length}</p>
+          <p className="circle">{stats?.doctorsAmount}</p>
         </motion.div>
         {user?.role == 1 ? (
           <motion.div
@@ -74,7 +73,7 @@ const HomeTab = () => {
             className="oneBox"
           >
             <b>Patients</b>
-            <p className="circle">{user?.listOfPatients.length}</p>
+            <p className="circle">{stats?.patientsAmount}</p>
           </motion.div>
         ) : null}
       </div>

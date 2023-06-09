@@ -7,12 +7,14 @@ import {
   getUserUpcomingMeetings,
   meetingCompleted,
   startMeeting,
+  getUserStats,
 } from "../Controllers/Meet.controller";
 import { requiredAuthentication } from "../Middlewares/RequireAuth";
 const router = express.Router();
 
 router.use(requiredAuthentication);
 router.post("/meet", createMeeting);
+router.get("/get-user-stats/:id", getUserStats);
 router.get("/get-one-meeting/:id", getOneMeeting);
 router.post("/get-meetings/:doctorId", getMeetings);
 router.get("/upcoming-meetings", getUserUpcomingMeetings);

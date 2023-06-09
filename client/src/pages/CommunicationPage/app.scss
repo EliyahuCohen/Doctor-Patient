@@ -20,11 +20,11 @@
   color: black;
   word-wrap: break-word;
   position: relative;
-  &:hover{
-    .copyIcon{
+  &:hover {
+    .copyIcon {
       cursor: pointer;
-        scale: 1;
-        opacity: 1;
+      scale: 1;
+      opacity: 1;
     }
   }
 }
@@ -39,28 +39,27 @@
   word-wrap: break-word;
   border-radius: 10px;
   position: relative;
-  .copyIcon{
+  .copyIcon {
     left: -15px;
     transform: rotateY(180deg);
-  top: -15px;
+    top: -15px;
   }
-  &:hover{
-    .copyIcon{
+  &:hover {
+    .copyIcon {
       cursor: pointer;
-        scale: 1;
-        opacity: 1;
+      scale: 1;
+      opacity: 1;
     }
   }
 }
-.copyIcon{
+.copyIcon {
   opacity: 0;
-  scale: 0;
+  scale: 1;
   transition: 0.3s;
   position: absolute;
   top: -15px;
   right: -15px;
   color: gray !important;
-
 }
 .messageList {
   margin: 0 auto;

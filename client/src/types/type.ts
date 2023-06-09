@@ -109,3 +109,9 @@ export interface IRating {
   doctorId: string;
   _id: string;
 }
+export interface IUserStats {
+  meetingAmount: number;
+  rating: number;
+  doctorsAmount: number;
+  patientsAmount: number;
+}

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { UserType } from "../features/userSlice";
 import { newMessage } from "../features/messagesSlice";
-import { IMeet } from "../types/type";
+import { IMeet, IUserStats } from "../types/type";
 
 export function useMeetings() {
   const { token } = useSelector(
@@ -14,8 +14,14 @@ export function useMeetings() {
       Authorization: `Bearer ${token}`,
     },
   });
-  async function getOneMeeting(id: string,setMeeting:React.Dispatch<React.SetStateAction<IMeet|null>>) {
-    instance.get(`http://localhost:3001/meeting/get-one-meeting/${id}`).then(res => setMeeting(res.data)).catch(err => console.log(err))
+  async function getOneMeeting(
+    id: string,
+    setMeeting: React.Dispatch<React.SetStateAction<IMeet | null>>
+  ) {
+    instance
+      .get(`http://localhost:3001/meeting/get-one-meeting/${id}`)
+      .then((res) => setMeeting(res.data))
+      .catch((err) => console.log(err));
   }
   async function postMeeting(
     date: Date,
@@ -71,9 +77,7 @@ export function useMeetings() {
         console.log(err);
       });
   }
-  async function meetingCompleted(
-    meetingId: string,
-  ) {
+  async function meetingCompleted(meetingId: string) {
     instance
       .patch("http://localhost:3001/meeting/meeting-completed", { meetingId })
       .then(() => {
@@ -139,6 +143,17 @@ export function useMeetings() {
       })
       .catch((err) => console.log(err));
   }
+  async function getStats(
+    id: string,
+    setStats: React.Dispatch<React.SetStateAction<IUserStats | null>>
+  ) {
+    instance
+      .get(`http://localhost:3001/meeting/get-user-stats/${id}`)
+      .then((res) => {
+        setStats(res.data);
+      })
+      .catch((err) => console.log(err));
+  }
 
   return {
     postMeeting,
@@ -146,6 +161,7 @@ export function useMeetings() {
     startMeet,
     meetingCompleted,
     cancelMeeting,
-    getOneMeeting
+    getOneMeeting,
+    getStats,
   };
 }

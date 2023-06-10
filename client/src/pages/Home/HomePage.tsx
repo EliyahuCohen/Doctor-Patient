@@ -21,12 +21,15 @@ const HomePage = () => {
           animate={{ opacity: 1, y: 0 }}
         >
           <h1>
-            Providing the best medical care and
-            <span> consultation</span>
+          Transforming Healthcare <span>Experiences</span> with Expert Medical Care and
+            <span> Consultation</span>
           </h1>
-          <p>
+          {/* <p>
             We provide the best consultation to you with the <br /> best doctors
             in the field
+          </p> */}
+          <p>
+          Experience healthcare at its finest through our platform, where we connect you with top-tier doctors who offer unparalleled expertise and personalized care.
           </p>
           {user ? (
             <Link to="/dashboard/2">
@@ -38,7 +41,7 @@ const HomePage = () => {
                 navigate("/signin");
               }}
             >
-              Make an Appoitment
+              Book an Appointment
             </button>
           )}
         </motion.div>

@@ -16,8 +16,7 @@ nav {
   align-items: center;
   .leftNav {
     img {
-      max-width: 290px;
-      // max-height: 5vh;
+      max-width: 200px;
       object-fit: contain;
     }
     a:not(:first-child) {
@@ -37,7 +36,8 @@ nav {
     text-decoration: none;
     transition: 0.3s;
     font-size: larger;
-    color: #10a37f;
+    // color: #10a37f;
+    color:rgb(59, 56, 56);
   }
   a.setting {
     position: relative;
@@ -48,8 +48,9 @@ nav {
     }
   }
   a:hover {
+    color: #10a37f;
     transition: 0.3s;
-    opacity: 0.8;
+    // opacity: 0.8;
   }
   a.setting::after {
     transition: 0.3s;

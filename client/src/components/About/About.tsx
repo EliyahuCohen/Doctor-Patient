@@ -20,23 +20,22 @@ const About = () => {
         >
           <h2>About Us</h2>
           <p>
-            Welcome to ABC Health Care! We are a leading provider of quality
-            medical services in the community, dedicated to improving the health
-            and well-being of our patients.
+            Welcome to Care Connect! <br/>We are a leading provider of quality
+            medical services in the community, dedicated to improving well-being of our patients and connecting you to a better health.
           </p>
           <p>
-            Our Mission: At ABC Health Care, our mission is to provide
-            compassionate, patient-centered care that improves the health and
-            well-being of our community. We believe in treating each patient
-            with dignity and respect, and in delivering the highest standard of
-            medical care.
+            Our Mission: At Care Connect, we are on a mission to revolutionize healthcare. 
+            By connecting patients with premier doctors and offering streamlined services,
+             we provide accessible and innovative solutions. Through our cutting-edge platform,
+              we facilitate seamless communication and convenient access to medical advice. 
+              We are committed to transforming healthcare and fostering optimal well-being.
           </p>
           <p>
-            Our History: ABC Health Care was founded in 2000 with the goal of
-            providing accessible and affordable healthcare to the local
-            community. Over the years, we have grown to become one of the most
-            respected healthcare providers in the area, offering a wide range of
-            services to meet the needs of our patients.
+            Our History: Since our establishment in 2012, Care Connect has been a pioneer in digital healthcare. 
+            We have revolutionized the way patients and doctors connect, leveraging technology to bridge the gap. 
+            With our user-friendly platform, extensive network of top-tier medical professionals, 
+            and enhanced patient-doctor interactions, we continue to lead the industry.
+            We are committed to driving positive change and empowering individuals on their path to better health.
           </p>
           <button>Learn More</button>
         </motion.div>

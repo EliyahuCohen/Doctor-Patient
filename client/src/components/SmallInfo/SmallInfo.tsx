@@ -12,15 +12,15 @@ const SmallInfo = () => {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <span>1k+</span>
-        <p>Patients Beds</p>
+        <span>25k+</span>
+        <p>Meetings booked</p>
       </motion.div>
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <span>20k+</span>
+        <span>12k+</span>
         <p>Happy Patients</p>
       </motion.div>
       <motion.div
@@ -28,8 +28,8 @@ const SmallInfo = () => {
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <span>700</span>
-        <p>Doctors & Nurse</p>
+        <span>300+</span>
+        <p>Professional Doctors</p>
       </motion.div>
       <motion.div
         initial={{ opacity: 0 }}
@@ -37,8 +37,8 @@ const SmallInfo = () => {
         transition={{ duration: 0.5 }}
         whileHover={{ cursor: "pointer" }}
       >
-        <span>15</span>
-        <p>Year Experience</p>
+        <span>10+</span>
+        <p>Years Experience</p>
       </motion.div>
     </motion.div>
   );

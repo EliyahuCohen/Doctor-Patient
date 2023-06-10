@@ -3,7 +3,7 @@ import formatDistance from "date-fns/esm/formatDistance";
 import { useParams } from "react-router-dom";
 import { useMessages } from "../../hooks/useMessages";
 import { RiSendPlaneLine } from "react-icons/ri";
-import "./app.scss";
+import "./communication.scss";
 import { socket } from "../../App";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,5 +1,5 @@
 import { FiChevronDown } from "react-icons/fi";
-import "./go.scss";
+import "./goBackButton.scss";
 import { Link } from "react-router-dom";
 
 export interface IButtonProps {

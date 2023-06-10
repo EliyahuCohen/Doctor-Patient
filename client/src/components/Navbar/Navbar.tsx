@@ -40,7 +40,7 @@ const Navbar = () => {
           <div className="navLinks">
             {!user ? (
               <>
-                <NavLink className="link" to="/signin" title="Singin page">
+                <NavLink className="link" to="/signin" title="Sign in page">
                   Sign In
                 </NavLink>
                 <NavLink className="link" to="/register" title="Signup page">

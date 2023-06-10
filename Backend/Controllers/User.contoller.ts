@@ -45,7 +45,7 @@ export async function signup(req: Request, res: Response) {
         messages: [
           {
             message:
-              "Thank you for choosing Eden as your Care Connect provider ",
+              "Thank you for choosing Care Connect as your trusted partner on your journey to better health.",
             type: 1,
           },
         ],

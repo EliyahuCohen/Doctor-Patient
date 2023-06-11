@@ -32,6 +32,7 @@ export interface User {
   createdAt: string;
   messages: IAlert[];
   userRating: IRating;
+  Duration: IMeetingsDuration;
 }
 export interface IRating {
   sum: number;
@@ -114,4 +115,8 @@ export interface IUserStats {
   rating: number;
   doctorsAmount: number;
   patientsAmount: number;
+}
+export interface IMeetingsDuration {
+  meetingsAmount: number;
+  totalDuration: number;
 }

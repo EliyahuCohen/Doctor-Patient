@@ -10,7 +10,6 @@ import { UserType } from "../../features/userSlice";
 import { useSelector } from "react-redux";
 import { useUpdateRole } from "../../hooks/useUpdateRole";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { usePrescriptions } from "../../hooks/usePrescriptions";
 
 const PatientOrDoctor = ({
   user,

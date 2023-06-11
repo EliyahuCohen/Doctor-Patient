@@ -19,7 +19,23 @@ header {
     width: 4px;
   }
 }
-
+.filter {
+  margin: 2rem 0;
+  * {
+    outline: 0;
+  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  b {
+    color: #10a37f;
+    text-transform: capitalize;
+  }
+  option {
+    border-radius: 1rem;
+    outline: transparent;
+  }
+}
 ::-webkit-scrollbar-thumb {
   background: #5555557a;
   border-radius: 100vh;

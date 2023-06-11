@@ -175,7 +175,7 @@ export async function getUserUpcomingMeetings(req: Request, res: Response) {
 }
 //update
 export async function meetingCompleted(req: Request, res: Response) {
-  const { meetingId, USER_ID } = req.body;
+  const { meetingId, USER_ID, meetingDuration } = req.body;
   if (!isValidObjectId(USER_ID) || !isValidObjectId(USER_ID))
     return res.status(400).json({ message: "Invalid Object ID" });
   const meeting = await Meet.findOne({ _id: meetingId });
@@ -193,6 +193,8 @@ export async function meetingCompleted(req: Request, res: Response) {
       1
     );
     doctor.meetingAmount++;
+    doctor!.Duration.meetingsAmount++;
+    doctor!.Duration.totalDuration += meetingDuration;
   }
   await doctor?.save();
   await patient?.save();

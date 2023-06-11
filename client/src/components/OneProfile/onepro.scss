@@ -16,7 +16,17 @@
     color: #229f97;
   }
 }
-
+.averageMeetingTime {
+  text-align: center;
+  margin-top: 1rem;
+  h3 {
+    font-weight: 400;
+  }
+  span {
+    font-weight: bold;
+    color: #229f97;
+  }
+}
 .profileWrapper {
   display: flex;
   justify-content: space-between;

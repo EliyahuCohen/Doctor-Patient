@@ -78,8 +78,12 @@ export function useMeetings() {
       });
   }
   async function meetingCompleted(meetingId: string) {
+    const meetingDuration = JSON.parse(localStorage.getItem("meeting-time")!);
     instance
-      .patch("http://localhost:3001/meeting/meeting-completed", { meetingId })
+      .patch("http://localhost:3001/meeting/meeting-completed", {
+        meetingId,
+        meetingDuration,
+      })
       .then(() => {
         dispatch(
           newMessage({

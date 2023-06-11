@@ -13,7 +13,10 @@ export interface Schedule {
   day: 1 | 2 | 3 | 4 | 5 | 6;
   times: [ITimeSpan];
 }
-
+export interface IMeetingsDuration {
+  meetingsAmount: number;
+  totalDuration: number;
+}
 export interface User {
   fName: string;
   lName: string;
@@ -32,7 +35,8 @@ export interface User {
   isMale: boolean;
   schedule: Schedule[];
   userRating: IRating;
-  varificationCode:string;
+  varificationCode: string;
+  Duration: IMeetingsDuration;
 }
 export interface IRating {
   sum: number;
@@ -58,6 +62,17 @@ const userRating: Schema = new mongoose.Schema<IRating>({
     required: false,
   },
   votes: {
+    type: Number,
+    default: 0,
+  },
+});
+const MeetingsDuration: Schema = new mongoose.Schema<IMeetingsDuration>({
+  meetingsAmount: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  totalDuration: {
     type: Number,
     default: 0,
   },
@@ -118,11 +133,16 @@ const userSchema: Schema = new mongoose.Schema<User>(
       default: { sum: 0, votes: 0 },
       required: false,
     },
-    varificationCode:{
-      type:String,
-      default:"",
-      required:false,
-    }
+    varificationCode: {
+      type: String,
+      default: "",
+      required: false,
+    },
+    Duration: {
+      type: MeetingsDuration,
+      default: { meetingsAmount: 0, totalDuration: 0 },
+      required: false,
+    },
   },
   { timestamps: true }
 );

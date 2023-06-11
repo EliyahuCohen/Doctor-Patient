@@ -8,7 +8,10 @@ import PatientOrDoctor from "../PatientOrDoctor/PatientOrDoctor";
 import { MdOutlineExpandMore } from "react-icons/md";
 import { useGetAllDoctors } from "../../hooks/useGetAllDoctors";
 import PrescriptionModal from "../PrescriptionModal/PrescriptionModal";
+import { motion } from "framer-motion";
+
 const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
+  const [sortBy, setSortBy] = useState<0 | 1 | 2 | 3>(0);
   const [patients, setPatients] = useState<User[]>([]);
   const [doctors, setDoctors] = useState<User[]>([]);
   const [moreDoctors, setMoreDoctors] = useState<User[] | null>([]);
@@ -30,26 +33,62 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
         </div>
       ) : null}
       <header>{selected == 1 ? <h2>Doctors</h2> : <h2>Patients</h2>}</header>
-      <div className="users">
+      {selected == 1 && doctors.length > 0 && (
+        <div className="users filter">
+          <b>Sort By</b>
+          <select
+            onChange={(e) => {
+              setSortBy(parseInt(e.target.value) as 0 | 1 | 2 | 3);
+            }}
+          >
+            <option value="0">Don't Sort</option>
+            <option value="1">Name</option>
+            <option value="2">Rating</option>
+            <option value="3">Meeting Duration</option>
+          </select>
+        </div>
+      )}
+      <motion.div layout className="users">
         {selected == 1 ? (
           doctors.length == 0 ? (
             <p className="moreDoctorP"> You don't have doctors yet</p>
           ) : (
-            doctors.map((doctor, index) => {
-              return (
-                <PatientOrDoctor
-                  selected={selected}
-                  isMore={false}
-                  status={false}
-                  user={doctor}
-                  key={doctor._id}
-                  setDoctors={setDoctors}
-                  setMoreDoctors={setMoreDoctors}
-                  canRemove={true}
-                  index={index}
-                />
-              );
-            })
+            doctors
+              .slice()
+              .sort((one: any, two: any) => {
+                if (sortBy === 1) {
+                  return one.fName > two.fName ? 1 : -1;
+                }
+                if (sortBy === 2) {
+                  return one.userRating.sum / one.userRating.rating -
+                    two.userRating.sum / two.userRating.rating <
+                    1
+                    ? 1
+                    : -1;
+                }
+                if (sortBy === 3) {
+                  return (
+                    one.Duration.totalDuration / one.Duration.meetingsAmount -
+                    two.Duration.totalDuration / two.Duration.meetingsAmount
+                  );
+                }
+                return one;
+              })
+              .map((doctor, index) => {
+                return (
+                  <PatientOrDoctor
+                    selected={selected}
+                    isMore={false}
+                    status={false}
+                    user={doctor}
+                    key={doctor._id}
+                    setDoctors={setDoctors}
+                    setMoreDoctors={setMoreDoctors}
+                    canRemove={true}
+                    index={index}
+                  />
+                );
+              })
           )
         ) : patients.length == 0 ? (
           <p className="moreDoctorP"> You don't have Patients yet</p>
@@ -71,7 +110,7 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
             );
           })
         )}
-      </div>
+      </motion.div>
       {moreDoctors && moreDoctors.length > 0 && (
         <p className="moreDoctorP">more doctors ({moreDoctors.length})</p>
       )}

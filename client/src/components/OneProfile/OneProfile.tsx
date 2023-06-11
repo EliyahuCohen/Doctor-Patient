@@ -184,6 +184,22 @@ const OneProfile = () => {
             ) : null}
           </div>
         </div>
+        {user.role == 1 && (
+          <div className="averageMeetingTime">
+            <h3>
+              Average Meeting Duration:{"  "}
+              <span>
+                {" "}
+                {Math.round(
+                  user.Duration.totalDuration /
+                    60 /
+                    user.Duration.meetingsAmount
+                )}{" "}
+              </span>
+              Minutes
+            </h3>
+          </div>
+        )}
         {fetched ? <Feedbacks feedbacks={feedbacks} /> : null}
       </div>
     </div>

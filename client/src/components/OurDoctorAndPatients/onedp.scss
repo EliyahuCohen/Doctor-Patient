@@ -20,7 +20,7 @@ header {
   }
 }
 .filter {
-  margin: 2rem 0;
+  margin: 1rem 0;
   * {
     outline: 0;
   }
@@ -34,6 +34,20 @@ header {
   option {
     border-radius: 1rem;
     outline: transparent;
+    font-weight: 500;
+  }
+  select {
+    padding: 0.2em 1rem;
+    border-radius: 0.2em;
+    color: #10a37f;
+    background: #fff;
+  }
+  .custom-optgroup {
+    color: #555;
+    font-weight: bold;
+    option {
+      color: #10a37f;
+    }
   }
 }
 ::-webkit-scrollbar-thumb {

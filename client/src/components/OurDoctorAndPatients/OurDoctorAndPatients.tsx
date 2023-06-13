@@ -11,7 +11,8 @@ import PrescriptionModal from "../PrescriptionModal/PrescriptionModal";
 import { motion } from "framer-motion";
 
 const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
-  const [sortBy, setSortBy] = useState<0 | 1 | 2 | 3>(0);
+  const [sortBy, setSortBy] = useState<0 | 1 | 2 | 3 | 4>(0);
+  const [speciality, setSpeciality] = useState<string>("");
   const [patients, setPatients] = useState<User[]>([]);
   const [doctors, setDoctors] = useState<User[]>([]);
   const [moreDoctors, setMoreDoctors] = useState<User[] | null>([]);
@@ -38,13 +39,27 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
           <b>Sort By</b>
           <select
             onChange={(e) => {
-              setSortBy(parseInt(e.target.value) as 0 | 1 | 2 | 3);
+              if (["0", "1", "2", "3"].includes(e.target.value)) {
+                setSortBy(parseInt(e.target.value) as 0 | 1 | 2 | 3 | 4);
+              } else {
+                setSpeciality(e.target.value);
+                setSortBy(4);
+              }
             }}
           >
             <option value="0">Don't Sort</option>
             <option value="1">Name</option>
             <option value="2">Rating</option>
             <option value="3">Meeting Duration</option>
+            <optgroup label="Specialities" className="custom-optgroup">
+              {doctors?.map((doc) => {
+                return (
+                  <option value={doc.speciality} key={doc._id}>
+                    {doc.speciality}
+                  </option>
+                );
+              })}
+            </optgroup>
           </select>
         </div>
       )}
@@ -55,7 +70,7 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
           ) : (
             doctors
               .slice()
-              .sort((one: any, two: any) => {
+              .sort((one: any, two: User) => {
                 if (sortBy === 1) {
                   return one.fName > two.fName ? 1 : -1;
                 }
@@ -73,6 +88,17 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
                   );
                 }
                 return one;
+              })
+              .filter((one) => {
+                if (sortBy === 4) {
+                  if (one.speciality == speciality) {
+                    return one;
+                  } else {
+                    return 0;
+                  }
+                } else {
+                  return one;
+                }
               })
               .map((doctor, index) => {
                 return (

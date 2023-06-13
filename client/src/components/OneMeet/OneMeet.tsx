@@ -54,7 +54,7 @@ const OneMeet = ({
         meeting.patientId,
         `http://localhost:5173/video-meeting/${meeting._id}`
       ).then(() => {
-        navigate("/video-meeting/" + meeting._id);
+        window.location.pathname = "/video-meeting/" + meeting._id;
       });
     }
   }
@@ -75,7 +75,7 @@ const OneMeet = ({
             style={{ marginRight: "5px" }}
           />
         ) : null}
-        
+
         <MdOutlineRemoveCircleOutline
           title="Cancel meeting"
           onClick={() =>

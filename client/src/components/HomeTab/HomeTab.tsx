@@ -55,7 +55,7 @@ const HomeTab = () => {
             className="oneBox"
           >
             <b>Rating</b>
-            <p className="circle">{stats?.rating}</p>
+            <p className="circle">{stats?.rating.toFixed(1)}</p>
           </motion.div>
         ) : null}
         <motion.div

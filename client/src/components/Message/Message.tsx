@@ -10,6 +10,7 @@ import "./message.scss";
 import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import { deleteMessage } from "../../features/messagesSlice";
+import { Link } from "react-router-dom";
 const Message = ({ message, senderName, type, time, id }: IMessage) => {
   const dispatch = useDispatch();
   useEffect(() => {

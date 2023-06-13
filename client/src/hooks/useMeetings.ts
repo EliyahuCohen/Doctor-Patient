@@ -20,7 +20,10 @@ export function useMeetings() {
   ) {
     instance
       .get(`http://localhost:3001/meeting/get-one-meeting/${id}`)
-      .then((res) => setMeeting(res.data))
+      .then((res) => {
+        setMeeting(res.data);
+        return res.data;
+      })
       .catch((err) => console.log(err));
   }
   async function postMeeting(

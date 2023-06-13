@@ -75,7 +75,7 @@ const VideoMeeting = () => {
     navigate("/dashboard/0");
   }
   async function init() {
-    getOneMeeting(id!, setMeeting);
+    await getOneMeeting(id!, setMeeting);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
@@ -205,6 +205,11 @@ const VideoMeeting = () => {
       createRoom();
     });
   }, []);
+  useEffect(() => {
+    if (meeting && meeting.completed) {
+      window.location.pathname = "";
+    }
+  }, [meeting]);
 
   return (
     <motion.div layout>

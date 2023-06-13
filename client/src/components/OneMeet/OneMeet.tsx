@@ -2,7 +2,6 @@ import "./meet.scss";
 import { IMeet } from "../../types/type";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
-import { AiOutlineCheckCircle } from "react-icons/ai";
 import {
   MdOutlineCallToAction,
   MdOutlineRemoveCircleOutline,
@@ -10,7 +9,6 @@ import {
 import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
 import { formatTime } from "../../Utils/functions";
-import { useNavigate } from "react-router-dom";
 import { useMeetings } from "../../hooks/useMeetings";
 
 const OneMeet = ({
@@ -41,7 +39,6 @@ const OneMeet = ({
   const day = new Date(meeting.date).getDate() - 1;
   const month = new Date(meeting.date).getMonth() + 1;
   const year = new Date(meeting.date).getFullYear();
-  const navigate = useNavigate();
   const { startMeet } = useMeetings();
 
   const { user } = useSelector(

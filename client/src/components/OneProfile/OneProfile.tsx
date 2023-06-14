@@ -184,17 +184,17 @@ const OneProfile = () => {
             ) : null}
           </div>
         </div>
-        {user.role == 1 && user.Duration.meetingsAmount>0 && (
+        {user.role == 1 && user.Duration.meetingsAmount > 0 && (
           <div className="averageMeetingTime">
             <h3>
               Average Meeting Duration:{"  "}
               <span>
                 {" "}
-                {Math.round(
-                  user.Duration.totalDuration /
-                    60 /
-                    user.Duration.meetingsAmount
-                )}{" "}
+                {user.Duration.meetingsAmount != 0
+                  ? Math.floor(
+                      user.Duration.totalDuration / user.Duration.meetingsAmount
+                    )
+                  : "0"}{" "}
               </span>
               Minutes
             </h3>

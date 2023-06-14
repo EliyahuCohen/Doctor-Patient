@@ -154,7 +154,7 @@ const SignupPage = () => {
               <div className={props.role == 2 ? "selectedRole" : ""}>
                 <span className="icon">🧑</span>
                 <span>As Patient</span>
-                <p>whire better , think more clearly,Stay optemize</p>
+                <p>Experience the convenience of accessing quality healthcare online.</p>
               </div>
             </label>
             <input
@@ -173,7 +173,7 @@ const SignupPage = () => {
               <div className={props.role == 1 ? "selectedRole" : ""}>
                 <span className="icon">👨‍⚕️ </span>
                 <span>As Doctor</span>
-                <p>whire better , think more clearly,Stay optemize</p>
+                <p>Start making a positive impact on your patients' lives.</p>
               </div>
             </label>
             <input
@@ -197,10 +197,15 @@ const SignupPage = () => {
                   setProps({ ...props, speciality: e.target.value })
                 }
               >
-                <option value="family-doctor">Family Doctor</option>
-                <option value="optometrist">Optometrist</option>
-                <option value="dermatologist">Dermatologist</option>
+                <option value="cardiologist">Cardiologist</option>
+                <option value="chiropractor">Chiropractor</option>
                 <option value="dentist">Dentist</option>
+                <option value="dermatologist">Dermatologist</option>
+                <option value="family-doctor">Family Doctor</option>
+                <option value="gastroenterologist">Gastroenterologist</option>
+                <option value="optometrist">Optometrist</option>
+                <option value="pediatrician">Pediatrician</option>
+                <option value="psychiatrist">Psychiatrist</option>
               </select>
             </div>
           ) : null}
@@ -253,7 +258,7 @@ const SignupPage = () => {
           <div className="finish">✔</div>
           <div className="middle">
             <h1 className="small">Congratulations,{props.fName}!</h1>
-            <p>You have completed onboarding, you can start using Eden</p>
+            <p>You have completed onboarding, you can start using Care Connect</p>
           </div>
 
           <div>

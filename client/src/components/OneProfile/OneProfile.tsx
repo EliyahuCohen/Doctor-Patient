@@ -184,7 +184,7 @@ const OneProfile = () => {
             ) : null}
           </div>
         </div>
-        {user.role == 1 && (
+        {user.role == 1 && user.Duration.meetingsAmount>0 && (
           <div className="averageMeetingTime">
             <h3>
               Average Meeting Duration:{"  "}

@@ -90,3 +90,31 @@ a {
     border: 0;
   }
 }
+.bestAvg {
+  padding: 2rem;
+  min-height: 400px;
+  min-width: 500px;
+  overflow-y: scroll;
+
+  h2 {
+    margin: 2rem;
+  }
+  .top {
+    box-shadow: 0 0 4px #444 !important;
+  }
+  .singleRow {
+    padding: 1rem;
+    box-shadow: 0 0 2px #888;
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    span {
+      color: #444;
+      font-weight: bold;
+    }
+    &:hover {
+      scale: 1.03;
+    }
+    transition: 0.5s;
+  }
+}

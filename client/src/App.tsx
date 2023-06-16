@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { io } from "socket.io-client";
 import { Suspense, useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
@@ -16,12 +15,14 @@ import Loading from "./components/Loading/Loading";
 import RatingModal from "./components/RatingModal/RatingModal";
 import CompletedMeetingModal from "./components/CompletedMeetingModal/CompletedMeetingModal";
 
+import { io } from "socket.io-client";
 export const socket = io("http://localhost:3001");
 
 const App = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [meetingId,setMeetingId]=useState<string>("")
-  const [completedMeetingModal, setCompletedMeetingModal] = useState<boolean>(false);
+  const [meetingId, setMeetingId] = useState<string>("");
+  const [completedMeetingModal, setCompletedMeetingModal] =
+    useState<boolean>(false);
   const [modalText, setModalText] = useState<string>("");
   const [doctorId, setDoctorId] = useState<string>("");
   const { createIfDontHave } = useSaveLocalStorage();
@@ -43,7 +44,16 @@ const App = () => {
     updateStatus(socket, dispatch, user);
   }, [socket, user, users.length]);
   useEffect(() => {
-    handleSocket(socket, dispatch,setMeetingId, setModalOpen, setModalText, setDoctorId,setCompletedMeetingModal,user!);
+    handleSocket(
+      socket,
+      dispatch,
+      setMeetingId,
+      setModalOpen,
+      setModalText,
+      setDoctorId,
+      setCompletedMeetingModal,
+      user!
+    );
   }, [socket]);
 
   return (

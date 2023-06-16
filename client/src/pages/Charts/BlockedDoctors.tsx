@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 const BlockedDoctors = ({ users }: { users: User[] }) => {
   return (
     <motion.div>
+      {users.filter((one) => !one.approved).length > 0 && (
+        <h2>List of Blocked Users</h2>
+      )}
       {users
         .filter((one) => !one.approved)
         .map((one, index) => {

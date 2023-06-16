@@ -6,6 +6,7 @@ import PieCharts from "./PieChart";
 import TopDoctors from "./TopDoctors";
 import BlockedDoctors from "./BlockedDoctors";
 import MostMeeting from "./MostMeeting";
+import MeetingAverage from "./MeetingAverage";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -38,9 +39,9 @@ const Charts = () => {
         <PieCharts data={data} COLORS={COLORS} />
         <TopDoctors d={users} />
         <MostMeeting users={users} />
+        <MeetingAverage users={users} />
       </div>
       <div className="secondPart">
-        <h2>List of Blocked Doctors</h2>
         <BlockedDoctors users={users} />
       </div>
     </div>

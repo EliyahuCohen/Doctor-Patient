@@ -144,7 +144,6 @@ const PatientOrDoctor = ({
           <a className="emailBtn" href={`mailto:${user.email} `} title="email">
             Email
           </a>
-
           {user.role == 1 && canRemove && !isMore && (
             <Link className="meetingBtn" to={`/booking/${user._id}`}>
               Schedual
@@ -170,6 +169,19 @@ const PatientOrDoctor = ({
             </div>
           )}
         </div>
+      ) : null}
+      {isOpen && user.role == 1 ? (
+        <p className="durationP">
+          Avg Meeting Duration{" "}
+          <span>
+            {user.Duration.meetingsAmount != 0
+              ? Math.floor(
+                  user.Duration.totalDuration / user.Duration.meetingsAmount
+                )
+              : "0"}
+          </span>{" "}
+          Minutes
+        </p>
       ) : null}
     </motion.div>
   );

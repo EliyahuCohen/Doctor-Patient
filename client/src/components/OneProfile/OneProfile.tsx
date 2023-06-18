@@ -9,6 +9,7 @@ import { useUpdateRole } from "../../hooks/useUpdateRole";
 import { useFeedbacks } from "../../hooks/useFeedbacks";
 import { IRating } from "../../types/type";
 import Feedbacks from "../Feedbacks/Feedbacks";
+import GoBackButton from "../GoBackButton/GoBackButton";
 
 const OneProfile = () => {
   const { id } = useParams();
@@ -48,6 +49,12 @@ const OneProfile = () => {
     <div>
       <div className="profileWrapper">
         <span className="line2"></span>
+      </div>
+      <div className="goback">
+        <GoBackButton
+          whereTo="http://localhost:5173/admin"
+          backgroundColor="#555"
+        />
       </div>
       <div className="profileWrapper second">
         <p className="image">{user.role == 1 ? "👨‍⚕️" : "😷"}</p>

@@ -142,6 +142,7 @@ const VideoMeeting = () => {
     //Event listener for user closing call
     socket.on("user-left", () => {
       otherPersonLeft();
+      navigate("/dashboard/0");
     });
 
     // Event listener for receiving answers

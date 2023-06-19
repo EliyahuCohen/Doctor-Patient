@@ -47,7 +47,7 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
               }
             }}
           >
-            <option value="0">Don't Sort</option>
+            <option value="0">Default</option>
             <option value="1">Name</option>
             <option value="2">Rating</option>
             <option value="3">Meeting Duration</option>
@@ -100,6 +100,7 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
                   return one;
                 }
               })
+              .reverse()
               .map((doctor, index) => {
                 return (
                   <PatientOrDoctor

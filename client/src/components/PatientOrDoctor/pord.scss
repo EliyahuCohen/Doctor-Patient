@@ -82,6 +82,10 @@
   transition: 0.3s;
   rotate: -180deg;
 }
+.theStarts {
+  display: flex;
+  justify-content: center;
+}
 .bottomPart {
   margin-top: 1rem;
   display: flex;
@@ -181,16 +185,11 @@
   }
 }
 .durationP {
-  font-size: 1em;
-  padding: 0.2em 1em;
-  border: 1px solid;
+  font-size: 0.5em;
   width: fit-content;
-  margin: 0 auto;
-  border-radius: 100vh;
   text-align: center;
-  margin-top: 0.8em;
   span {
-    font-weight: 500;
+    font-weight: 600;
   }
   @media screen and (max-width: 800px) {
     font-size: 0.8em;

@@ -92,47 +92,80 @@ const PatientOrDoctor = ({
         </div>
         {!isOpen ? (
           <div className="theRatingStars">
-            {user.role == 1 && selected == 1 ? (
-              <div className="ratingLine">
-                <p> {user.userRating.votes} ratings</p>
-                {user.role == 1 &&
-                user.userRating &&
-                user.userRating.sum &&
-                user.userRating.votes ? (
+            <div>
+              {user.role == 1 && selected == 1 ? (
+                <div className="ratingLine">
                   <div>
-                    {[
-                      ...new Array(
-                        Math.floor(user.userRating.sum / user.userRating.votes)
-                      ),
-                    ].map((_, index) => {
-                      return (
-                        <AiFillStar key={index} color="#ffa41c" fontSize={18} />
-                      );
-                    })}
-                    {[
-                      ...new Array(
-                        5 -
-                          Math.floor(
-                            user.userRating.sum / user.userRating.votes
-                          )
-                      ),
-                    ].map((_, index) => {
-                      return (
-                        <AiOutlineStar key={index + user._id} fontSize={18} />
-                      );
-                    })}
+                    <p> {user.userRating.votes} ratings</p>
+                    {user.role == 1 &&
+                    user.userRating &&
+                    user.userRating.sum &&
+                    user.userRating.votes ? (
+                      <div className="theStarts">
+                        {[
+                          ...new Array(
+                            Math.floor(
+                              user.userRating.sum / user.userRating.votes
+                            )
+                          ),
+                        ].map((_, index) => {
+                          return (
+                            <AiFillStar
+                              key={index}
+                              color="#ffa41c"
+                              fontSize={18}
+                            />
+                          );
+                        })}
+                        {[
+                          ...new Array(
+                            5 -
+                              Math.floor(
+                                user.userRating.sum / user.userRating.votes
+                              )
+                          ),
+                        ].map((_, index) => {
+                          return (
+                            <AiOutlineStar
+                              key={index + user._id}
+                              fontSize={18}
+                            />
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <div className="theStarts">
+                        {[...new Array(5)].map((_, index) => {
+                          return (
+                            <AiOutlineStar
+                              key={index + user._id}
+                              fontSize={18}
+                            />
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
-                ) : (
                   <div>
-                    {[...new Array(5)].map((_, index) => {
-                      return (
-                        <AiOutlineStar key={index + user._id} fontSize={18} />
-                      );
-                    })}
+                    {user.role == 1 ? (
+                      <p className="durationP">
+                        Average Duration{" "}
+                        {
+                          <span>
+                            {user.Duration.meetingsAmount != 0
+                              ? Math.floor(
+                                  user.Duration.totalDuration /
+                                    user.Duration.meetingsAmount
+                                )
+                              : "0"}
+                          </span>
+                        }
+                      </p>
+                    ) : null}
                   </div>
-                )}
-              </div>
-            ) : null}
+                </div>
+              ) : null}
+            </div>
             <MdOutlineExpandMore className="expandIcon" />
           </div>
         ) : (
@@ -169,19 +202,6 @@ const PatientOrDoctor = ({
             </div>
           )}
         </div>
-      ) : null}
-      {isOpen && user.role == 1 ? (
-        <p className="durationP">
-          Avg Meeting Duration{" "}
-          <span>
-            {user.Duration.meetingsAmount != 0
-              ? Math.floor(
-                  user.Duration.totalDuration / user.Duration.meetingsAmount
-                )
-              : "0"}
-          </span>{" "}
-          Minutes
-        </p>
       ) : null}
     </motion.div>
   );

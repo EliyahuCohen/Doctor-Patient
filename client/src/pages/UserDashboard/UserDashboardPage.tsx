@@ -10,6 +10,7 @@ import { UserType } from "../../features/userSlice";
 import "./app.scss";
 import { CgPill } from "react-icons/cg";
 import { useNavigate, useParams } from "react-router-dom";
+import { FaStethoscope } from "react-icons/fa";
 
 const SystemMessagesPage = lazy(
   () => import("../../components/SystemMessages/SystemMessagesPage")
@@ -71,7 +72,7 @@ const UserDashboardPage = () => {
           className={`${selected == 2 ? "selected" : ""}`}
           onClick={() => changeTab(2)}
         >
-          <GiDoctorFace title="My Doctors" />
+          <FaStethoscope title="My Doctors" />
           <p>My Doctors</p>
         </div>
 

@@ -6,7 +6,7 @@ import { io } from "../server";
 import { usersID } from "../socket";
 import User from "../Models/User.model";
 
-interface Req {
+interface ReqObjectIDs {
   USER_ID: mongoose.Types.ObjectId;
   personId: mongoose.Types.ObjectId;
 }
@@ -18,25 +18,27 @@ export interface ReqMessage {
 
 //get
 export async function getConversation(req: Request, res: Response) {
-  const { USER_ID } = req.body as Req;
+  const { USER_ID } = req.body as ReqObjectIDs;
   const { personId } = req.params;
   //checking for existing conversation between the two
-  const isInDoctorsList = await User.findById(USER_ID);
-  if (!isInDoctorsList) return res.status(404).json({ message: "No a Person" });
+  const user = await User.findById(USER_ID);
+  if (!user) return res.status(404).json({ message: "user does not exist" });
   let status: Boolean = false;
-  for (let i = 0; i < isInDoctorsList.listOfDoctors.length; i++) {
-    if (isInDoctorsList.listOfDoctors[i] == (personId as any)) {
+  //checking that the user is a patient and the personId is the doctor
+  for (let i = 0; i < user.listOfDoctors.length; i++) {
+    if (user.listOfDoctors[i] == (personId as any)) {
       status = true;
       break;
     }
   }
-  for (let i = 0; i < isInDoctorsList.listOfPatients.length; i++) {
-    if (isInDoctorsList.listOfPatients[i] == (personId as any)) {
+  //checking that the user is a doctor and the personId is the patient
+  for (let i = 0; i < user.listOfPatients.length; i++) {
+    if (user.listOfPatients[i] == (personId as any)) {
       status = true;
       break;
     }
   }
-  if (!status) return res.status(404).json({ message: "Not in doctors list" });
+  if (!status) return res.status(404).json({ message: "Connection between the two does not exist" });
   const conversationExists: IConversation | null = await Conversation.findOne({
     participants: { $all: [USER_ID, personId] },
   });
@@ -44,7 +46,7 @@ export async function getConversation(req: Request, res: Response) {
     conversationExists.messages.forEach((message) => {
       message.read = true;
     });
-    await (conversationExists as any).save();
+    await (conversationExists as any).save(); // save the messages as read
     return res.status(200).json(conversationExists);
   } else {
     //creating a new conversation between two of these people
@@ -73,6 +75,7 @@ export async function PostNewMessage(req: Request, res: Response) {
     createdAt: date,
     read: false,
   });
+  //check if the recipient is online
   const otherUser = usersID.filter((one) => one.userId == personId)[0];
   if (otherUser) {
     let senderName: string = await User.findById(USER_ID).then(

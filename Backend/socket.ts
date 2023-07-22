@@ -3,7 +3,7 @@ import { user } from "./server";
 
 export let admin: user | null = null;
 export let usersID: user[] = [];
-export function socket(io: Server) {
+export function socketHandler(io: Server) {
   io.on("connection", (socket) => {
     socket.on("userConnected", (data: any) => {
       if (data && data._id && socket) {
@@ -15,12 +15,15 @@ export function socket(io: Server) {
             socketId: socket.id,
           };
         }
+        //update admin of each new login
         if (admin) {
           io.to(admin.socketId).emit("userLoggedIn", data);
         }
+        //update everyone that this user is now online - to show by the chat
         io.emit("user-in", data._id);
       }
     });
+    //unintentinal sudden disconnection
     socket.on("disconnect", () => {
       let selected = usersID.filter((one) => one.socketId == socket.id)[0];
       if (selected) {
@@ -29,9 +32,11 @@ export function socket(io: Server) {
           1
         );
       }
+      //update admin that this user is now logged out
       if (selected && admin) {
         io.to(admin.socketId).emit("updateAdmin", selected?.userId);
       }
+      //update everyone that this user is no longer online (for chat)
       io.emit("user-out", selected?.userId);
     });
     socket.on("userLoggedOut", () => {
@@ -47,6 +52,7 @@ export function socket(io: Server) {
       }
       io.emit("user-out", selected?.userId);
     });
+    //events for handling video calls
     socket.on("is-user-live", (sock) => {
       const { userid, askingId } = sock;
       const findUser = usersID.filter((one) => one?.userId == userid)[0];

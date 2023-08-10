@@ -138,7 +138,7 @@ const DatePicker = ({
       </div>
       <div className="calanderWrapper">
         <div className="dateDays">
-          {["Sun", "Mon", "Tue", "Wen", "Thu", "Fri", "Sat"].map(
+          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(
             (moth: string, index: number) => {
               return (
                 <span

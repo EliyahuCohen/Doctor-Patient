@@ -365,3 +365,9 @@ export async function addRatingToDoctor(req: Request, res: Response) {
   await doctor.save();
   return res.status(200).json({ message: "Thank you!" });
 }
+export async function validateEmailAndExists(req: Request, res: Response) {
+  const { email } = req.body;
+  const emailExists = await User.findOne({ email });
+  if (emailExists) return res.status(400).json({ message: "Email exists" });
+  return res.status(200).json({ message: "Good email" });
+}

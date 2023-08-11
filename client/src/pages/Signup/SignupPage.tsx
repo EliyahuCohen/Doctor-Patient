@@ -5,10 +5,14 @@ import { moveFoword, check } from "../../Utils/functions";
 import { Register } from "../../types/type";
 import { useRegister } from "../../hooks/useRegister";
 import Logo from "../../assets/smallLogo.png";
+import validator from "validator";
+import { useUser } from "../../hooks/useUser";
 const SignupPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [totalSteps, setTotalSteps] = useState<number>(4);
   const [error, setError] = useState<string>("");
+  const [isError, setIsError] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<boolean>(false);
   const [props, setProps] = useState<Register>({
     fName: "",
     lName: "",
@@ -19,7 +23,9 @@ const SignupPage = () => {
     speciality: "",
     isMale: true,
   });
+
   const { registerFunc } = useRegister(props, setError);
+  const { validateEmail } = useUser();
 
   return (
     <div className="register">
@@ -114,11 +120,20 @@ const SignupPage = () => {
               name="Email Address"
               type="email"
               required
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
               placeholder="someone@gmail.com"
               id="email"
               value={props.email}
-              onChange={(e) => setProps({ ...props, email: e.target.value })}
+              onChange={(e) => {
+                setEmailError(false);
+                setProps({ ...props, email: e.target.value });
+              }}
             />
+            <div style={{ textAlign: "left" }}>
+              {emailError && props.email.length > 0 && (
+                <p className="myError">Email Aready Exists</p>
+              )}
+            </div>
             <label htmlFor="pass">Password</label>
             <input
               name="Password (at least 8 charecters)"
@@ -127,16 +142,32 @@ const SignupPage = () => {
               placeholder="password"
               id="pass"
               required
-              pattern="[A-Za-z\d@./!@#$%^&*({})]{8,}$"
               value={props.password}
-              onChange={(e) => setProps({ ...props, password: e.target.value })}
+              onChange={(e) => {
+                setProps({ ...props, password: e.target.value });
+                const isGood = validator.isStrongPassword(e.target.value);
+                setIsError(isGood);
+              }}
             />
+            {!isError && props.password.length > 0 && (
+              <div style={{ textAlign: "left" }}>
+                <p className="myError">Not strong enough</p>
+              </div>
+            )}
             <button
               className="sideBtn"
               onClick={() => {
-                if (check(2)) {
-                  moveFoword(currentStep + 1, props, setCurrentStep);
-                }
+                validateEmail(props.email, setEmailError)
+                  .then((res) => {
+                    if (!res) {
+                      if (check(2) && !emailError && isError) {
+                        moveFoword(currentStep + 1, props, setCurrentStep);
+                      }
+                    }
+                  })
+                  .catch((err) => {
+                    console.log("err");
+                  });
               }}
             >
               Next
@@ -154,7 +185,10 @@ const SignupPage = () => {
               <div className={props.role == 2 ? "selectedRole" : ""}>
                 <span className="icon">🧑</span>
                 <span>As Patient</span>
-                <p>Experience the convenience of accessing quality healthcare online.</p>
+                <p>
+                  Experience the convenience of accessing quality healthcare
+                  online.
+                </p>
               </div>
             </label>
             <input
@@ -258,7 +292,9 @@ const SignupPage = () => {
           <div className="finish">✔</div>
           <div className="middle">
             <h1 className="small">Congratulations,{props.fName}!</h1>
-            <p>You have completed onboarding, you can start using Care Connect</p>
+            <p>
+              You have completed onboarding, you can start using Care Connect
+            </p>
           </div>
 
           <div>

@@ -58,8 +58,10 @@ export function check(number: number): boolean {
         const div = document.createElement("div");
         div.classList.add("errorMessage");
         div.style.textAlign = "left";
-        div.innerHTML = `invalid ${one.name}`;
-        one?.parentNode?.insertBefore(div, one.nextSibling);
+        if (one.name != "password") {
+          div.innerHTML = `invalid ${one.name}`;
+          one?.parentNode?.insertBefore(div, one.nextSibling);
+        }
       }
     } else {
       one.classList.remove("errorField");

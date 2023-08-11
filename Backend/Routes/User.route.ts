@@ -18,6 +18,7 @@ import {
   resetPasswordVerificationCodeEmailSender,
   checkIfVerificationCodeIsValidAndCorrect,
   changePassword,
+  validateEmailAndExists,
 } from "../Controllers/User.contoller";
 import { requiredAuthentication } from "../Middlewares/RequireAuth";
 
@@ -28,6 +29,7 @@ router.post("/login", login);
 router.post("/reset-password", resetPasswordVerificationCodeEmailSender);
 router.post("/verification", checkIfVerificationCodeIsValidAndCorrect);
 router.post("/change-password", changePassword);
+router.post("/validateEmail", validateEmailAndExists);
 router.use(requiredAuthentication);
 router.use("/checkAccess", checkAccess);
 router.get("/all", getAllUsers);

@@ -13,6 +13,7 @@ const SignupPage = () => {
   const [error, setError] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<boolean>(false);
+  const [specialError, setSpecialError] = useState<boolean>(false);
   const [props, setProps] = useState<Register>({
     fName: "",
     lName: "",
@@ -126,9 +127,15 @@ const SignupPage = () => {
               value={props.email}
               onChange={(e) => {
                 setEmailError(false);
+                setSpecialError(!validator.isEmail(e.target.value));
                 setProps({ ...props, email: e.target.value });
               }}
             />
+            <div style={{ textAlign: "left" }}>
+              {specialError && props.email.length > 0 && (
+                <p className="myError">Invalid Email Address</p>
+              )}
+            </div>
             <div style={{ textAlign: "left" }}>
               {emailError && props.email.length > 0 && (
                 <p className="myError">Email Aready Exists</p>
@@ -160,7 +167,7 @@ const SignupPage = () => {
                 validateEmail(props.email, setEmailError)
                   .then((res) => {
                     if (!res) {
-                      if (check(2) && !emailError && isError) {
+                      if (check(2) && !emailError && !specialError && isError) {
                         moveFoword(currentStep + 1, props, setCurrentStep);
                       }
                     }

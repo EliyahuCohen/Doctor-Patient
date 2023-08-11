@@ -58,7 +58,7 @@ export function check(number: number): boolean {
         const div = document.createElement("div");
         div.classList.add("errorMessage");
         div.style.textAlign = "left";
-        if (one.name != "password") {
+        if (one.name != "password" && one.name != "Email Address") {
           div.innerHTML = `invalid ${one.name}`;
           one?.parentNode?.insertBefore(div, one.nextSibling);
         }

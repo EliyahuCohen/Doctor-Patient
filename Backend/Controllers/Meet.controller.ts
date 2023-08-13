@@ -99,17 +99,22 @@ export async function getMeetings(
     const schedule = doctor.schedule[day];
     const currentDate = new Date();
 
-    const validTimes = schedule.times.reduce(
+    let validTimes = schedule.times.reduce(
       (timesTemp: ITimeSpan[], time: ITimeSpan) => {
         const isMeetingTimeTaken = meetingInWantedDate.some(
           (meetingTime) => meetingTime.startTime === time.startTime
         );
 
         if (
-          (day === currentDate.getDay() &&
-            time.startTime >= currentDate.getHours()) ||
-          !isMeetingTimeTaken
+          day === currentDate.getDay() &&
+          date.getTime() === currentDate.getTime()
         ) {
+          if (time.startTime >= currentDate.getHours()) {
+            if (!isMeetingTimeTaken) {
+              timesTemp.push(time);
+            }
+          }
+        } else if (!isMeetingTimeTaken) {
           timesTemp.push(time);
         }
 
@@ -117,11 +122,21 @@ export async function getMeetings(
       },
       []
     );
-
     const response = {
       day,
       times: validTimes,
     };
+    let array: ITimeSpan[] = [];
+    const newDate = new Date();
+
+    if (date.getDate() == newDate.getDate()) {
+      validTimes.map((value) => {
+        if (value.startTime > newDate.getHours()) {
+          array.push(value);
+        }
+      });
+      response.times = array;
+    }
 
     return res.status(200).json(response);
   } catch (err) {

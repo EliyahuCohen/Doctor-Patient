@@ -6,7 +6,9 @@ import User, { ITimeSpan } from "../Models/User.model";
 import { io } from "../server";
 import { usersID } from "../socket";
 import nodemailer from "nodemailer";
-import Message from "../Models/Conversation.model";
+import { transporter } from "./User.contoller";
+import { NewMeeting } from "../Utils/emails";
+import { IUserStats } from "../types/types";
 //post
 export async function createMeeting(
   req: Request<
@@ -26,6 +28,9 @@ export async function createMeeting(
   if (!isValidObjectId(USER_ID)) {
     return res.status(400).json({ message: "Invalid user ID" });
   }
+  if (!isValidObjectId(doctorId)) {
+    return res.status(400).json({ message: "Invalid doctor ID" });
+  }
   if (!dateString || !doctorId || !endTime || !USER_ID || !startTime)
     return res.status(400).json({ message: "All fields are required" });
   else {
@@ -41,7 +46,7 @@ export async function createMeeting(
       });
       if (hasMeeting.length > 0)
         return res.status(400).json({
-          message: "Can't make more than one appintment with the same doctor",
+          message: "Can't make more than one appointment with the same doctor",
         });
       const meeting = await Meet.create({
         date,
@@ -61,14 +66,15 @@ export async function createMeeting(
         .status(201)
         .json({ message: "Meetings schedualed successfuly" });
     } else {
-      res.status(404).json({ messag: "patinet or doctor could not be found" });
+      res.status(404).json({ messag: "patient or doctor could not be found" });
     }
-    return res.status(400).json({ message: "Cant do that" });
+    return res.status(400).json({ message: "Something went wrong" });
   }
 }
 //get
-
+//returns all the available appointments from the given doctor on the requested date
 export async function getMeetings(
+            //the parameter passed by the url
   req: Request<{ doctorId: string }, {}, { date: string; day: number }>,
   res: Response
 ) {
@@ -77,10 +83,11 @@ export async function getMeetings(
     const { date: dateString, day } = req.body;
 
     if (!isValidObjectId(doctorId)) {
-      return res.status(400).json({ message: "Invalid user id" });
+      return res.status(400).json({ message: "Invalid doctor id" });
     }
 
     const d = new Date(dateString);
+    //holds the date that the user picked on the calender
     const date = new Date(d.getFullYear(), d.getMonth(), d.getDate());
 
     const doctor = await User.findById(doctorId);
@@ -94,29 +101,20 @@ export async function getMeetings(
         .json({ message: "Not a working day in our company" });
     }
 
-    const meetingInWantedDate = await Meet.find({ date });
+    const meetingInWantedDate = await Meet.find({ date, doctorId:doctorId });
 
     const schedule = doctor.schedule[day];
     const currentDate = new Date();
 
     let validTimes = schedule.times.reduce(
+      //inserts into isMeetingTimeTaken all the already booked appointments from the schedule
       (timesTemp: ITimeSpan[], time: ITimeSpan) => {
         const isMeetingTimeTaken = meetingInWantedDate.some(
           (meetingTime) => meetingTime.startTime === time.startTime
         );
 
-        if (
-          day === currentDate.getDay() &&
-          date.getTime() === currentDate.getTime()
-        ) {
-          if (time.startTime >= currentDate.getHours()) {
-            if (!isMeetingTimeTaken) {
-              timesTemp.push(time);
-            }
-          }
-        } else if (!isMeetingTimeTaken) {
+        if ((day === currentDate.getDay() && !isMeetingTimeTaken) || !isMeetingTimeTaken)
           timesTemp.push(time);
-        }
 
         return timesTemp;
       },
@@ -126,12 +124,12 @@ export async function getMeetings(
       day,
       times: validTimes,
     };
-    let array: ITimeSpan[] = [];
+    
     const newDate = new Date();
-
     if (date.getDate() == newDate.getDate()) {
+      let array: ITimeSpan[] = [];
       validTimes.map((value) => {
-        if (value.startTime > newDate.getHours()) {
+        if (value.startTime > newDate.getHours()+ newDate.getMinutes()/100) {
           array.push(value);
         }
       });
@@ -154,12 +152,12 @@ export async function getUserUpcomingMeetings(req: Request, res: Response) {
     if (user) {
       const meetingsDoctors: IMeet[] = [];
       const meetingsPatients: IMeet[] = [];
-      const d = new Date();
+      const date = new Date();
       for (let i = 0; i < user.meetingsDoctors.length; i++) {
         const meeting = await Meet.findOne({
           _id: user.meetingsDoctors[i]._id,
           date: {
-            $gte: new Date(`${d.getMonth()}-${d.getDate()}-${d.getFullYear()}`),
+            $gte: new Date(`${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`),
           },
           completed: false,
         });
@@ -167,8 +165,6 @@ export async function getUserUpcomingMeetings(req: Request, res: Response) {
           meetingsDoctors.push(meeting);
         }
       }
-      const date = new Date();
-
       for (let i = 0; i < user.meetingsPatients.length; i++) {
         const meeting = await Meet.findOne({
           _id: user.meetingsPatients[i]._id,
@@ -191,8 +187,8 @@ export async function getUserUpcomingMeetings(req: Request, res: Response) {
 //update
 export async function meetingCompleted(req: Request, res: Response) {
   const { meetingId, USER_ID, meetingDuration } = req.body;
-  if (!isValidObjectId(USER_ID) || !isValidObjectId(USER_ID))
-    return res.status(400).json({ message: "Invalid Object ID" });
+  if (!isValidObjectId(USER_ID) || !isValidObjectId(meetingId))
+    return res.status(400).json({ message: "Invalid Object or meeting ID" });
   const meeting = await Meet.findOne({ _id: meetingId });
   if (!meeting)
     return res.status(404).json({ message: "No such meeting in db" });
@@ -216,6 +212,7 @@ export async function meetingCompleted(req: Request, res: Response) {
   meeting.completed = true;
   await meeting.save();
   //finding the user for sending request to fire the rating modal
+  //check if the user is now online
   const exists = usersID.filter(
     (one) => one.userId == (meeting.patientId as any)
   )[0];
@@ -228,16 +225,13 @@ export async function meetingCompleted(req: Request, res: Response) {
 
   return res.status(200).json({ message: "Meeting updated" });
 }
-import { transporter } from "./User.contoller";
-import { NewMeeting } from "../Utils/emails";
-import { IConversation } from "../Models/Conversation.model";
-import { IUserStats } from "../types/types";
+
 //delete
 export async function cancelMeeting(req: Request, res: Response) {
   const { USER_ID } = req.body;
   const { meetingId } = req.params;
-  if (!isValidObjectId(USER_ID) || !isValidObjectId(USER_ID))
-    return res.status(400).json({ message: "Invalid Object ID" });
+  if (!isValidObjectId(USER_ID) || !isValidObjectId(meetingId))
+    return res.status(400).json({ message: "Invalid Object or meeting ID" });
   const meeting = await Meet.findOne({ _id: meetingId });
   if (!meeting)
     return res.status(404).json({ message: "No such meeting in db" });
@@ -272,7 +266,7 @@ export async function startMeeting(
   if (isValidObjectId(USER_ID)) {
     const patient = await User.findById(patientId);
     const doctor = await User.findById(doctorId);
-    if (patient) {
+    if (patient && doctor) {
       const mailOptions: nodemailer.SendMailOptions = {
         from: "careconnecthealthapp@gmail.com",
         to: patient.email,
@@ -312,7 +306,7 @@ export async function startMeeting(
       return res.status(404).json({ message: "User was not found" });
     }
   } else {
-    return res.status(404).json({ message: "User was not found" });
+    return res.status(404).json({ message: "Invalid User id" });
   }
 }
 export async function getOneMeeting(req: Request, res: Response) {
@@ -321,6 +315,7 @@ export async function getOneMeeting(req: Request, res: Response) {
   if (meeting) return res.status(200).json(meeting);
   return res.status(400).json({ message: "invalid meeting id" });
 }
+//returns all the 
 export async function getUserStats(req: Request, res: Response) {
   const { id } = req.params;
   if (isValidObjectId(id)) {
@@ -338,7 +333,7 @@ export async function getUserStats(req: Request, res: Response) {
 
     const stats: IUserStats = {
       doctorsAmount: user.listOfDoctors.length,
-      meetingAmount: amount.length + amount2.length,
+      meetingAmount: user.role==1? amount2.length:amount.length,
       patientsAmount: user.listOfPatients.length,
       rating:
         user?.userRating?.sum > 0 && user?.userRating?.votes > 0

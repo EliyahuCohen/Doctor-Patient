@@ -18,7 +18,7 @@ export function ValidateEmailAndPassword(email: string, password: string) {
   else if (!validatePassword(password)) throw Error("Weak password");
 }
 export function generateVarificationCode(): string {
-  return Math.floor(100_000 + Math.random() * 900_000).toString();
+  return Math.floor(100_000 + Math.random() * 999_999).toString();
 }
 export function generateTokenForVarificationCode(code: string): string {
   const codeToken = jwt.sign({ code }, `${process.env.SECRET}`, {

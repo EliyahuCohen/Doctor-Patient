@@ -22,7 +22,7 @@ export class SendMessage {
 }
 export interface ScheduleDay {
   schedule: Schedule;
-  day: string;
+  day: string; //from 0-6
 }
 export interface IQuote {
   id: number;

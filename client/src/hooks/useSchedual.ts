@@ -61,6 +61,7 @@ export function useSchedual() {
         day,
       })
       .then((res) => {
+        console.log(res.data);
         setLoading(false);
         setError(false);
         setAvailableMeetings(res.data);

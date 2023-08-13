@@ -67,66 +67,66 @@ export async function createMeeting(
   }
 }
 //get
+
 export async function getMeetings(
-  req: Request<
-    { doctorId: string | ObjectId },
-    {},
-    { date: string; day: number }
-  >,
+  req: Request<{ doctorId: string }, {}, { date: string; day: number }>,
   res: Response
 ) {
   try {
     const { doctorId } = req.params;
-    if (!isValidObjectId(doctorId))
-      return res.status(400).json({ message: "Invalid user id " });
     const { date: dateString, day } = req.body;
+
+    if (!isValidObjectId(doctorId)) {
+      return res.status(400).json({ message: "Invalid user id" });
+    }
+
     const d = new Date(dateString);
-    const date = new Date(
-      `${d.getMonth() + 1}-${d.getDate()}-${d.getFullYear()}`
-    );
-    const user = await User.findById(doctorId);
-    if (!user) return res.status(404).json({ message: "No such user" });
-    if (day <= 5 && day >= 0) {
-      const meetingInWantedDate = await Meet.find({ date });
-      // more things
-      const schedual = user.schedule[day];
-      const timesTemp: ITimeSpan[] = [];
+    const date = new Date(d.getFullYear(), d.getMonth(), d.getDate());
 
-      if (schedual?.times) {
-        for (let i = 0; i < schedual.times.length; i++) {
-          for (let j = 0; j < meetingInWantedDate.length; j++) {
-            if (
-              schedual.times[i].startTime == meetingInWantedDate[j].startTime
-            ) {
-              schedual.times[i] = { endTime: 0, startTime: 0 };
-            }
-          }
-        }
+    const doctor = await User.findById(doctorId);
+    if (!doctor) {
+      return res.status(404).json({ message: "No such Doctor" });
+    }
 
-        for (let j = 0; j < schedual.times.length; j++) {
-          if (
-            schedual.times[j].startTime != 0 &&
-            schedual.times[j].endTime != 0
-          ) {
-            timesTemp.push(schedual.times[j]);
-          }
-        }
-        schedual.times = timesTemp as any;
-      }
-      if (schedual?.times && day == new Date().getDay()) {
-        let result = schedual.times.filter((one) => {
-          return one.startTime >= new Date().getHours();
-        });
-        schedual.times = result as any;
-      }
-      return res.status(200).json(schedual);
-    } else {
+    if (day < 0 || day > 5) {
       return res
         .status(400)
         .json({ message: "Not a working day in our company" });
     }
+
+    const meetingInWantedDate = await Meet.find({ date });
+
+    const schedule = doctor.schedule[day];
+    const currentDate = new Date();
+
+    const validTimes = schedule.times.reduce(
+      (timesTemp: ITimeSpan[], time: ITimeSpan) => {
+        const isMeetingTimeTaken = meetingInWantedDate.some(
+          (meetingTime) => meetingTime.startTime === time.startTime
+        );
+
+        if (
+          (day === currentDate.getDay() &&
+            time.startTime >= currentDate.getHours()) ||
+          !isMeetingTimeTaken
+        ) {
+          timesTemp.push(time);
+        }
+
+        return timesTemp;
+      },
+      []
+    );
+
+    const response = {
+      day,
+      times: validTimes,
+    };
+
+    return res.status(200).json(response);
   } catch (err) {
-    console.log("err available get meetings");
+    console.error("Error while getting meetings:", err);
+    return res.status(500).json({ message: "An error occurred" });
   }
 }
 export async function getUserUpcomingMeetings(req: Request, res: Response) {

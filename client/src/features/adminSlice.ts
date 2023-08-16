@@ -3,7 +3,7 @@ import { User } from "../types/type";
 
 export interface adminUsers {
   users: User[];
-  liveUsers: any[];
+  liveUsers: any[];//live users' id
 }
 
 const initialState: adminUsers = {
@@ -33,11 +33,13 @@ const adminSlice = createSlice({
     },
     updateLiveUsers: (state: adminUsers) => {
       state.users.forEach((user) => {
-        state.liveUsers.forEach((live) => {
-          if (user._id == live) {
+        for(let i=0;i<state.liveUsers.length;i++)
+        {
+          if (user._id == state.liveUsers[i]) {
             user.live = true;
+            break;
           }
-        });
+        }
       });
     },
     addNewUser: (state: adminUsers, action) => {
@@ -53,6 +55,7 @@ const adminSlice = createSlice({
         }
       }
     },
+    //maps over the live users from the DB to extract their user_id
     setLiveUsersObject: (state: adminUsers, action) => {
       const arr: any[] = [];
       action.payload.forEach((el: any) => {

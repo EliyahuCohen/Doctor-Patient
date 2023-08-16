@@ -16,7 +16,7 @@ import RatingModal from "./components/RatingModal/RatingModal";
 import CompletedMeetingModal from "./components/CompletedMeetingModal/CompletedMeetingModal";
 
 import { io } from "socket.io-client";
-export const socket = io("http://localhost:3001");
+export const socket = io("http://localhost:3001"); //backend url
 
 const App = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -27,8 +27,8 @@ const App = () => {
   const [doctorId, setDoctorId] = useState<string>("");
   const { createIfDontHave } = useSaveLocalStorage();
   const { checkTokenValidity } = useLogin();
+  
   const dispatch = useDispatch();
-  const date = new Date();
   const { users } = useSelector(
     (state: { adminSlice: adminUsers }) => state.adminSlice
   );

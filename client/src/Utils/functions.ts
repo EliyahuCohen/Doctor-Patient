@@ -101,7 +101,8 @@ export function sendMessageTime(dispatch: any) {
 }
 export function handleSocket(
   socket: Socket,
-  dispatch: any,
+  dispatch: any,  //will give us access to the slice reducers
+  //for the meeting feedback which are not available globally
   setMeetingId: React.Dispatch<React.SetStateAction<string>>,
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
   setModalText: React.Dispatch<React.SetStateAction<string>>,

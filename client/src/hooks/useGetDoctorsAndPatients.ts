@@ -28,7 +28,6 @@ export function useGetDoctorsAndPatients(
         .catch((err) => {
           console.log(err);
         });
-      setPatients(patientArray);
     }
     if (theUser!.role == 1 || theUser!.role == 0) {
       for (let i = 0; i < theUser!.listOfPatients.length; i++) {

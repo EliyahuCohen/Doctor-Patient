@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { UserType } from "../features/userSlice";
 import { useDispatch } from "react-redux";
@@ -30,8 +29,5 @@ export function useGetAdminUsers() {
         console.log(err);
       });
   }
-  useEffect(() => {
-    getUsers();
-  }, []);
   return { getUsers };
 }

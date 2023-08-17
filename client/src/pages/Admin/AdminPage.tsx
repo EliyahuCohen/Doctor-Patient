@@ -56,9 +56,9 @@ const AdminPage = () => {
         </div>
         <div className="headlines">
           <p>Email</p>
-          <p>Group</p>
+          <p>Role</p>
           <p>Status</p>
-          <p className="delete-small">Date</p>
+          <p className="delete-small">Date joined</p>
           <p className="delete-small">Read More</p>
         </div>
         {SortArray(users, selected).map((user: User) => {

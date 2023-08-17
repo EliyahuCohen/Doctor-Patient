@@ -23,7 +23,7 @@ const AdminUserLine = ({ user, status }: { user: User; status: boolean }) => {
       </p>
 
       <p>{user.role == 1 ? "Doctors" : "Patient"}</p>
-      <p className={`status ${user.approved ? "approved" : "pending"}`}>
+      <p className={`status ${user.approved ? "approved" : "blocked"}`}>
         {user.approved ? "Approved" : "Blocked"}
       </p>
       <p className="delete-small time">

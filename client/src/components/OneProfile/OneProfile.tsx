@@ -122,26 +122,16 @@ const OneProfile = () => {
         </div>
       </div>
       <div className="bottomInfo">
-        {user.approved == true ? (
-          <div>
-            <button
-              className="block"
-              onClick={(e) => {
-                updateRole(setUser);
-              }}
-            >
-              Block
-            </button>
-          </div>
-        ) : (
+        <div>
           <button
+            className={user.approved? "block":""}
             onClick={(e) => {
               updateRole(setUser);
             }}
           >
-            Approve
+            {!user.approved? "Approve":"Block"}
           </button>
-        )}
+        </div>
       </div>
       <div className="tabsSection">
         <div className="tabs">
@@ -199,8 +189,8 @@ const OneProfile = () => {
                 {" "}
                 {user.Duration.meetingsAmount != 0
                   ? Math.floor(
-                      user.Duration.totalDuration / user.Duration.meetingsAmount
-                    )
+                    user.Duration.totalDuration / user.Duration.meetingsAmount
+                  )
                   : "0"}{" "}
               </span>
               Minutes

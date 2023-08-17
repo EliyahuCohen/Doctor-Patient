@@ -27,7 +27,7 @@ const App = () => {
   const [doctorId, setDoctorId] = useState<string>("");
   const { createIfDontHave } = useSaveLocalStorage();
   const { checkTokenValidity } = useLogin();
-  
+
   const dispatch = useDispatch();
   const { users } = useSelector(
     (state: { adminSlice: adminUsers }) => state.adminSlice
@@ -59,8 +59,8 @@ const App = () => {
   return (
     <div style={{ overflowX: "hidden" }}>
       <Router>
+        <Navbar />
         <Suspense fallback={<Loading />}>
-          <Navbar />
           {modalOpen ? (
             <RatingModal
               modalText={modalText}
@@ -76,7 +76,7 @@ const App = () => {
             />
           ) : null}
           <Messages />
-          <Routes>
+          <Routes >
             {routes.map((route: RouteType) => {
               return (
                 <Route

@@ -24,16 +24,12 @@ const HomePage = () => {
           Transforming Healthcare <span>Experiences</span> with Expert <br/> Medical Care and
             <span> Consultation</span>
           </h1>
-          {/* <p>
-            We provide the best consultation to you with the <br /> best doctors
-            in the field
-          </p> */}
           <p>
           Experience healthcare at its finest through our platform, where we connect you with top-tier<br/>doctors who offer unparalleled expertise and personalized care.
           </p>
           {user ? (
             <Link to="/dashboard/2">
-              <button>Make an Appoitment</button>
+              <button>Book an Appointment</button>
             </Link>
           ) : (
             <button

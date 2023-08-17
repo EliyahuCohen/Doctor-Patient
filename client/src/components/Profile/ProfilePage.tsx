@@ -183,7 +183,7 @@ const ProfilePage = ({ selected }: { selected: number }) => {
                   </span>
                   Status:
                 </p>
-                <p>{theUser?.approved ? "Approved" : "Pending"}</p>
+                <p>{theUser?.approved ? "Approved" : "blocked"}</p>
               </div>
             )}
             <div className="row">

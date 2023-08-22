@@ -83,8 +83,8 @@ const ResetPassword = () => {
             <div className="linkWrapper">
               <p className="goBackLink">
                 <Link to="/signin">
+                  <MdOutlineKeyboardBackspace style={{ marginRight: "1rem" }} />
                   Back to Sign in{" "}
-                  <MdOutlineKeyboardBackspace style={{ marginLeft: "1rem" }} />
                 </Link>
               </p>
             </div>
@@ -106,9 +106,6 @@ const ResetPassword = () => {
             <a href="https://mail.google.com/" target="_blank">
               <button
                 className="resetBtn"
-                onClick={() => {
-                  //we will automaticaly will navigate him to the last page after we get a signal that the mail was sent successfully
-                }}
               >
                 Open email app
               </button>
@@ -136,7 +133,7 @@ const ResetPassword = () => {
           </div>
           <div className="welcomeWords">
             <h2>Enter Verification Code</h2>
-            <p>We're almost threre one more step to go</p>
+            <p>You're almost there one more step to go</p>
           </div>
           <div className="numbers-boxs">
             {[...Array(6)].map((_, index) => (
@@ -177,7 +174,7 @@ const ResetPassword = () => {
             Apply
           </button>
           <p className="resendP">
-            Didn't recive the email?{" "}
+            Didn't receive the email?{" "}
             <button
               className="resendBtn"
               onClick={() => {

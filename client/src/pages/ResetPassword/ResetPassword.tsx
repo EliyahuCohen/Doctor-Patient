@@ -21,6 +21,7 @@ const ResetPassword = () => {
   const [stage, setStage] = useState<1 | 2 | 3 | 4>(1);
   const inputRefs = useRef<any>([]);
   const [error, setError] = useState<string>("");
+  const [emailCheckError, setEmailCheckError] = useState<boolean>(false);
   const dispatch = useDispatch();
   const { sendEmail, sendEmailAgain, ValidateVerficationCode, resetPassword } =
     useResetPassword(setStage);
@@ -74,12 +75,17 @@ const ResetPassword = () => {
               className="resetBtn"
               onClick={() => {
                 if (check(1)) {
-                  sendEmail(email);
+                  sendEmail(email, setEmailCheckError);
                 }
               }}
             >
               Reset password
             </button>
+            {emailCheckError && (
+              <p style={{ padding: "1rem 0.3rem" }} className="error">
+                Email could not be found!
+              </p>
+            )}
             <div className="linkWrapper">
               <p className="goBackLink">
                 <Link to="/signin">
@@ -104,11 +110,7 @@ const ResetPassword = () => {
               </p>
             </div>
             <a href="https://mail.google.com/" target="_blank">
-              <button
-                className="resetBtn"
-              >
-                Open email app
-              </button>
+              <button className="resetBtn">Open email app</button>
             </a>
             <p
               className="moveOnBtn"
@@ -201,7 +203,6 @@ const ResetPassword = () => {
             </div>
             <div className="welcomeWords">
               <h2>Set new password</h2>
-              
             </div>
             <div className="finalInputs">
               <label htmlFor="fpassword">Password</label>

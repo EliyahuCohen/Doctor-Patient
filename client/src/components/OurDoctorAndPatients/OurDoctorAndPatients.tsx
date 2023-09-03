@@ -72,7 +72,7 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
               .slice()
               .sort((one: any, two: User) => {
                 if (sortBy === 1) {
-                  return one.fName > two.fName ? 1 : -1;
+                  return one.fName > two.fName ? one : two;
                 }
                 if (sortBy === 2) {
                   return one.userRating.sum / one.userRating.rating -

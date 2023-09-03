@@ -74,7 +74,7 @@ export async function createMeeting(
 //get
 //returns all the available appointments from the given doctor on the requested date
 export async function getMeetings(
-            //the parameter passed by the url
+  //the parameter passed by the url
   req: Request<{ doctorId: string }, {}, { date: string; day: number }>,
   res: Response
 ) {
@@ -101,7 +101,7 @@ export async function getMeetings(
         .json({ message: "Not a working day in our company" });
     }
 
-    const meetingInWantedDate = await Meet.find({ date, doctorId:doctorId });
+    const meetingInWantedDate = await Meet.find({ date, doctorId: doctorId });
 
     const schedule = doctor.schedule[day];
     const currentDate = new Date();
@@ -113,7 +113,10 @@ export async function getMeetings(
           (meetingTime) => meetingTime.startTime === time.startTime
         );
 
-        if ((day === currentDate.getDay() && !isMeetingTimeTaken) || !isMeetingTimeTaken)
+        if (
+          (day === currentDate.getDay() && !isMeetingTimeTaken) ||
+          !isMeetingTimeTaken
+        )
           timesTemp.push(time);
 
         return timesTemp;
@@ -124,12 +127,12 @@ export async function getMeetings(
       day,
       times: validTimes,
     };
-    
+
     const newDate = new Date();
     if (date.getDate() == newDate.getDate()) {
       let array: ITimeSpan[] = [];
       validTimes.map((value) => {
-        if (value.startTime > newDate.getHours()+ newDate.getMinutes()/100) {
+        if (value.startTime > newDate.getHours() + newDate.getMinutes() / 100) {
           array.push(value);
         }
       });
@@ -157,7 +160,9 @@ export async function getUserUpcomingMeetings(req: Request, res: Response) {
         const meeting = await Meet.findOne({
           _id: user.meetingsDoctors[i]._id,
           date: {
-            $gte: new Date(`${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`),
+            $gte: new Date(
+              `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`
+            ),
           },
           completed: false,
         });
@@ -225,7 +230,6 @@ export async function meetingCompleted(req: Request, res: Response) {
 
   return res.status(200).json({ message: "Meeting updated" });
 }
-
 //delete
 export async function cancelMeeting(req: Request, res: Response) {
   const { USER_ID } = req.body;
@@ -315,7 +319,7 @@ export async function getOneMeeting(req: Request, res: Response) {
   if (meeting) return res.status(200).json(meeting);
   return res.status(400).json({ message: "invalid meeting id" });
 }
-//returns all the 
+//returns all the
 export async function getUserStats(req: Request, res: Response) {
   const { id } = req.params;
   if (isValidObjectId(id)) {
@@ -333,7 +337,7 @@ export async function getUserStats(req: Request, res: Response) {
 
     const stats: IUserStats = {
       doctorsAmount: user.listOfDoctors.length,
-      meetingAmount: user.role==1? amount2.length:amount.length,
+      meetingAmount: user.role == 1 ? amount2.length : amount.length,
       patientsAmount: user.listOfPatients.length,
       rating:
         user?.userRating?.sum > 0 && user?.userRating?.votes > 0

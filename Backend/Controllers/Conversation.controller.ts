@@ -38,7 +38,10 @@ export async function getConversation(req: Request, res: Response) {
       break;
     }
   }
-  if (!status) return res.status(404).json({ message: "Connection between the two does not exist" });
+  if (!status)
+    return res
+      .status(404)
+      .json({ message: "Connection between the two does not exist" });
   const conversationExists: IConversation | null = await Conversation.findOne({
     participants: { $all: [USER_ID, personId] },
   });

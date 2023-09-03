@@ -42,7 +42,7 @@ export function resetPasswordEmail(
         >
         <p style="text-align: center; margin-top: 1rem">
           We received a request to reset the password for your account at
-          eliyahu@gmail.com. To proceed with the password reset,<br /><br />
+          ${email}. To proceed with the password reset,<br /><br />
           Please enter this code within <strong>10 minutes</strong> on the
           password reset page. If you didn't initiate this request, please
           disregard this email.

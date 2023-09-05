@@ -25,7 +25,6 @@ const VideoMeeting = () => {
 
   useEffect(() => {
     if (!localStorage.getItem("meeting-time")) {
-      window.location.reload()
       localStorage.setItem("meeting-time", JSON.stringify(0));
     }
   }, []);

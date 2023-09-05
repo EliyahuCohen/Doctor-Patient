@@ -106,7 +106,7 @@ export async function getMeetings(
     const schedule = doctor.schedule[day];
     const currentDate = new Date();
 
-    let validTimes = schedule.times.reduce(
+    let validTimes = schedule.times?.reduce(
       //inserts into isMeetingTimeTaken all the already booked appointments from the schedule
       (timesTemp: ITimeSpan[], time: ITimeSpan) => {
         const isMeetingTimeTaken = meetingInWantedDate.some(

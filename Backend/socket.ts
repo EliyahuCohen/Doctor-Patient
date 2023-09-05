@@ -56,7 +56,7 @@ export function socketHandler(io: Server) {
     socket.on("is-user-live", (sock) => {
       const { userid, askingId } = sock;
       const findUser = usersID.filter((one) => one?.userId == userid)[0];
-      io.to(usersID.filter((one) => one?.userId == askingId)[0].socketId).emit(
+      io.to(usersID.filter((one) => one?.userId == askingId)[0]?.socketId).emit(
         "user-status",
         findUser ? true : false
       );

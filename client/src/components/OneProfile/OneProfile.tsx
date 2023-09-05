@@ -189,7 +189,7 @@ const OneProfile = () => {
                 {" "}
                 {user.Duration.meetingsAmount != 0
                   ? Math.floor(
-                    user.Duration.totalDuration / user.Duration.meetingsAmount
+                    user.Duration.totalDuration/60 / user.Duration.meetingsAmount
                   )
                   : "0"}{" "}
               </span>

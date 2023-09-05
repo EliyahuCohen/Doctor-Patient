@@ -166,3 +166,16 @@
 .online {
   background: green;
 }
+.specialLinkMessage{
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  a{
+    background: transparent;
+    color: #fff;
+    text-decoration: none;
+    padding: 1rem;
+    border: 2px solid white ; border-radius: 12px;
+    cursor: pointer;
+  }
+}

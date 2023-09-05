@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import formatDistance from "date-fns/esm/formatDistance";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useMessages } from "../../hooks/useMessages";
 import { RiSendPlaneLine } from "react-icons/ri";
 import "./communication.scss";
@@ -106,7 +106,11 @@ const Communication = () => {
                     type:"MESSAGE"
                    }))
                 }}/>
-                  {message.message}
+                  {message.message.includes("http")?<div className="specialLinkMessage">
+                    <Link to={message.message} >
+                    Go To Meeting
+                    </Link>
+                  </div>:message.message}
                   <span>
                     {formatDistance(new Date(message.createdAt), new Date())}
                   </span>

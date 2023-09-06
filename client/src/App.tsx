@@ -76,7 +76,7 @@ const App = () => {
             />
           ) : null}
           <Messages />
-          <Routes >
+          <Routes>
             {routes.map((route: RouteType) => {
               return (
                 <Route

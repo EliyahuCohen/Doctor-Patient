@@ -90,7 +90,7 @@ const OurTeam = () => {
         >
           <img src={Image4} alt="" height={400} width={400} />
           <div className="doctorInfo">
-            <p>Dr.Lydia Leen</p>
+            <p>Dr.Robert Glan</p>
             <strong>Pediatrician</strong>
           </div>
         </motion.div>

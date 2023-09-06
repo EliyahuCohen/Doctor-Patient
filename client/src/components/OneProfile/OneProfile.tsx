@@ -51,10 +51,7 @@ const OneProfile = () => {
         <span className="line2"></span>
       </div>
       <div className="goback">
-        <GoBackButton
-          whereTo="http://localhost:5173/admin"
-          backgroundColor="#555"
-        />
+        <GoBackButton whereTo="admin" backgroundColor="#555" />
       </div>
       <div className="profileWrapper second">
         <p className="image">{user.role == 1 ? "👨‍⚕️" : "😷"}</p>
@@ -124,12 +121,12 @@ const OneProfile = () => {
       <div className="bottomInfo">
         <div>
           <button
-            className={user.approved? "block":""}
+            className={user.approved ? "block" : ""}
             onClick={(e) => {
               updateRole(setUser);
             }}
           >
-            {!user.approved? "Approve":"Block"}
+            {!user.approved ? "Approve" : "Block"}
           </button>
         </div>
       </div>
@@ -189,8 +186,10 @@ const OneProfile = () => {
                 {" "}
                 {user.Duration.meetingsAmount != 0
                   ? Math.floor(
-                    user.Duration.totalDuration/60 / user.Duration.meetingsAmount
-                  )
+                      user.Duration.totalDuration /
+                        60 /
+                        user.Duration.meetingsAmount
+                    )
                   : "0"}{" "}
               </span>
               Minutes

@@ -31,6 +31,7 @@ const userSlice = createSlice({
       state.user!.meetingAmount++;
     },
     logout: (state) => {
+      localStorage.setItem("user", JSON.stringify(null));
       state.token = null;
       state.user = null;
     },

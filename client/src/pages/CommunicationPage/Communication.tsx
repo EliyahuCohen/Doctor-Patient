@@ -22,7 +22,7 @@ const Communication = () => {
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const { userid } = useParams();
   const inputRef = useRef<HTMLInputElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
@@ -75,7 +75,6 @@ const Communication = () => {
     if (inputRef.current?.value.length! >= 1) {
       sendNewMessage(inputRef.current!.value, userid!);
       inputRef.current!.value = "";
-    } else {
     }
   }
   return (
@@ -95,22 +94,29 @@ const Communication = () => {
             return (
               <div key={message.sender + message.message + index}>
                 <p className={message.sender == userid! ? "right" : "left"}>
-                <FiCopy className="copyIcon" onClick={()=>{
-                   navigator.clipboard.writeText(message.message)
-                   dispatch(newMessage({
-                    id:message.createdAt.toString(),
-                    message:"Copied successfully!",
-                    senderId:crypto.randomUUID(),
-                    senderName:"System",
-                    time:3000,
-                    type:"MESSAGE"
-                   }))
-                }}/>
-                  {message.message.includes("http")?<div className="specialLinkMessage">
-                    <Link to={message.message} >
-                    Go To Meeting
-                    </Link>
-                  </div>:message.message}
+                  <FiCopy
+                    className="copyIcon"
+                    onClick={() => {
+                      navigator.clipboard.writeText(message.message);
+                      dispatch(
+                        newMessage({
+                          id: message.createdAt.toString(),
+                          message: "Copied successfully!",
+                          senderId: crypto.randomUUID(),
+                          senderName: "System",
+                          time: 3000,
+                          type: "MESSAGE",
+                        })
+                      );
+                    }}
+                  />
+                  {message.message.includes("http") ? (
+                    <div className="specialLinkMessage">
+                      <Link to={message.message}>Go To Meeting</Link>
+                    </div>
+                  ) : (
+                    message.message
+                  )}
                   <span>
                     {formatDistance(new Date(message.createdAt), new Date())}
                   </span>

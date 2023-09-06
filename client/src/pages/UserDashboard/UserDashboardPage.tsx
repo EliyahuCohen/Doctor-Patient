@@ -3,7 +3,6 @@ import { BsCalendarDate, BsGrid1X2 } from "react-icons/bs";
 import { TbMessageCircle2 } from "react-icons/tb";
 import { BiBed } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
-import { GiDoctorFace } from "react-icons/gi";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
@@ -27,6 +26,8 @@ const MyAppointments = lazy(
   () => import("../../components/MyAppointments/MyAppointments")
 );
 const UserDashboardPage = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
@@ -36,8 +37,6 @@ const UserDashboardPage = () => {
     navigate(`/dashboard/${tabNumber}`);
     setSelected(tabNumber);
   }
-  const { id } = useParams();
-  const navigate = useNavigate();
   useEffect(() => {
     if (id && Number(id) < 8 && Number(id) >= 0) {
       if (user?.role == 2 && Number(id) > 5) {

@@ -1,4 +1,5 @@
 import { Schedule } from "../Models/User.model";
+import mongoose from "mongoose";
 
 export class SendMessage {
   message: string;
@@ -33,4 +34,8 @@ export interface IUserStats {
   rating: number;
   doctorsAmount: number;
   patientsAmount: number;
+}
+export interface user {
+  userId: mongoose.Types.ObjectId;
+  socketId: string;
 }

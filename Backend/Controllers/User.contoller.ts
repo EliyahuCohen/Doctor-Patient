@@ -3,7 +3,6 @@ import {
   createAccessToken,
   generateTokenForVarificationCode,
   generateVarificationCode,
-  validateEmail,
   ValidateEmailAndPassword,
 } from "../Utils/helpers";
 import bcrypt from "bcrypt";
@@ -108,7 +107,7 @@ export async function resetPasswordVerificationCodeEmailSender(
     console.log(error);
     return res
       .status(500)
-      .json({ message: "Failed to send email. Please try again" });
+      .json({ message: "Failed to send email. Please try again later" });
   }
 }
 export async function checkIfVerificationCodeIsValidAndCorrect(
@@ -143,6 +142,10 @@ export async function changePassword(req: Request, res: Response) {
   const hash = await bcrypt.hash(password, salt);
 
   user.password = hash;
+  user.messages.push({
+    message: "Password successfully updated!",
+    type: 2,
+  });
   await user.save();
 
   return res.status(201).json({ message: "Password successfully updated!" });
@@ -187,7 +190,7 @@ export async function postSchedual(
     const ws: Schedule[] = weeklySchedual.map((one) => {
       return one.schedule;
     });
-    if (user.schedule) {
+    if (user?.schedule) {
       user.schedule = ws;
     }
     user.messages.push({
@@ -255,11 +258,13 @@ export async function getSchedual(
     const user = await User.findById(USER_ID);
     if (!user || user.role != 1)
       return res.status(404).json({ message: "No such user/doctor" });
-    const ws: ScheduleDay[] = user.schedule.map((one) => {
-      return {
-        day: "",
-        schedule: { day: one.day, times: one.times },
-      } as any;
+    const ws: ScheduleDay[] = user?.schedule.map((one) => {
+      return (
+        ({
+          day: "",
+          schedule: { day: one.day, times: one.times },
+        } as any) || []
+      );
     });
     return res.status(200).json({ schedual: ws });
   }

@@ -94,25 +94,20 @@ export async function getMeetings(
     if (!doctor) {
       return res.status(404).json({ message: "No such Doctor" });
     }
-
     if (day < 0 || day > 5) {
       return res
         .status(400)
         .json({ message: "Not a working day in our company" });
     }
-
     const meetingInWantedDate = await Meet.find({ date, doctorId: doctorId });
-
-    const schedule = doctor.schedule[day];
+    const schedule = doctor?.schedule[day];
     const currentDate = new Date();
-
-    let validTimes = schedule.times?.reduce(
+    let validTimes = schedule?.times?.reduce(
       //inserts into isMeetingTimeTaken all the already booked appointments from the schedule
       (timesTemp: ITimeSpan[], time: ITimeSpan) => {
         const isMeetingTimeTaken = meetingInWantedDate.some(
           (meetingTime) => meetingTime.startTime === time.startTime
         );
-
         if (
           (day === currentDate.getDay() && !isMeetingTimeTaken) ||
           !isMeetingTimeTaken
@@ -127,7 +122,6 @@ export async function getMeetings(
       day,
       times: validTimes,
     };
-
     const newDate = new Date();
     if (date.getDate() == newDate.getDate()) {
       let array: ITimeSpan[] = [];
@@ -138,7 +132,6 @@ export async function getMeetings(
       });
       response.times = array;
     }
-
     return res.status(200).json(response);
   } catch (err) {
     console.error("Error while getting meetings:", err);
@@ -227,7 +220,6 @@ export async function meetingCompleted(req: Request, res: Response) {
       doctorId: doctor?._id,
     });
   }
-
   return res.status(200).json({ message: "Meeting updated" });
 }
 //delete

@@ -1,5 +1,5 @@
 import { Server } from "socket.io";
-import { user } from "./server";
+import { user } from "./types/types";
 
 export let admin: user | null = null;
 export let usersID: user[] = [];
@@ -52,7 +52,6 @@ export function socketHandler(io: Server) {
       }
       io.emit("user-out", selected?.userId);
     });
-    //events for handling video calls
     socket.on("is-user-live", (sock) => {
       const { userid, askingId } = sock;
       const findUser = usersID.filter((one) => one?.userId == userid)[0];
@@ -61,6 +60,9 @@ export function socketHandler(io: Server) {
         findUser ? true : false
       );
     });
+
+    //events for handling video calls
+
     socket.on("join room", (roomId) => {
       socket.join(roomId);
       socket.to(roomId).emit("user connected");
@@ -77,8 +79,11 @@ export function socketHandler(io: Server) {
     socket.on("ice candidate", (candidate, roomId) => {
       socket.to(roomId).emit("ice candidate", candidate, socket.id);
     });
-    socket.on("leave-call", (roomNum: string,doctorId:string,meetingId:string) => {
-      io.to(roomNum).emit("user-left",doctorId,meetingId);
-    });
+    socket.on(
+      "leave-call",
+      (roomNum: string, doctorId: string, meetingId: string) => {
+        io.to(roomNum).emit("user-left", doctorId, meetingId);
+      }
+    );
   });
 }

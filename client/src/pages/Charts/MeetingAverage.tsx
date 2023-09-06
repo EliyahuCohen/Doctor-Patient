@@ -20,7 +20,7 @@ const MeetingAverage = ({ users }: { users: User[] }) => {
                 {one.fName + " " + one.lName + " "}
                 <span>
                   {one.Duration.meetingsAmount != 0
-                    ? Math.floor(
+                    ? Math.ceil(
                       one.Duration.totalDuration / 60 / one.Duration.meetingsAmount
                     )
                     : "0"}{" "}

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
 import "./video.scss";
+import React, { useEffect, useRef, useState } from "react";
 import { socket } from "../../App";
 import { BsMic, BsMicMute } from "react-icons/bs";
 import { FiCamera, FiCameraOff } from "react-icons/fi";
@@ -282,5 +282,6 @@ const VideoMeeting = () => {
     </motion.div>
   );
 };
+
 
 export default VideoMeeting;

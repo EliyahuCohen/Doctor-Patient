@@ -9,7 +9,10 @@ const MeetingTimer = ({
 }) => {
   useEffect(() => {
     const timer = setInterval(() => {
-      setMeetingDuration((prevDuration) => prevDuration + 1);
+      setMeetingDuration((prevDuration) => {
+        localStorage.setItem("meeting-time", JSON.stringify(prevDuration + 1));
+        return prevDuration + 1;
+      });
     }, 1000);
 
     return () => {

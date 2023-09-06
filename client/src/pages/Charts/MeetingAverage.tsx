@@ -14,7 +14,6 @@ const MeetingAverage = ({ users }: { users: User[] }) => {
               two.Duration.totalDuration / two.Duration.meetingsAmount
             );
           })
-          .reverse()
           .map((one, index) => {
             return (
               <div className={`singleRow ${index == 0 && "top"}`} key={one._id}>

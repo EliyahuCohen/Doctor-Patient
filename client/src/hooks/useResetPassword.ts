@@ -1,18 +1,24 @@
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { newMessage } from "../features/messagesSlice";
+import React from "react";
 export function useResetPassword(
   setStage: React.Dispatch<React.SetStateAction<1 | 2 | 3 | 4>>
 ) {
   const dispatch = useDispatch();
 
-  async function sendEmail(email: string) {
+  async function sendEmail(
+    email: string,
+    setError: React.Dispatch<React.SetStateAction<boolean>>
+  ) {
     axios
       .post("http://localhost:3001/users/reset-password", { email })
       .then((res) => {
         setStage((prev) => (prev + 1) as 1 | 2 | 3 | 4);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
   }
   async function sendEmailAgain(email: string) {
     axios

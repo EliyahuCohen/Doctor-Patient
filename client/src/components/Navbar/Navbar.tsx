@@ -22,6 +22,7 @@ const Navbar = () => {
   }
   useEffect(() => {
     const height = window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
   }, []);
   const dispatch = useDispatch();
   return (
@@ -82,7 +83,6 @@ const Navbar = () => {
                 title="logout"
                 style={{ padding: "0 1rem", cursor: "pointer" }}
                 onClick={() => {
-                  localStorage.setItem("user", JSON.stringify(null));
                   dispatch(logout());
                   dispatch(
                     newMessage({
@@ -190,7 +190,6 @@ const Navbar = () => {
                 title="logout"
                 style={{ padding: "0 1rem", cursor: "pointer" }}
                 onClick={() => {
-                  localStorage.setItem("user", JSON.stringify(null));
                   dispatch(logout());
                   socket.emit("userLoggedOut");
                   setOpen(false);

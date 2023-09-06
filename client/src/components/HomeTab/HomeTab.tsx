@@ -29,7 +29,7 @@ const HomeTab = () => {
           Good
           {date.getHours() < 12
             ? " Morning"
-            : date.getHours() > 12 && date.getHours() < 18
+            : date.getHours() >= 12 && date.getHours() < 18
             ? " Afternoon"
             : " Evening"}
           ,

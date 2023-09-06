@@ -154,7 +154,7 @@ const PatientOrDoctor = ({
                           <span>
                             {user.Duration.meetingsAmount != 0
                               ? Math.floor(
-                                  user.Duration.totalDuration /
+                                  user.Duration.totalDuration /60/
                                     user.Duration.meetingsAmount
                                 )
                               : "0"}

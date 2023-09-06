@@ -3,7 +3,6 @@ import {
   createAccessToken,
   generateTokenForVarificationCode,
   generateVarificationCode,
-  validateEmail,
   ValidateEmailAndPassword,
 } from "../Utils/helpers";
 import bcrypt from "bcrypt";
@@ -54,7 +53,9 @@ export async function signup(req: Request, res: Response) {
         return res.status(201).json({ user: result, token });
       });
     }
-    return res.status(400).json({ message: "Account with this email already exists" });
+    return res
+      .status(400)
+      .json({ message: "Account with this email already exists" });
   } catch (err: any) {
     return res.status(400).json({ message: err.message });
   }
@@ -106,7 +107,7 @@ export async function resetPasswordVerificationCodeEmailSender(
     console.log(error);
     return res
       .status(500)
-      .json({ message: "Failed to send email. Please try again" });
+      .json({ message: "Failed to send email. Please try again later" });
   }
 }
 export async function checkIfVerificationCodeIsValidAndCorrect(
@@ -141,6 +142,10 @@ export async function changePassword(req: Request, res: Response) {
   const hash = await bcrypt.hash(password, salt);
 
   user.password = hash;
+  user.messages.push({
+    message: "Password successfully updated!",
+    type: 2,
+  });
   await user.save();
 
   return res.status(201).json({ message: "Password successfully updated!" });
@@ -185,10 +190,13 @@ export async function postSchedual(
     const ws: Schedule[] = weeklySchedual.map((one) => {
       return one.schedule;
     });
-    if (user.schedule) {
+    if (user?.schedule) {
       user.schedule = ws;
     }
-    user.messages.push({ message: "Your schedual list has been updated", type: 2 });
+    user.messages.push({
+      message: "Your schedual list has been updated",
+      type: 2,
+    });
     return await user.save().then((r) => {
       const ws: ScheduleDay[] = r.schedule.map((one) => {
         return {
@@ -250,11 +258,13 @@ export async function getSchedual(
     const user = await User.findById(USER_ID);
     if (!user || user.role != 1)
       return res.status(404).json({ message: "No such user/doctor" });
-    const ws: ScheduleDay[] = user.schedule.map((one) => {
-      return {
-        day: "",
-        schedule: { day: one.day, times: one.times },
-      } as any;
+    const ws: ScheduleDay[] = user?.schedule.map((one) => {
+      return (
+        ({
+          day: "",
+          schedule: { day: one.day, times: one.times },
+        } as any) || []
+      );
     });
     return res.status(200).json({ schedual: ws });
   }
@@ -277,7 +287,7 @@ export async function updateUser(req: Request, res: Response) {
   await user?.save();
   return res.status(200).json(user);
 }
-//for the admin to change the approval status of the users 
+//for the admin to change the approval status of the users
 export async function updatePermissions(req: Request, res: Response) {
   const { USER_ID } = req.body;
   const { id } = req.params;
@@ -329,17 +339,15 @@ export async function updateDoctorsList(req: Request, res: Response) {
         doctor.listOfPatients = doctor.listOfPatients.filter(
           (pat) => pat != USER_ID
         );
-
-      } else //we just want to add it 
-      {
+      } //we just want to add it
+      else {
         user?.listOfDoctors.push(doc);
         doctor?.listOfPatients.push(USER_ID);
       }
       await user?.save();
       await doctor?.save();
       return res.status(201).json(user);
-    }
-    else {
+    } else {
       return res.status(400).json({ message: "He is not even a doctor!" });
     }
   }
@@ -359,6 +367,11 @@ export async function deleteUser(req: Request, res: Response) {
 }
 //validation
 export async function checkAccess(req: Request, res: Response) {
+  const { USER_ID } = req.body;
+  const user = await User.findById(USER_ID);
+  if (!user) {
+    return res.status(400).json({ message: "This is not a user" });
+  }
   return res.status(200).json({ message: "Validation Successful" });
 }
 export async function addRatingToDoctor(req: Request, res: Response) {
@@ -371,7 +384,7 @@ export async function addRatingToDoctor(req: Request, res: Response) {
       .status(404)
       .json({ message: "Can't find doctor to rate, sorry!" });
   doctor.userRating.sum += rating;
-  doctor.userRating.votes = doctor.userRating.votes + 1; 
+  doctor.userRating.votes = doctor.userRating.votes + 1;
   await doctor.save();
   return res.status(200).json({ message: "Thanks for your feedback!" });
 }

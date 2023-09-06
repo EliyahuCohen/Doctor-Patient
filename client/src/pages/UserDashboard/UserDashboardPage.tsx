@@ -26,6 +26,8 @@ const MyAppointments = lazy(
   () => import("../../components/MyAppointments/MyAppointments")
 );
 const UserDashboardPage = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const { user } = useSelector(
     (state: { userSlice: UserType }) => state.userSlice
   );
@@ -35,8 +37,6 @@ const UserDashboardPage = () => {
     navigate(`/dashboard/${tabNumber}`);
     setSelected(tabNumber);
   }
-  const { id } = useParams();
-  const navigate = useNavigate();
   useEffect(() => {
     if (id && Number(id) < 8 && Number(id) >= 0) {
       if (user?.role == 2 && Number(id) > 5) {

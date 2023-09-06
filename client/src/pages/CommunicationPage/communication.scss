@@ -166,3 +166,17 @@
 .online {
   background: green;
 }
+.specialLinkMessage {
+  background-color: transparent;
+  a {
+    font-style: italic;
+    font-weight: bold;
+    color: rgba(0, 0, 255, 0.628);
+    cursor: pointer;
+  }
+  .right {
+    a {
+      color: white;
+    }
+  }
+}

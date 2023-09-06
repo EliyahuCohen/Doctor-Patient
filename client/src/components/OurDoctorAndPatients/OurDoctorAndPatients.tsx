@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
   const [sortBy, setSortBy] = useState<0 | 1 | 2 | 3 | 4>(0);
   const [speciality, setSpeciality] = useState<string>("");
+  const uniqueSpecialities = new Set();
   const [patients, setPatients] = useState<User[]>([]);
   const [doctors, setDoctors] = useState<User[]>([]);
   const [moreDoctors, setMoreDoctors] = useState<User[] | null>([]);
@@ -52,13 +53,18 @@ const OurDoctorAndPatients = ({ selected }: { selected: number }) => {
             <option value="2">Rating</option>
             <option value="3">Meeting Duration</option>
             <optgroup label="Specialities" className="custom-optgroup">
-              {doctors?.map((doc) => {
-                return (
-                  <option value={doc.speciality} key={doc._id}>
-                    {doc.speciality}
-                  </option>
-                );
-              })}
+
+              {doctors?.filter(d => d.speciality).map((doc) => {
+                if (!uniqueSpecialities.has(doc.speciality)) {
+                  uniqueSpecialities.add(doc.speciality);
+                  return (
+                    <option value={doc.speciality} key={doc._id}>
+                      {doc.speciality}
+                    </option>
+                  );
+                }
+              }
+              )}
             </optgroup>
           </select>
         </div>

@@ -16,7 +16,7 @@ const RatingModal = ({
   setDoctorId: React.Dispatch<React.SetStateAction<string>>;
   doctorId: string;
 }) => {
-  const [rating, setRating] = useState<1 | 2 | 3 | 4 | 5>(1);
+  const [rating, setRating] = useState<1 | 2 | 3 | 4 | 5>(5);
   const [feedback, setFeedback] = useState<string>("");
   const { postFeedback } = useFeedbacks();
   const dispatch = useDispatch();

@@ -21,8 +21,8 @@ const MeetingAverage = ({ users }: { users: User[] }) => {
                 <span>
                   {one.Duration.meetingsAmount != 0
                     ? Math.floor(
-                        one.Duration.totalDuration / one.Duration.meetingsAmount
-                      )
+                      one.Duration.totalDuration / 60 / one.Duration.meetingsAmount
+                    )
                     : "0"}{" "}
                 </span>
                 Minutes

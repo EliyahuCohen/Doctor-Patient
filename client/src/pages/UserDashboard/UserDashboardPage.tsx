@@ -3,7 +3,6 @@ import { BsCalendarDate, BsGrid1X2 } from "react-icons/bs";
 import { TbMessageCircle2 } from "react-icons/tb";
 import { BiBed } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
-import { GiDoctorFace } from "react-icons/gi";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { UserType } from "../../features/userSlice";
@@ -49,7 +48,7 @@ const UserDashboardPage = () => {
       } else if (user?.role == 1) {
         setSelected(Number(id) as 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7);
       }
-    } else setSelected(1);
+    } else setSelected(0);
   }, []);
   return (
     <div className="dashboardWrapper">
@@ -125,10 +124,10 @@ const UserDashboardPage = () => {
           <MyAppointments />
         )}
 
+        {selected == 5 && <Prescription />}
         {selected == 6 && user?.role == 1 && user.approved && (
           <OurDoctorAndPatients selected={2} />
         )}
-        {selected == 5 && <Prescription />}
         {user?.role == 1 && user.approved && selected == 7 && (
           <ProfilePage selected={2} />
         )}

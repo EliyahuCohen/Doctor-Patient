@@ -60,7 +60,7 @@ const ProfilePage = ({ selected }: { selected: number }) => {
       <div className="profileWrapper">
         {selected == 1 && theUser && (
           <p className="headline">
-            Personal information
+            Personal information     
             <FiEdit3
               title="edit"
               className="updateInfo"
@@ -115,8 +115,7 @@ const ProfilePage = ({ selected }: { selected: number }) => {
               <p>
                 <span className="fitEmoji">
                   <TbGenderFemme
-                    color="d770ff
- "
+                    color="d770ff"
                   />
                 </span>
                 Gender:

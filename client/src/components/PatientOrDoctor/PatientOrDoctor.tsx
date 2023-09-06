@@ -75,7 +75,7 @@ const PatientOrDoctor = ({
     >
       <div className="topPart">
         <div className="userProfile">
-          <div className="side1">
+          <div title={user.speciality} className="side1">
             {user.speciality == "optometrist" ? (
               <FaGlasses />
             ) : user.speciality == "family-doctor" ? (
